@@ -22,10 +22,6 @@ h1 {
   font-size: 3em;
 }
 
-div.img {
-  text-align: center;
-  margin-bottom: 2em;
-}
 
 img {
   width: 400px;
@@ -34,6 +30,7 @@ img {
   -moz-box-shadow: 5px 5px 5px #AAA;
   -webkit-box-shadow: 5px 5px 5px #AAA;
   box-shadow: 5px 5px 5px #AAA;
+  margin-bottom: 2em;
 }
 
 header {
@@ -42,7 +39,8 @@ header {
 }
 
 article {
-  margin-left: 1em;
+  text-align: center;
+/*  margin-left: 1em;*/
 }
 
 p {
@@ -51,11 +49,13 @@ p {
 }
 
 p.links {
+  margin-top: 2em;
   text-align: center;
 }
 
 footer {
   text-align: center;
+  margin-top: 2em;
 }
 
 p.quote {
