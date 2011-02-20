@@ -8,9 +8,69 @@
 ----------------------------------------------------------------------*/
 @import url("core.css");
 
+body {
+  background-color: #F5F5F5;
+  color: #2B1E14;
+  font-family: Georgia;
+  font-size: 18px;
+  margin: auto;
+  width: 980px;
+}
 
-/*-  Browser-specific patches
-----------------------------------------------------------------------*/
-/*\*//*/
-@import url("patches/mac-ie5.css");
-/**/
+h1 {
+  color: #003B04;
+  font-size: 3em;
+}
+
+div.img {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+img {
+  width: 400px;
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+  -moz-box-shadow: 5px 5px 5px #AAA;
+  -webkit-box-shadow: 5px 5px 5px #AAA;
+  box-shadow: 5px 5px 5px #AAA;
+}
+
+header {
+  font-family: Helvetica, Arial, Verdana;
+  margin: 2em;
+}
+
+article {
+  margin-left: 1em;
+}
+
+p {
+  margin: 0 4em 1em 4em;
+/*  margin-bottom: 1em;*/
+}
+
+p.links {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+}
+
+p.quote {
+  display: none;
+  font-size: .8em;
+  font-style: italic;
+}
+
+p.quote span {
+  display: block;
+  font-style: normal;
+  font-weight: bold;
+  margin-top: .3em;
+}
+
+a, a:visited, a:active {
+  color: #E04226;
+}
