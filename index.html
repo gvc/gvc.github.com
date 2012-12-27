@@ -6,44 +6,53 @@
 	<meta charset="utf-8">
 	<title>gvc.github.com</title>
 	<meta name="description" content="">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/_print/main.css" media="print">
-<script src='js/jquery-1.5.min.js' type='text/javascript'></script>
-<script type='text/javascript'>
-  function init() {
-    var citationId = Math.floor(Math.random()*5) + 1
-    $("#quote-" + citationId).css('display', 'block')
-  }
-  
-  $(init);
-</script>
+	  <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src='js/jquery.min.js' type='text/javascript'></script>
+    <script type='text/javascript'>
+      function init() {
+        var citationId = Math.floor(Math.random()*5) + 1
+        $("#quote-" + citationId).css('display', 'block')
+      }
+      
+      $(init);
+    </script>
 </head>
 
 <body>
-  <div>
-  	<header>
-  		<h1>Guilherme Carvalho</h1>
-  	</header>
-	
-  	<article>
-  	  <div class='img'>
-    	  <img src='img/eu.jpg' alt='Guilherme' title='Guilherme' />
-      </div>
-  	  <p>
-  	    Computer Science graduate from UFPE (Universidade Federal de Pernambuco). Ruby and Rails developer. Generally a nice guy.
-  	    Co-founder of <a href='http://www.guava.com.br'>Guava</a>, a Ruby/Rails development studio.
-  	  </p>
-  	  <p class='links'>
-  	    <a href='http://github.com/gvc'>Github</a>
-  	    |
-  	    <a href='https://www.facebook.com/guilherme.v.carvalho'>Facebook</a>
-  	    |
-  	    <a href='http://twitter.com/guilherme_vc'>Twitter</a>
-  	  </p>
-  	  
-  	</article>
-	
-  	<footer>
+  <div class="row">
+    <div class="three columns" id="sidebar">
+      <img src="img/gvc.jpg" />
+      <p>
+        Computer Science graduate from UFPE (Universidade Federal de Pernambuco). Ruby and Rails developer. Generally a nice guy.
+        Co-founder of <a href='http://www.guava.com.br'>Guava</a>, a Ruby/Rails development studio.
+      </p>
+      <p class='links'>
+        <a href='http://github.com/gvc'>Github</a>
+        |
+        <a href='https://www.facebook.com/guilherme.v.carvalho'>Facebook</a>
+        |
+        <a href='http://twitter.com/guieevc'>Twitter</a>
+      </p>
+    </div>
+
+    <div class="nine columns" id="content">
+      <h2>Escrita <small>These will be only in portuguese, sorry :(</small></h2>
+      <hr />
+
+      <!-- TEMPLATE
+
+      <div class="post">
+        <h4>Title <small>26/12/2012</small></h4>
+      </div> 
+
+      -->
+    </div>
+  </div>
+
+
+	<div class="row">
+    <div id="footer" class="eight columns centered">
       <p class='quote' id='quote-1'>
         A great man is always willing to be little.
         <span>Ralph Waldo Emerson</span>
@@ -64,7 +73,7 @@
         Do the thing we fear, and death of fear is certain.
         <span>Ralph Waldo Emerson</span>
       </p>
-  	</footer>
+    </div>
   </div>
 </body>
 </html>
