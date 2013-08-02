@@ -8,45 +8,35 @@
 	<meta name="description" content="">
 	  <link rel="stylesheet" href="css/foundation.min.css">
     <link rel="stylesheet" href="css/app.css">
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Belgrano' rel='stylesheet' type='text/css'>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+
     <script src='js/jquery.min.js' type='text/javascript'></script>
     <script type='text/javascript'>
       function init() {
-        var citationId = Math.floor(Math.random()*5) + 1
+        var citationId = Math.floor(Math.random()*6) + 1
         $("#quote-" + citationId).css('display', 'block')
       }
-      
+
       $(init);
     </script>
 </head>
 
 <body>
   <div class="row">
-    <div class="three columns" id="sidebar">
-      <img src="img/gvc.jpg" />
+    <div class="six columns push-three" id="main">
+      <h2>Guilherme Carvalho</h2>
+
       <p>
         Computer Science graduate from UFPE (Universidade Federal de Pernambuco). Ruby and Rails developer. Generally a nice guy.
-        Co-founder of <a href='http://www.guava.com.br'>Guava</a>, a Ruby/Rails development studio.
+        Co-founder of <a id="guava" href='http://www.guava.com.br'>Guava</a>, a Ruby/Rails development studio.
       </p>
       <p class='links'>
-        <a href='http://github.com/gvc'>Github</a>
-        |
-        <a href='https://www.facebook.com/guilherme.v.carvalho'>Facebook</a>
-        |
-        <a href='http://twitter.com/guieevc'>Twitter</a>
+        <a href='http://github.com/gvc'><i class="icon-github-alt icon-2x"></i></a>
+        <a href='http://twitter.com/guieevc'><i class="icon-twitter icon-2x"></i></a>
       </p>
-    </div>
-
-    <div class="nine columns" id="content">
-      <h2>Escrita <small>These will be only in portuguese, sorry :(</small></h2>
-      <hr />
-
-      <!-- TEMPLATE
-
-      <div class="post">
-        <h4>Title <small>26/12/2012</small></h4>
-      </div> 
-
-      -->
     </div>
   </div>
 
@@ -72,6 +62,14 @@
       <p class='quote' id='quote-5'>
         Do the thing we fear, and death of fear is certain.
         <span>Ralph Waldo Emerson</span>
+      </p>
+      <p class="quote" id="quote-6">
+        Water adopts the shape of its receptacle, it is sometimes a trickle and sometimes a wild sea.
+        <span>Miyamoto Musashi</span>
+      </p>
+      <p class="quote" id="quote-7">
+        Think lightly of yourself and deeply of the world.
+        <span>Miyamoto Musashi</span>
       </p>
     </div>
   </div>

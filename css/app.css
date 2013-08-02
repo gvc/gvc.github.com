@@ -1,6 +1,6 @@
 /* Artfully masterminded by ZURB  */
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
    Table of Contents
 -----------------------------------------------------
 :: Page Name 1
@@ -18,37 +18,22 @@
   box-shadow: -5px 0px #eeeeee;
 }
 
-h2 small {
-  opacity: .4;
-}
-
-hr + div.post {
-  box-shadow: -5px 0px #2ba6cb;
-}
-
-div.post {
-  border-bottom: 1px solid #EBF2FC;
-  padding: 0 0 10px 10px;
-  margin-bottom: 15px;
-}
-
-#sidebar {
+h2 {
+  font-family: 'Varela Round', sans-serif;
   text-align: center;
-}
-
-#sidebar img {
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  border-radius: 50px;
-
   margin-top: 3em;
   margin-bottom: 1em;
-  opacity: .2;
-  height: 200px;
 }
 
-#sidebar img:hover {
-  opacity: .8;
+.links {
+  text-align: center;
+  margin: 2em 0;
+}
+
+#guava {
+  background: url('../img/header_background.png');
+  color: white;
+  padding: 1px 2px;
 }
 
 #footer p {
@@ -58,8 +43,22 @@ div.post {
 
 .quote {
   display: none;
+  font-style: italic;
 }
 
 .quote span {
-  font-style: italic;
+  font-style: normal;
+  font-weight: bold;
+}
+
+a {
+  color: rgb(240, 73, 95);
+}
+
+a:hover {
+  color: rgb(214, 24, 85);
+}
+
+p {
+  font-family: 'Belgrano', Georgia, serif;
 }
