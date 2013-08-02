@@ -15,9 +15,23 @@
 
     <script src='js/jquery.min.js' type='text/javascript'></script>
     <script type='text/javascript'>
+      var e0bdcb = 0, L = e0bdcb + 38, T = L - 1, Z = T*2-L+4, G = -Z+L+3+L;
+
       function init() {
         var citationId = Math.floor(Math.random()*6) + 1
         $("#quote-" + citationId).css('display', 'block')
+
+        $(document).bind('keydown', function(e) {
+          tip = e.keyCode;
+          if(tip == L && (e0bdcb == 0 || e0bdcb == 1)) { e0bdcb++; } else if(tip == Z && (e0bdcb == 2 || e0bdcb == 3)) { e0bdcb++;
+          } else if(tip == T && (e0bdcb == 4 || e0bdcb == 6)) { e0bdcb++; } else if(tip == G && (e0bdcb == 5 || e0bdcb == 7)) { e0bdcb++;
+          } else if(tip == 66 && (e0bdcb == 8)) {e0bdcb++;} else if(tip == 65 && (e0bdcb == 9)) {e0bdcb++;} else {e0bdcb = 0;}
+
+          if(e0bdcb == 'l'.charCodeAt(0) - 2 * '1'.charCodeAt(0)) {
+            new Audio('z.wav').play()
+            e0bdcb = 0;
+          }
+        });
       }
 
       $(init);
