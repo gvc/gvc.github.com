@@ -87,3 +87,7 @@ a:hover {
 p, ul {
   font-family: 'Belgrano', Georgia, serif;
 }
+
+p.align-center {
+  text-align: center;
+}
