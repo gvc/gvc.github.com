@@ -1,0 +1,26 @@
+{
+  "name": "gvc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "gvc",
+  "author": "Guilherme Carvalho",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^4.5.2",
+    "gatsby-plugin-react-helmet": "^5.5.0",
+    "gatsby-plugin-sass": "^5.5.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "sass": "^1.48.0"
+  }
+}
