@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-pages-books-jsx",
+    "path": "/books/",
+    "result": {"data":{"allBooksYaml":{"edges":[{"node":{"author":"Bruce Patton, Douglas Stone e Sheila Heen","date_read":"Invalid date","title":"Conversas difíceis &mdash; Como discutir o que é mais importante","review":null,"notes":null}},{"node":{"author":"Will Larson","date_read":"2022-01-10","title":"An Elegant Puzzle: Systems of Engineering Management","review":"3/5","notes":"I think the book aims at a different level of Engineering Management than I have been exposed to. Sometimes the author seems to be speaking of other levels above engineering management."}}]}},"pageContext":{}},
+    "staticQueryHashes": []}
