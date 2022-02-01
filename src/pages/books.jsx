@@ -48,9 +48,9 @@ const BooksPage = ({data}) => {
 }
 
 export const query = graphql`
-    query BooksRead {
+  query BooksRead {
     allBooksYaml(sort: {fields: date_read, order: ASC}) {
-        edges {
+      edges {
         node {
             author
             date_read(formatString: "YYYY-MM-DD")
@@ -58,9 +58,9 @@ export const query = graphql`
             review
             notes
         }
-        }
+      }
     }
-    }
+  }
 `
 
 export default BooksPage
