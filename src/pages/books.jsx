@@ -2,8 +2,21 @@ import * as React from 'react'
 import { graphql, Link } from 'gatsby'
 import Layout from '../components/layout'
 
+const NotesSection = ({ book }) => {
+  if (book.notes) {
+    return (
+      <p className="mb-3">
+        {book.notes}
+        <br />
+        <span>Read on: {book.date_read}</span>
+      </p>
+    )
+  } else {
+    return <p className='mb-3'><span>Read on: {book.date_read}</span></p>
+  } 
+}
+
 const BookRead = ({ book }) => {
-  console.log(book)
   const isCurrentlyReading = book.date_read.match(/\d{4}-\d{2}-\d{2}/)
 
   if (!isCurrentlyReading) {
@@ -21,11 +34,7 @@ const BookRead = ({ book }) => {
         <h2 className="text-xl font-bold" dangerouslySetInnerHTML={{ __html: book.title }} />
         <span className="text-purple-600 align-baseline">{book.review}</span>
       </div>
-      <p className="mb-3">
-        {book.notes}
-        <br />
-        <span>Read on: {book.date_read}</span>
-      </p>
+      <NotesSection book={book} />
     </>
   )
 }
