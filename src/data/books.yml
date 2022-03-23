@@ -1,7 +1,9 @@
 - title: "An Elegant Puzzle: Systems of Engineering Management"
   author: "Will Larson"
   review: 3/5
-  notes: I think the book aims at a different level of Engineering Management than I have been exposed to. Sometimes the author seems to be speaking of other levels above engineering management.
+  notes: >
+   I think the book aims at a different level of Engineering Management than I have been exposed to. The book 
+   has a lot of good references, though, which is very helpful for deeper dives in other subjects
   date_read: 2022-01-10
 
 - title: "Conversas difíceis &mdash; Como discutir o que é mais importante"
@@ -27,3 +29,11 @@
   author: "Martha Wells"
   date_read: 2022-02-17
   review: 3.5/5
+
+- title: "Thinking in Systems: A Primer"
+  author: Donella Meadows
+  date_read: 2022-03-12
+  review: 4/5
+  note: >
+    Very good and concise intro to systems thinking. Starts of with pretty basic concepts, such as stocks and inflows and outflows,
+    but quickly adds complexity and nuance to what is being explained.
