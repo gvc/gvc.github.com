@@ -1,0 +1,202 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const writings = [
+	{
+		title: "The Beauty of Constraint-Based Design",
+		date: "2024-02-15",
+		excerpt: "Why limitations often lead to more creative solutions than infinite possibilities.",
+		readTime: "5 min",
+		category: "design"
+	},
+	{
+		title: "Building Software Like Tending a Garden",
+		date: "2024-02-01",
+		excerpt: "Software development as cultivation rather than construction—nurturing systems that grow and evolve.",
+		readTime: "8 min",
+		category: "philosophy"
+	},
+	{
+		title: "The Terminal Renaissance",
+		date: "2024-01-20",
+		excerpt: "How modern CLI tools are bringing elegance and power back to the command line.",
+		readTime: "6 min",
+		category: "tools"
+	},
+	{
+		title: "AI as a Thought Partner, Not a Replacement",
+		date: "2024-01-10",
+		excerpt: "Exploring the collaborative potential between human intuition and machine intelligence.",
+		readTime: "10 min",
+		category: "ai"
+	},
+	{
+		title: "Minimal Viable Documentation",
+		date: "2023-12-28",
+		excerpt: "Finding the sweet spot between over-documentation and leaving future you in the dark.",
+		readTime: "4 min",
+		category: "practices"
+	},
+	{
+		title: "The Art of Readable Code",
+		date: "2023-12-15",
+		excerpt: "Code is read far more often than it's written. Optimizing for human comprehension.",
+		readTime: "7 min",
+		category: "craft"
+	},
+	{
+		title: "Systems Thinking for Software Engineers",
+		date: "2023-11-30",
+		excerpt: "Understanding feedback loops, emergence, and leverage points in complex software systems.",
+		readTime: "12 min",
+		category: "architecture"
+	}
+];
+
+const formatDate = (dateString: string) => {
+	const date = new Date(dateString);
+	return date.toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric'
+	});
+};
+---
+
+<Layout title="Writings">
+	<section class="writings">
+		<h1>Writings</h1>
+		<p class="intro-text">
+			Thoughts on software, design, and the evolving relationship between
+			humans and technology. Each piece is a snapshot of ongoing exploration.
+		</p>
+
+		<div class="writing-list">
+			{writings.map((writing) => (
+				<article class="writing-item">
+					<header>
+						<h2>
+							<a href="#" class="writing-link">{writing.title}</a>
+						</h2>
+						<div class="meta">
+							<time datetime={writing.date}>
+								{formatDate(writing.date)}
+							</time>
+							<span class="separator">•</span>
+							<span class="read-time">{writing.readTime}</span>
+							<span class="separator">•</span>
+							<span class="category">{writing.category}</span>
+						</div>
+					</header>
+					<p class="excerpt">{writing.excerpt}</p>
+				</article>
+			))}
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.writings h1 {
+		color: var(--accent-color);
+		font-family: var(--font-mono);
+		font-size: 1.75rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.intro-text {
+		margin-bottom: 3rem;
+		font-size: 1.05rem;
+		line-height: 1.7;
+		max-width: 650px;
+		color: var(--text-color);
+		opacity: 0.9;
+	}
+
+	.writing-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.writing-item {
+		padding-bottom: 1.75rem;
+		border-bottom: 1px solid var(--border-color);
+	}
+
+	.writing-item:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.writing-item header {
+		margin-bottom: 0.75rem;
+	}
+
+	.writing-item h2 {
+		font-size: 1.25rem;
+		font-weight: 500;
+		margin: 0 0 0.5rem 0;
+	}
+
+	.writing-link {
+		color: var(--text-color);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.writing-link:hover {
+		color: var(--accent-color);
+		text-decoration: none;
+	}
+
+	.meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.825rem;
+		color: var(--text-color);
+		opacity: 0.6;
+	}
+
+	.separator {
+		opacity: 0.4;
+	}
+
+	.category {
+		color: var(--accent-color);
+		opacity: 0.8;
+		text-transform: lowercase;
+	}
+
+	.excerpt {
+		line-height: 1.7;
+		color: var(--text-color);
+		opacity: 0.8;
+		margin: 0;
+		font-size: 0.975rem;
+	}
+
+	@media (max-width: 640px) {
+		.writing-list {
+			gap: 1.5rem;
+		}
+
+		.writing-item h2 {
+			font-size: 1.125rem;
+		}
+
+		.meta {
+			font-size: 0.75rem;
+			flex-wrap: wrap;
+		}
+
+		.separator:first-of-type {
+			display: none;
+		}
+
+		.read-time {
+			display: none;
+		}
+	}
+</style>
