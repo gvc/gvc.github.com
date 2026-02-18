@@ -1,37 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const experiments = [
-	{
-		title: "AI-Powered Code Review Assistant",
-		date: "2024-02",
-		description: "Built a context-aware code review bot using LLMs to analyze pull requests, suggest improvements, and detect potential bugs before they reach production.",
-		status: "active"
-	},
-	{
-		title: "Natural Language to SQL Query Engine",
-		date: "2024-01",
-		description: "Developed a system that translates plain English questions into optimized SQL queries, making database exploration accessible to non-technical users.",
-		status: "completed"
-	},
-	{
-		title: "Autonomous Documentation Generator",
-		date: "2023-12",
-		description: "Created an AI agent that automatically generates and maintains technical documentation by analyzing codebases and understanding architectural patterns.",
-		status: "active"
-	},
-	{
-		title: "Conversational Design System Builder",
-		date: "2023-11",
-		description: "Experimented with using AI to generate complete design systems from natural language descriptions, including color palettes, typography, and component libraries.",
-		status: "archived"
-	},
-	{
-		title: "AI Pair Programming Extension",
-		date: "2023-10",
-		description: "Developed a VS Code extension that provides real-time coding assistance, refactoring suggestions, and test generation using large language models.",
-		status: "active"
-	}
+type Experiment = {
+  title: string
+  date: string
+  description: string
+  status: "active" | "inactive"
+}
+
+const experiments: Experiment[] = [
 ];
 ---
 

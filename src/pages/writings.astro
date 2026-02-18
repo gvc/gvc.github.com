@@ -1,56 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const writings = [
-	{
-		title: "The Beauty of Constraint-Based Design",
-		date: "2024-02-15",
-		excerpt: "Why limitations often lead to more creative solutions than infinite possibilities.",
-		readTime: "5 min",
-		category: "design"
-	},
-	{
-		title: "Building Software Like Tending a Garden",
-		date: "2024-02-01",
-		excerpt: "Software development as cultivation rather than construction—nurturing systems that grow and evolve.",
-		readTime: "8 min",
-		category: "philosophy"
-	},
-	{
-		title: "The Terminal Renaissance",
-		date: "2024-01-20",
-		excerpt: "How modern CLI tools are bringing elegance and power back to the command line.",
-		readTime: "6 min",
-		category: "tools"
-	},
-	{
-		title: "AI as a Thought Partner, Not a Replacement",
-		date: "2024-01-10",
-		excerpt: "Exploring the collaborative potential between human intuition and machine intelligence.",
-		readTime: "10 min",
-		category: "ai"
-	},
-	{
-		title: "Minimal Viable Documentation",
-		date: "2023-12-28",
-		excerpt: "Finding the sweet spot between over-documentation and leaving future you in the dark.",
-		readTime: "4 min",
-		category: "practices"
-	},
-	{
-		title: "The Art of Readable Code",
-		date: "2023-12-15",
-		excerpt: "Code is read far more often than it's written. Optimizing for human comprehension.",
-		readTime: "7 min",
-		category: "craft"
-	},
-	{
-		title: "Systems Thinking for Software Engineers",
-		date: "2023-11-30",
-		excerpt: "Understanding feedback loops, emergence, and leverage points in complex software systems.",
-		readTime: "12 min",
-		category: "architecture"
-	}
+type Writing = {
+  title: string,
+  date: string,
+  excerpt: string,
+  readTime: string
+  category: string
+}
+
+const writings: Writing[] = [
 ];
 
 const formatDate = (dateString: string) => {
