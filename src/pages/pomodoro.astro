@@ -1,0 +1,461 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Pomodoro Timer">
+	<section class="pomodoro-container">
+		<h1>Pomodoro Timer</h1>
+
+		<div class="timer-box">
+			<div class="phase-indicator" id="phaseIndicator">FOCUS</div>
+
+			<div class="progress-bar-container">
+				<div class="progress-bar" id="progressBar"></div>
+			</div>
+
+			<div class="timer-display" id="timerDisplay">20:00</div>
+
+			<div class="controls">
+				<button id="startBtn" class="btn btn-primary">START</button>
+				<button id="pauseBtn" class="btn btn-secondary" style="display: none;">PAUSE</button>
+				<button id="resetBtn" class="btn btn-secondary">RESET</button>
+			</div>
+
+			<div class="stats">
+				<div class="stat-item">
+					<span class="stat-label">Session:</span>
+					<span class="stat-value" id="sessionCount">1</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-label">Total Focus:</span>
+					<span class="stat-value" id="totalFocus">0m</span>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.pomodoro-container {
+		max-width: 500px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.pomodoro-container h1 {
+		color: var(--accent-color);
+		font-family: var(--font-mono);
+		font-size: 1.75rem;
+		margin-bottom: 3rem;
+		text-align: center;
+	}
+
+	.timer-box {
+		background: rgba(26, 31, 46, 0.3);
+		border: 1px solid var(--border-color);
+		border-radius: 0.5rem;
+		padding: 3rem 2rem;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+	}
+
+	.phase-indicator {
+		font-family: var(--font-mono);
+		font-size: 0.875rem;
+		font-weight: 600;
+		letter-spacing: 0.15em;
+		color: var(--text-color);
+		opacity: 0.7;
+		margin-bottom: 2rem;
+	}
+
+	.phase-indicator.focus {
+		color: var(--accent-color);
+		opacity: 1;
+	}
+
+	.phase-indicator.rest {
+		color: #00BFFF;
+		opacity: 1;
+	}
+
+	.progress-bar-container {
+		width: 100%;
+		height: 24px;
+		background: var(--code-bg);
+		border: 1px solid var(--border-color);
+		border-radius: 2px;
+		margin-bottom: 2.5rem;
+		font-family: var(--font-mono);
+		font-size: 14px;
+		line-height: 22px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.progress-bar {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		padding: 0 8px;
+		position: relative;
+		white-space: nowrap;
+	}
+
+	.progress-bar::before {
+		content: attr(data-progress);
+		color: var(--text-color);
+		font-size: 12px;
+		position: absolute;
+		left: 8px;
+		z-index: 2;
+		font-weight: 500;
+	}
+
+	.progress-bar::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		background: var(--accent-color);
+		width: var(--progress, 0%);
+		transition: width 1s linear;
+		opacity: 0.9;
+	}
+
+	.timer-display {
+		font-family: var(--font-mono);
+		font-size: 4.5rem;
+		font-weight: 600;
+		color: var(--text-color);
+		margin-bottom: 2.5rem;
+		letter-spacing: 0.05em;
+		text-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+	}
+
+	.timer-display.active {
+		color: var(--accent-color);
+		text-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+	}
+
+	.controls {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		margin-bottom: 2rem;
+	}
+
+	.btn {
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		font-weight: 600;
+		padding: 0.75rem 2rem;
+		border: 2px solid;
+		border-radius: 0.25rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		letter-spacing: 0.1em;
+		background: transparent;
+	}
+
+	.btn-primary {
+		color: var(--accent-color);
+		border-color: var(--accent-color);
+	}
+
+	.btn-primary:hover {
+		background: var(--accent-color);
+		color: var(--bg-color);
+		box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+	}
+
+	.btn-secondary {
+		color: var(--text-color);
+		border-color: var(--border-color);
+		opacity: 0.8;
+	}
+
+	.btn-secondary:hover {
+		border-color: var(--text-color);
+		opacity: 1;
+	}
+
+	.stats {
+		display: flex;
+		justify-content: space-around;
+		padding-top: 2rem;
+		border-top: 1px solid var(--border-color);
+	}
+
+	.stat-item {
+		font-family: var(--font-mono);
+		font-size: 0.875rem;
+	}
+
+	.stat-label {
+		color: var(--text-color);
+		opacity: 0.6;
+		margin-right: 0.5rem;
+	}
+
+	.stat-value {
+		color: var(--accent-color);
+		font-weight: 600;
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 0.9; }
+		50% { opacity: 0.6; }
+	}
+
+	.timer-display.ending {
+		animation: pulse 1s ease-in-out infinite;
+		color: #FF6B6B;
+	}
+
+	@media (max-width: 640px) {
+		.timer-display {
+			font-size: 3.5rem;
+		}
+
+		.timer-box {
+			padding: 2rem 1.5rem;
+		}
+	}
+</style>
+
+<script>
+	// Timer configuration
+	const FOCUS_TIME = 20 * 60; // 20 minutes in seconds
+	const REST_TIME = 5 * 60;   // 5 minutes in seconds
+
+	// Timer state
+	let currentTime = FOCUS_TIME;
+	let totalTime = FOCUS_TIME;
+	let isRunning = false;
+	let isRest = false;
+	let interval: number | null = null;
+	let sessionCount = 1;
+	let totalFocusMinutes = 0;
+
+	// DOM elements
+	const timerDisplay = document.getElementById('timerDisplay') as HTMLElement;
+	const startBtn = document.getElementById('startBtn') as HTMLButtonElement;
+	const pauseBtn = document.getElementById('pauseBtn') as HTMLButtonElement;
+	const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+	const phaseIndicator = document.getElementById('phaseIndicator') as HTMLElement;
+	const progressBar = document.getElementById('progressBar') as HTMLElement;
+	const sessionCountEl = document.getElementById('sessionCount') as HTMLElement;
+	const totalFocusEl = document.getElementById('totalFocus') as HTMLElement;
+
+	// Audio for notifications
+	const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+
+	function playNotification() {
+		const oscillator = audioContext.createOscillator();
+		const gainNode = audioContext.createGain();
+
+		oscillator.connect(gainNode);
+		gainNode.connect(audioContext.destination);
+
+		oscillator.frequency.value = 800;
+		oscillator.type = 'sine';
+
+		gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+		gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+		gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+		oscillator.start();
+		oscillator.stop(audioContext.currentTime + 0.5);
+
+		// Play three beeps
+		setTimeout(() => {
+			const osc2 = audioContext.createOscillator();
+			const gain2 = audioContext.createGain();
+			osc2.connect(gain2);
+			gain2.connect(audioContext.destination);
+			osc2.frequency.value = 800;
+			osc2.type = 'sine';
+			gain2.gain.setValueAtTime(0, audioContext.currentTime);
+			gain2.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+			gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+			osc2.start();
+			osc2.stop(audioContext.currentTime + 0.5);
+		}, 200);
+
+		setTimeout(() => {
+			const osc3 = audioContext.createOscillator();
+			const gain3 = audioContext.createGain();
+			osc3.connect(gain3);
+			gain3.connect(audioContext.destination);
+			osc3.frequency.value = 1000;
+			osc3.type = 'sine';
+			gain3.gain.setValueAtTime(0, audioContext.currentTime);
+			gain3.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + 0.01);
+			gain3.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.7);
+			osc3.start();
+			osc3.stop(audioContext.currentTime + 0.7);
+		}, 400);
+	}
+
+	function formatTime(seconds: number): string {
+		const mins = Math.floor(seconds / 60);
+		const secs = seconds % 60;
+		return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+	}
+
+	function updateDisplay() {
+		timerDisplay.textContent = formatTime(currentTime);
+
+		// Update progress bar
+		const progress = ((totalTime - currentTime) / totalTime) * 100;
+		progressBar.style.setProperty('--progress', `${progress}%`);
+
+		// Create terminal-style progress bar
+		const filled = Math.floor(progress / 2.5); // 40 chars total
+		const empty = 40 - filled;
+		const progressText = `[${'█'.repeat(filled)}${'░'.repeat(empty)}] ${Math.floor(progress)}%`;
+		progressBar.setAttribute('data-progress', progressText);
+
+		// Visual feedback when time is running out
+		if (currentTime <= 60 && isRunning) {
+			timerDisplay.classList.add('ending');
+		} else {
+			timerDisplay.classList.remove('ending');
+		}
+
+		// Update phase indicator
+		if (isRest) {
+			phaseIndicator.textContent = 'REST';
+			phaseIndicator.className = 'phase-indicator rest';
+			progressBar.style.setProperty('--accent-color', '#00BFFF');
+		} else {
+			phaseIndicator.textContent = 'FOCUS';
+			phaseIndicator.className = 'phase-indicator focus';
+			progressBar.style.setProperty('--accent-color', '#00FF41');
+		}
+	}
+
+	function startTimer() {
+		if (!isRunning) {
+			isRunning = true;
+			startBtn.style.display = 'none';
+			pauseBtn.style.display = 'inline-block';
+			timerDisplay.classList.add('active');
+
+			interval = setInterval(() => {
+				if (currentTime > 0) {
+					currentTime--;
+					updateDisplay();
+
+					// Update total focus time
+					if (!isRest && currentTime % 60 === 0) {
+						totalFocusMinutes++;
+						updateStats();
+					}
+				} else {
+					// Timer finished
+					playNotification();
+
+					if (!isRest) {
+						// Switch to rest
+						isRest = true;
+						currentTime = REST_TIME;
+						totalTime = REST_TIME;
+					} else {
+						// Switch to focus
+						isRest = false;
+						currentTime = FOCUS_TIME;
+						totalTime = FOCUS_TIME;
+						sessionCount++;
+						updateStats();
+					}
+
+					updateDisplay();
+				}
+			}, 1000);
+		}
+	}
+
+	function pauseTimer() {
+		isRunning = false;
+		if (interval) {
+			clearInterval(interval);
+			interval = null;
+		}
+		startBtn.style.display = 'inline-block';
+		pauseBtn.style.display = 'none';
+		timerDisplay.classList.remove('active');
+	}
+
+	function resetTimer() {
+		pauseTimer();
+		isRest = false;
+		currentTime = FOCUS_TIME;
+		totalTime = FOCUS_TIME;
+		updateDisplay();
+	}
+
+	function updateStats() {
+		sessionCountEl.textContent = sessionCount.toString();
+
+		if (totalFocusMinutes < 60) {
+			totalFocusEl.textContent = `${totalFocusMinutes}m`;
+		} else {
+			const hours = Math.floor(totalFocusMinutes / 60);
+			const mins = totalFocusMinutes % 60;
+			totalFocusEl.textContent = `${hours}h ${mins}m`;
+		}
+	}
+
+	// Event listeners
+	startBtn.addEventListener('click', startTimer);
+	pauseBtn.addEventListener('click', pauseTimer);
+	resetBtn.addEventListener('click', resetTimer);
+
+	// Keyboard shortcuts
+	document.addEventListener('keydown', (e) => {
+		if (e.code === 'Space') {
+			e.preventDefault();
+			if (isRunning) {
+				pauseTimer();
+			} else {
+				startTimer();
+			}
+		} else if (e.code === 'KeyR' && (e.metaKey || e.ctrlKey)) {
+			e.preventDefault();
+			resetTimer();
+		}
+	});
+
+	// Initialize display
+	updateDisplay();
+	updateStats();
+
+	// Prevent page from sleeping
+	let wakeLock: any = null;
+
+	async function requestWakeLock() {
+		try {
+			if ('wakeLock' in navigator) {
+				wakeLock = await (navigator as any).wakeLock.request('screen');
+			}
+		} catch (err) {
+			// Wake Lock API not supported or failed
+		}
+	}
+
+	// Request wake lock when timer starts
+	const originalStartTimer = startTimer;
+	startTimer = function() {
+		requestWakeLock();
+		originalStartTimer();
+	};
+
+	// Page visibility change
+	document.addEventListener('visibilitychange', () => {
+		if (wakeLock !== null && document.visibilityState === 'visible') {
+			requestWakeLock();
+		}
+	});
+</script>
