@@ -68,6 +68,15 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
             ]}
             href="/writings"
           >LOGS</a>
+          <a
+            class:list={[
+              "font-['Space_Grotesk'] tracking-tighter uppercase text-xs font-bold transition-colors",
+              activeNav === 'who-am-i'
+                ? "text-[#00FF7F] border-b-2 border-[#00FF7F] pb-1"
+                : "text-[#b9cbb8] hover:text-[#00FF7F]"
+            ]}
+            href="/who-am-i"
+          >WHO_AM_I</a>
         </nav>
       </div>
       <div class="flex items-center gap-4">
@@ -118,6 +127,10 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
       <a class:list={["flex flex-col items-center gap-1", activeNav === 'writings' ? "text-[#00FF7F]" : "text-[#b9cbb8]"]} href="/writings">
         <span class="material-symbols-outlined">terminal</span>
         <span class="text-[8px] uppercase tracking-tighter font-bold">LOGS</span>
+      </a>
+      <a class:list={["flex flex-col items-center gap-1", activeNav === 'who-am-i' ? "text-[#00FF7F]" : "text-[#b9cbb8]"]} href="/who-am-i">
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-[8px] uppercase tracking-tighter font-bold">ID</span>
       </a>
     </nav>
   </body>
