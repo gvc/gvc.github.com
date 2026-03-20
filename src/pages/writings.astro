@@ -1,161 +1,247 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-type Writing = {
-  title: string,
-  date: string,
-  excerpt: string,
-  readTime: string
-  category: string
-}
-
-const writings: Writing[] = [
-];
-
-const formatDate = (dateString: string) => {
-	const date = new Date(dateString);
-	return date.toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric'
-	});
-};
 ---
 
-<Layout title="Writings">
-	<section class="writings">
-		<h1>Writings</h1>
-		<p class="intro-text">
-			Thoughts on software, design, and the evolving relationship between
-			humans and technology. Each piece is a snapshot of ongoing exploration.
-		</p>
+<Layout title="TERMINAL_OS | LOGS" activeNav="writings">
+  <Fragment slot="head">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .scanline {
+        background: linear-gradient(
+          to bottom,
+          transparent 50%,
+          rgba(0, 255, 127, 0.02) 50%
+        );
+        background-size: 100% 4px;
+      }
+    </style>
+  </Fragment>
 
-		<div class="writing-list">
-			{writings.map((writing) => (
-				<article class="writing-item">
-					<header>
-						<h2>
-							<a href="#" class="writing-link">{writing.title}</a>
-						</h2>
-						<div class="meta">
-							<time datetime={writing.date}>
-								{formatDate(writing.date)}
-							</time>
-							<span class="separator">•</span>
-							<span class="read-time">{writing.readTime}</span>
-							<span class="separator">•</span>
-							<span class="category">{writing.category}</span>
-						</div>
-					</header>
-					<p class="excerpt">{writing.excerpt}</p>
-				</article>
-			))}
-		</div>
-	</section>
+  <main class="flex-grow pt-24 pb-16 px-6 max-w-7xl mx-auto w-full">
+    <!-- Header Section -->
+    <section class="mb-16 border-l-4 border-primary-container pl-6 py-4">
+      <div
+        class="flex flex-col md:flex-row md:items-end justify-between gap-4"
+      >
+        <div>
+          <span
+            class="font-mono text-xs text-primary-container tracking-widest uppercase mb-2 block"
+          >DIRECTORY: /SYSTEM/LOGS/ROOT</span>
+          <h1
+            class="text-5xl md:text-7xl font-black font-headline tracking-tighter uppercase leading-none"
+          >
+            System Logs
+          </h1>
+        </div>
+        <div class="font-mono text-xs text-outline space-y-1">
+          <p>STATUS: <span class="text-primary-container">[ONLINE]</span></p>
+          <p>LAST_SYNC: 2024.05.22_09:44:12</p>
+          <p>ENCRYPTION: AES-256_ACTIVE</p>
+        </div>
+      </div>
+    </section>
+    <!-- Logs Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <!-- Active Terminal Status Widget -->
+      <div
+        class="md:col-span-4 bg-surface-container-low p-6 flex flex-col justify-between border-t-2 border-secondary-container relative overflow-hidden"
+      >
+        <div class="scanline absolute inset-0 pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="flex justify-between items-start mb-8">
+            <span class="font-mono text-[10px] text-secondary-container tracking-widest">[KERNEL_FEED]</span>
+            <span
+              class="material-symbols-outlined text-secondary-container"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+            >sensors</span>
+          </div>
+          <div class="space-y-4 font-mono text-[11px] text-on-surface-variant leading-relaxed">
+            <p>&gt; INITIALIZING_LOG_STREAM...</p>
+            <p>&gt; PARSING_METADATA_BLOCKS...</p>
+            <p>&gt; FETCHING_REMOTE_ASSETS [OK]</p>
+            <p>&gt; VERIFYING_SIGNATURES [99%]</p>
+            <p class="text-primary-container">&gt; CONNECTION_STABLE_W_LATENCY: 14MS</p>
+          </div>
+        </div>
+        <div class="mt-8 relative z-10">
+          <button
+            class="w-full bg-secondary-container text-on-secondary font-mono text-xs font-bold py-3 uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all"
+          >
+            Request Access
+          </button>
+        </div>
+      </div>
+      <!-- Main Log Entries -->
+      <div class="md:col-span-8 space-y-8">
+        <!-- Log Entry 1 -->
+        <article
+          class="group relative bg-surface-container-low p-8 border-t-2 border-primary-container transition-all hover:bg-surface-container-high"
+        >
+          <div class="flex flex-col md:flex-row gap-6">
+            <div class="md:w-32 flex-shrink-0">
+              <time class="font-mono text-sm text-outline group-hover:text-primary-container transition-colors">
+                2024.05.20<br />14:22:05
+              </time>
+            </div>
+            <div class="flex-grow">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="bg-primary-container/10 text-primary-container font-mono text-[10px] px-2 py-0.5 border border-primary-container/20">[STABLE]</span>
+                <span class="bg-secondary-container/10 text-secondary-container font-mono text-[10px] px-2 py-0.5 border border-secondary-container/20">[SUCCESS]</span>
+                <span class="bg-zinc-800 text-zinc-400 font-mono text-[10px] px-2 py-0.5 border border-zinc-700">[ENCRYPTED]</span>
+              </div>
+              <h2 class="text-2xl font-headline font-bold text-on-background mb-3 group-hover:text-primary-container transition-colors">
+                SYSTEM_INIT: KERNEL_V4_DEPLOYMENT
+              </h2>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-6 font-body">
+                Successful rollout of the next-generation neural kernel.
+                Optimized task scheduling algorithms and enhanced memory
+                management for high-density computational workloads. Entropy
+                levels remaining within expected thresholds.
+              </p>
+              <div class="flex items-center gap-4">
+                <a
+                  class="font-mono text-xs uppercase tracking-widest text-primary-container flex items-center gap-2 hover:gap-3 transition-all"
+                  href="#"
+                >
+                  Read_Full_Log
+                  <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Log Entry 2 (Warning State) -->
+        <article
+          class="group relative bg-surface-container-low p-8 border-t-2 border-tertiary-container transition-all hover:bg-surface-container-high"
+        >
+          <div class="flex flex-col md:flex-row gap-6">
+            <div class="md:w-32 flex-shrink-0">
+              <time class="font-mono text-sm text-outline group-hover:text-tertiary-container transition-colors">
+                2024.05.18<br />03:10:44
+              </time>
+            </div>
+            <div class="flex-grow">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="bg-tertiary-container/10 text-on-tertiary-container font-mono text-[10px] px-2 py-0.5 border border-tertiary-container/20">[PATCH_REQUIRED]</span>
+                <span class="bg-zinc-800 text-zinc-400 font-mono text-[10px] px-2 py-0.5 border border-zinc-700">[SECURITY_BREACH_ATTEMPT]</span>
+              </div>
+              <h2 class="text-2xl font-headline font-bold text-on-background mb-3 group-hover:text-tertiary-container transition-colors">
+                PERIMETER_ALERT: UNKNOWN_ORIGIN_REQUEST
+              </h2>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-6 font-body">
+                Detected multiple unauthorized access attempts originating
+                from non-standard protocol masks. Firewall protocols engaged.
+                All primary nodes secured. Investigating potential
+                vulnerabilities in the legacy proxy gateway.
+              </p>
+              <div class="flex items-center gap-4">
+                <a
+                  class="font-mono text-xs uppercase tracking-widest text-tertiary-container flex items-center gap-2 hover:gap-3 transition-all"
+                  href="#"
+                >
+                  View_Details
+                  <span class="material-symbols-outlined text-sm">emergency</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Log Entry 3 -->
+        <article
+          class="group relative bg-surface-container-low p-8 border-t-2 border-secondary-container transition-all hover:bg-surface-container-high"
+        >
+          <div class="flex flex-col md:flex-row gap-6">
+            <div class="md:w-32 flex-shrink-0">
+              <time class="font-mono text-sm text-outline group-hover:text-secondary-container transition-colors">
+                2024.05.12<br />19:55:00
+              </time>
+            </div>
+            <div class="flex-grow">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="bg-secondary-container/10 text-secondary-container font-mono text-[10px] px-2 py-0.5 border border-secondary-container/20">[ARCHIVE]</span>
+                <span class="bg-zinc-800 text-zinc-400 font-mono text-[10px] px-2 py-0.5 border border-zinc-700">[DEPRECATED]</span>
+              </div>
+              <h2 class="text-2xl font-headline font-bold text-on-background mb-3 group-hover:text-secondary-container transition-colors">
+                LEGACY_MODULE: RECOVERY_SUCCESS
+              </h2>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-6 font-body">
+                Data restoration complete for Project: AETHER. Retained 94.2%
+                of corrupted blocks from the 2021 backup cluster. Semantic
+                mapping of historical logs is now underway in the experimental
+                dossier.
+              </p>
+              <div class="flex items-center gap-4">
+                <a
+                  class="font-mono text-xs uppercase tracking-widest text-secondary-container flex items-center gap-2 hover:gap-3 transition-all"
+                  href="#"
+                >
+                  Extract_Data
+                  <span class="material-symbols-outlined text-sm">database</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Pagination -->
+        <div class="flex justify-between items-center pt-8 border-t border-outline-variant/30">
+          <button class="font-mono text-xs text-zinc-500 hover:text-primary-container transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">chevron_left</span>
+            PREV_BLOCK
+          </button>
+          <div class="font-mono text-xs text-outline">PAGE [01] OF [12]</div>
+          <button class="font-mono text-xs text-primary-container hover:text-primary transition-colors flex items-center gap-2">
+            NEXT_BLOCK
+            <span class="material-symbols-outlined text-sm">chevron_right</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Featured Visualization / Tech Graph -->
+    <section class="mt-20">
+      <div class="bg-surface-container-highest/30 p-8 border border-outline-variant/20 relative">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="w-full md:w-1/2">
+            <h3
+              class="text-3xl font-headline font-black uppercase tracking-tighter mb-4 text-primary-container"
+            >
+              Substrate Activity
+            </h3>
+            <p class="text-on-surface-variant text-sm mb-6 max-w-md">
+              Visualizing system entropy and background task intensity across
+              the root cluster. Current load remains nominal with periodic
+              spikes during log encryption cycles.
+            </p>
+            <div class="space-y-4">
+              <div class="h-1 bg-zinc-800 w-full overflow-hidden">
+                <div class="h-full bg-primary-container w-[72%]"></div>
+              </div>
+              <div class="flex justify-between font-mono text-[10px] uppercase text-outline">
+                <span>CPU_CORE_CLUSTER</span>
+                <span>72% LOAD</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="w-full md:w-1/2 aspect-video bg-zinc-950 flex items-center justify-center border border-outline-variant/50 relative group overflow-hidden"
+          >
+            <img
+              alt="Circuitry Detail"
+              class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale group-hover:grayscale-0 transition-all duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm_MG0UK3B98Vkitqb1HVJp48LB8Vkzo2hO0EFaXdX8pTn3WagqbsXlXXco3M-duinDxM3s2SkSkbO_Yx8bsdiefcJF-jhCg1WBn51YvwPuSQpuSge_bS5ivVSsSD8G0IN4b4aEp2p59HHKPcENozF60xK4snjm3fPifOGhCNdDihOz1EJvb2bqEmoQcqm3BGFt4grXX50TmsGIpgNCIvrawuFwo4tpZdw54GxN8qYFL9Dc1OBLAza4191fNkSQEmNMKazKIM0RcM"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
+            <div class="relative z-10 text-primary-container text-center">
+              <span class="material-symbols-outlined text-4xl mb-2">monitoring</span>
+              <div class="font-mono text-[10px] uppercase tracking-widest">
+                Live_Telemetry_Active
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
-
-<style>
-	.writings h1 {
-		color: var(--accent-color);
-		font-family: var(--font-mono);
-		font-size: 1.75rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.intro-text {
-		margin-bottom: 3rem;
-		font-size: 1.05rem;
-		line-height: 1.7;
-		max-width: 650px;
-		color: var(--text-color);
-		opacity: 0.9;
-	}
-
-	.writing-list {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
-
-	.writing-item {
-		padding-bottom: 1.75rem;
-		border-bottom: 1px solid var(--border-color);
-	}
-
-	.writing-item:last-child {
-		border-bottom: none;
-		padding-bottom: 0;
-	}
-
-	.writing-item header {
-		margin-bottom: 0.75rem;
-	}
-
-	.writing-item h2 {
-		font-size: 1.25rem;
-		font-weight: 500;
-		margin: 0 0 0.5rem 0;
-	}
-
-	.writing-link {
-		color: var(--text-color);
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
-
-	.writing-link:hover {
-		color: var(--accent-color);
-		text-decoration: none;
-	}
-
-	.meta {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-family: var(--font-mono);
-		font-size: 0.825rem;
-		color: var(--text-color);
-		opacity: 0.6;
-	}
-
-	.separator {
-		opacity: 0.4;
-	}
-
-	.category {
-		color: var(--accent-color);
-		opacity: 0.8;
-		text-transform: lowercase;
-	}
-
-	.excerpt {
-		line-height: 1.7;
-		color: var(--text-color);
-		opacity: 0.8;
-		margin: 0;
-		font-size: 0.975rem;
-	}
-
-	@media (max-width: 640px) {
-		.writing-list {
-			gap: 1.5rem;
-		}
-
-		.writing-item h2 {
-			font-size: 1.125rem;
-		}
-
-		.meta {
-			font-size: 0.75rem;
-			flex-wrap: wrap;
-		}
-
-		.separator:first-of-type {
-			display: none;
-		}
-
-		.read-time {
-			display: none;
-		}
-	}
-</style>
