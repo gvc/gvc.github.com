@@ -39,7 +39,7 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
       class="fixed top-0 left-0 w-full z-50 bg-[#111317] border-b-2 border-[#1e2024] flex justify-between items-center px-6 py-4"
     >
       <div class="flex items-center gap-8">
-        <a href="/" class="text-xl font-black text-[#00FF7F] tracking-widest font-headline no-underline hover:no-underline">TACTICAL_TERMINAL</a>
+        <a href="/" class="text-xl font-black text-[#00FF7F] tracking-widest font-headline no-underline hover:no-underline">~/gvc</a>
         <nav class="hidden md:flex gap-6 items-center">
           <a
             class:list={[
@@ -79,14 +79,14 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
           >WHO_AM_I</a>
         </nav>
       </div>
-      <div class="flex items-center gap-4">
-        <span
-          class="material-symbols-outlined text-[#b9cbb8] hover:bg-[#1e2024] p-2 transition-all cursor-pointer"
-        >settings_input_component</span>
-        <span
-          class="material-symbols-outlined text-[#b9cbb8] hover:bg-[#1e2024] p-2 transition-all cursor-pointer"
-        >terminal</span>
-      </div>
+      <!-- <div class="flex items-center gap-4"> -->
+      <!--   <span -->
+      <!--     class="material-symbols-outlined text-[#b9cbb8] hover:bg-[#1e2024] p-2 transition-all cursor-pointer" -->
+      <!--   >settings_input_component</span> -->
+      <!--   <span -->
+      <!--     class="material-symbols-outlined text-[#b9cbb8] hover:bg-[#1e2024] p-2 transition-all cursor-pointer" -->
+      <!--   >terminal</span> -->
+      <!-- </div> -->
     </header>
 
     <slot />
@@ -98,7 +98,7 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
       <div
         class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8]"
       >
-        &copy; 2024 SOVEREIGN_CONSOLE // KERNEL_VER: 4.2.0-STABLE
+        &copy; 2024 GUILHERME CARVALHO
       </div>
       <div class="flex gap-8">
         <a
@@ -107,8 +107,12 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
         >GITHUB</a>
         <a
           class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8] hover:text-[#fe5f00] transition-colors focus:ring-1 focus:ring-[#fe5f00] outline-none"
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/in/guieevc/"
         >LINKEDIN</a>
+        <a
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8] hover:text-[#fe5f00] transition-colors focus:ring-1 focus:ring-[#fe5f00] outline-none"
+          href="https://x.com/guieevc"
+        >TWITTER</a>
       </div>
     </footer>
 

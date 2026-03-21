@@ -1,8 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+
+const allLogs = await getCollection('logs');
+const recentLogs = allLogs
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 4);
+
+function formatTime(date: Date): string {
+  return date.toISOString().split('T')[1]?.substring(0, 8) ?? '';
+}
 ---
 
-<Layout title="TACTICAL_TERMINAL // HOME" activeNav="home">
+<Layout title="~/gvc // HOME" activeNav="home">
   <Fragment slot="head">
     <style>
       .scanline-overlay {
@@ -47,15 +57,15 @@ import Layout from '../layouts/Layout.astro';
         <h1
           class="text-6xl md:text-8xl font-black font-headline tracking-tighter text-on-surface leading-[0.9] mb-8 uppercase"
         >
-          THE <span class="text-primary-container">TACTICAL</span><br />
-          INTERFACE.
+          GUILHERME<br />
+          <span class="text-primary-container">CARVALHO.</span>
         </h1>
         <p
           class="text-lg md:text-xl text-on-surface-variant font-body max-w-2xl mb-12 leading-relaxed"
         >
-          Personal command center and digital dossier for elite systems
-          architecture and strategic full-stack deployment. Zero latency.
-          Maximum throughput.
+          Staff engineer, studio co-founder, and ML researcher.
+          14 years of building software that works — from Rails
+          startups to commerce at scale.
         </p>
         <div class="flex flex-wrap gap-4">
           <a
@@ -157,34 +167,16 @@ import Layout from '../layouts/Layout.astro';
           <span class="flex-grow h-px bg-[#1e2024]"></span>
         </h2>
         <div class="space-y-2 font-['Space_Grotesk']">
-          <div
-            class="grid grid-cols-[100px_1fr_100px] items-center py-4 px-6 bg-surface-container-low border border-[#1e2024] hover:border-primary-container transition-all group"
-          >
-            <span class="text-[10px] tracking-widest text-on-tertiary-container font-medium">14:22:05</span>
-            <span class="text-sm font-medium text-on-surface uppercase tracking-tight">Production server scaled to 12 instances</span>
-            <span class="text-[10px] font-bold text-primary-container text-right uppercase tracking-widest">[STABLE]</span>
-          </div>
-          <div
-            class="grid grid-cols-[100px_1fr_100px] items-center py-4 px-6 bg-surface-container-low border border-[#1e2024] hover:border-primary-container transition-all group"
-          >
-            <span class="text-[10px] tracking-widest text-on-tertiary-container font-medium">11:04:12</span>
-            <span class="text-sm font-medium text-on-surface uppercase tracking-tight">New biometric security layer integrated</span>
-            <span class="text-[10px] font-bold text-primary-container text-right uppercase tracking-widest">[SUCCESS]</span>
-          </div>
-          <div
-            class="grid grid-cols-[100px_1fr_100px] items-center py-4 px-6 bg-surface-container-low border border-[#1e2024] hover:border-primary-container transition-all group"
-          >
-            <span class="text-[10px] tracking-widest text-on-tertiary-container font-medium">09:15:33</span>
-            <span class="text-sm font-medium text-on-surface uppercase tracking-tight">Optimization sweep completed on Kernal.V4</span>
-            <span class="text-[10px] font-bold text-primary-container text-right uppercase tracking-widest">[OPTIMAL]</span>
-          </div>
-          <div
-            class="grid grid-cols-[100px_1fr_100px] items-center py-4 px-6 bg-surface-container-low border border-[#1e2024] hover:border-primary-container transition-all group"
-          >
-            <span class="text-[10px] tracking-widest text-on-tertiary-container font-medium">06:42:10</span>
-            <span class="text-sm font-medium text-on-surface uppercase tracking-tight">Security audit: 0 vulnerabilities detected</span>
-            <span class="text-[10px] font-bold text-primary-container text-right uppercase tracking-widest">[CLEAN]</span>
-          </div>
+          {recentLogs.map((log) => (
+            <a
+              href={`/writings/${log.id}`}
+              class="grid grid-cols-[100px_1fr_100px] items-center py-4 px-6 bg-surface-container-low border border-[#1e2024] hover:border-primary-container transition-all group no-underline"
+            >
+              <span class="text-[10px] tracking-widest text-on-tertiary-container font-medium">{formatTime(log.data.date)}</span>
+              <span class="text-sm font-medium text-on-surface uppercase tracking-tight">{log.data.title}</span>
+              <span class="text-[10px] font-bold text-primary-container text-right uppercase tracking-widest">[{log.data.severity.toUpperCase()}]</span>
+            </a>
+          ))}
         </div>
       </div>
     </section>

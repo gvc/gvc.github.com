@@ -41,7 +41,7 @@ function formatDateTime(date: Date): string {
 }
 ---
 
-<Layout title={`TERMINAL_OS | ${entry.data.title}`} activeNav="writings">
+<Layout title={`~/gvc // ${entry.data.title}`} activeNav="writings">
   <Fragment slot="head">
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
@@ -147,12 +147,6 @@ function formatDateTime(date: Date): string {
 
     <!-- Header -->
     <header class={`mb-12 border-l-4 ${style.border} pl-6 py-4`}>
-      <div class="flex items-center gap-3 mb-4">
-        <span class={`material-symbols-outlined ${style.accent}`}>{entry.data.icon}</span>
-        <span class={`font-mono text-xs uppercase tracking-widest ${style.accent}`}>
-          SEVERITY: {style.label}
-        </span>
-      </div>
 
       <h1 class="text-3xl md:text-5xl font-black font-headline tracking-tighter text-on-surface uppercase leading-none mb-4">
         {entry.data.title}
