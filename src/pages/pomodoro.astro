@@ -2,460 +2,324 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Pomodoro Timer">
-	<section class="pomodoro-container">
-		<h1>Pomodoro Timer</h1>
+<Layout title="TACTICAL_TERMINAL // POMODORO" activeNav="">
+  <Fragment slot="head">
+    <style>
+      .pulse-dot {
+        box-shadow: 0 0 8px #00ff7f;
+      }
+      @keyframes pulse-fade {
+        0%, 100% { opacity: 0.9; }
+        50% { opacity: 0.5; }
+      }
+      .timer-ending {
+        animation: pulse-fade 1s ease-in-out infinite;
+        color: var(--color-secondary-container) !important;
+      }
+    </style>
+  </Fragment>
 
-		<div class="timer-box">
-			<div class="phase-indicator" id="phaseIndicator">FOCUS</div>
+  <main class="max-w-xl mx-auto pt-24 pb-20 px-6 min-h-screen flex-grow">
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="flex items-center space-x-2 mb-2">
+        <span class="w-2 h-2 rounded-full bg-primary pulse-dot"></span>
+        <span class="text-on-surface-variant font-label text-[10px] tracking-widest uppercase">
+          UTILITY / TIMER
+        </span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-black font-headline tracking-tighter text-on-surface uppercase leading-none">
+        POMODORO_CLOCK
+      </h1>
+    </header>
 
-			<div class="progress-bar-container">
-				<div class="progress-bar" id="progressBar"></div>
-			</div>
+    <!-- Timer Card -->
+    <div class="bg-surface-container-lowest border-2 border-surface-container p-8 md:p-10">
+      <!-- Phase indicator -->
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary-container text-xl" id="phaseIcon">timer</span>
+          <span
+            id="phaseIndicator"
+            class="font-mono text-xs font-bold tracking-[0.2em] uppercase text-primary-container"
+          >FOCUS</span>
+        </div>
+        <span class="text-[10px] font-label text-outline uppercase tracking-widest">
+          SESSION <span id="sessionCount" class="text-primary-container">1</span>
+        </span>
+      </div>
 
-			<div class="timer-display" id="timerDisplay">20:00</div>
+      <!-- Progress bar -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2 bg-surface-container-low border border-surface-container-high px-3 py-1.5">
+          <span id="progressPct" class="font-mono text-[10px] text-outline tracking-wider shrink-0">0%</span>
+          <span id="progressBlocks" class="font-mono text-[13px] leading-none tracking-[0.15em] flex-1 text-right overflow-hidden whitespace-nowrap"></span>
+        </div>
+      </div>
 
-			<div class="controls">
-				<button id="startBtn" class="btn btn-primary">START</button>
-				<button id="pauseBtn" class="btn btn-secondary" style="display: none;">PAUSE</button>
-				<button id="resetBtn" class="btn btn-secondary">RESET</button>
-			</div>
+      <!-- Timer display -->
+      <div class="text-center mb-8">
+        <div
+          id="timerDisplay"
+          class="font-mono text-7xl md:text-8xl font-bold text-on-surface tracking-wider leading-none"
+        >20:00</div>
+      </div>
 
-			<div class="stats">
-				<div class="stat-item">
-					<span class="stat-label">Session:</span>
-					<span class="stat-value" id="sessionCount">1</span>
-				</div>
-				<div class="stat-item">
-					<span class="stat-label">Total Focus:</span>
-					<span class="stat-value" id="totalFocus">0m</span>
-				</div>
-			</div>
-		</div>
-	</section>
+      <!-- Controls -->
+      <div class="flex gap-3 justify-center mb-8">
+        <button
+          id="startBtn"
+          class="px-8 py-3 border-2 border-primary-container text-primary-container font-mono text-xs font-bold tracking-[0.2em] uppercase hover:bg-primary-container hover:text-on-primary-container transition-colors"
+        >START</button>
+        <button
+          id="pauseBtn"
+          class="px-8 py-3 border-2 border-secondary-container text-secondary-container font-mono text-xs font-bold tracking-[0.2em] uppercase hover:bg-secondary-container hover:text-on-secondary-container transition-colors hidden"
+        >PAUSE</button>
+        <button
+          id="resetBtn"
+          class="px-8 py-3 border-2 border-surface-container-high text-on-surface-variant font-mono text-xs font-bold tracking-[0.2em] uppercase hover:border-on-surface-variant transition-colors"
+        >RESET</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="flex justify-around pt-6 border-t border-surface-container">
+        <div class="text-center">
+          <div class="text-[9px] font-label text-outline uppercase tracking-widest mb-1">TOTAL_FOCUS</div>
+          <div id="totalFocus" class="font-mono text-sm font-bold text-primary-container">0m</div>
+        </div>
+        <div class="text-center">
+          <div class="text-[9px] font-label text-outline uppercase tracking-widest mb-1">PHASE</div>
+          <div id="phaseLabel" class="font-mono text-sm font-bold text-primary-container">20:00 FOCUS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keyboard shortcuts hint -->
+    <div class="mt-6 flex justify-center gap-6 text-[9px] font-mono text-outline uppercase tracking-widest">
+      <span><span class="text-on-surface-variant">SPACE</span> START/PAUSE</span>
+      <span><span class="text-on-surface-variant">CMD+R</span> RESET</span>
+    </div>
+  </main>
 </Layout>
 
-<style>
-	.pomodoro-container {
-		max-width: 500px;
-		margin: 0 auto;
-		text-align: center;
-	}
-
-	.pomodoro-container h1 {
-		color: var(--accent-color);
-		font-family: var(--font-mono);
-		font-size: 1.75rem;
-		margin-bottom: 3rem;
-		text-align: center;
-	}
-
-	.timer-box {
-		background: rgba(26, 31, 46, 0.3);
-		border: 1px solid var(--border-color);
-		border-radius: 0.5rem;
-		padding: 3rem 2rem;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-	}
-
-	.phase-indicator {
-		font-family: var(--font-mono);
-		font-size: 0.875rem;
-		font-weight: 600;
-		letter-spacing: 0.15em;
-		color: var(--text-color);
-		opacity: 0.7;
-		margin-bottom: 2rem;
-	}
-
-	.phase-indicator.focus {
-		color: var(--accent-color);
-		opacity: 1;
-	}
-
-	.phase-indicator.rest {
-		color: #00BFFF;
-		opacity: 1;
-	}
-
-	.progress-bar-container {
-		width: 100%;
-		height: 24px;
-		background: var(--code-bg);
-		border: 1px solid var(--border-color);
-		border-radius: 2px;
-		margin-bottom: 2.5rem;
-		font-family: var(--font-mono);
-		font-size: 14px;
-		line-height: 22px;
-		overflow: hidden;
-		position: relative;
-	}
-
-	.progress-bar {
-		height: 100%;
-		display: flex;
-		align-items: center;
-		padding: 0 8px;
-		position: relative;
-		white-space: nowrap;
-	}
-
-	.progress-bar::before {
-		content: attr(data-progress);
-		color: var(--text-color);
-		font-size: 12px;
-		position: absolute;
-		left: 8px;
-		z-index: 2;
-		font-weight: 500;
-	}
-
-	.progress-bar::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		background: var(--accent-color);
-		width: var(--progress, 0%);
-		transition: width 1s linear;
-		opacity: 0.9;
-	}
-
-	.timer-display {
-		font-family: var(--font-mono);
-		font-size: 4.5rem;
-		font-weight: 600;
-		color: var(--text-color);
-		margin-bottom: 2.5rem;
-		letter-spacing: 0.05em;
-		text-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-	}
-
-	.timer-display.active {
-		color: var(--accent-color);
-		text-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
-	}
-
-	.controls {
-		display: flex;
-		gap: 1rem;
-		justify-content: center;
-		margin-bottom: 2rem;
-	}
-
-	.btn {
-		font-family: var(--font-mono);
-		font-size: 0.9rem;
-		font-weight: 600;
-		padding: 0.75rem 2rem;
-		border: 2px solid;
-		border-radius: 0.25rem;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		letter-spacing: 0.1em;
-		background: transparent;
-	}
-
-	.btn-primary {
-		color: var(--accent-color);
-		border-color: var(--accent-color);
-	}
-
-	.btn-primary:hover {
-		background: var(--accent-color);
-		color: var(--bg-color);
-		box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-	}
-
-	.btn-secondary {
-		color: var(--text-color);
-		border-color: var(--border-color);
-		opacity: 0.8;
-	}
-
-	.btn-secondary:hover {
-		border-color: var(--text-color);
-		opacity: 1;
-	}
-
-	.stats {
-		display: flex;
-		justify-content: space-around;
-		padding-top: 2rem;
-		border-top: 1px solid var(--border-color);
-	}
-
-	.stat-item {
-		font-family: var(--font-mono);
-		font-size: 0.875rem;
-	}
-
-	.stat-label {
-		color: var(--text-color);
-		opacity: 0.6;
-		margin-right: 0.5rem;
-	}
-
-	.stat-value {
-		color: var(--accent-color);
-		font-weight: 600;
-	}
-
-	@keyframes pulse {
-		0%, 100% { opacity: 0.9; }
-		50% { opacity: 0.6; }
-	}
-
-	.timer-display.ending {
-		animation: pulse 1s ease-in-out infinite;
-		color: #FF6B6B;
-	}
-
-	@media (max-width: 640px) {
-		.timer-display {
-			font-size: 3.5rem;
-		}
-
-		.timer-box {
-			padding: 2rem 1.5rem;
-		}
-	}
-</style>
-
 <script>
-	// Timer configuration
-	const FOCUS_TIME = 20 * 60; // 20 minutes in seconds
-	const REST_TIME = 5 * 60;   // 5 minutes in seconds
+  const FOCUS_TIME = 20 * 60;
+  const REST_TIME = 5 * 60;
 
-	// Timer state
-	let currentTime = FOCUS_TIME;
-	let totalTime = FOCUS_TIME;
-	let isRunning = false;
-	let isRest = false;
-	let interval: number | null = null;
-	let sessionCount = 1;
-	let totalFocusMinutes = 0;
+  let currentTime = FOCUS_TIME;
+  let totalTime = FOCUS_TIME;
+  let isRunning = false;
+  let isRest = false;
+  let interval: number | null = null;
+  let sessionCount = 1;
+  let totalFocusMinutes = 0;
 
-	// DOM elements
-	const timerDisplay = document.getElementById('timerDisplay') as HTMLElement;
-	const startBtn = document.getElementById('startBtn') as HTMLButtonElement;
-	const pauseBtn = document.getElementById('pauseBtn') as HTMLButtonElement;
-	const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
-	const phaseIndicator = document.getElementById('phaseIndicator') as HTMLElement;
-	const progressBar = document.getElementById('progressBar') as HTMLElement;
-	const sessionCountEl = document.getElementById('sessionCount') as HTMLElement;
-	const totalFocusEl = document.getElementById('totalFocus') as HTMLElement;
+  const timerDisplay = document.getElementById('timerDisplay') as HTMLElement;
+  const startBtn = document.getElementById('startBtn') as HTMLButtonElement;
+  const pauseBtn = document.getElementById('pauseBtn') as HTMLButtonElement;
+  const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+  const phaseIndicator = document.getElementById('phaseIndicator') as HTMLElement;
+  const phaseIcon = document.getElementById('phaseIcon') as HTMLElement;
+  const phaseLabel = document.getElementById('phaseLabel') as HTMLElement;
+  const progressPct = document.getElementById('progressPct') as HTMLElement;
+  const progressBlocks = document.getElementById('progressBlocks') as HTMLElement;
+  const sessionCountEl = document.getElementById('sessionCount') as HTMLElement;
+  const totalFocusEl = document.getElementById('totalFocus') as HTMLElement;
 
-	// Audio for notifications
-	const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
 
-	function playNotification() {
-		const oscillator = audioContext.createOscillator();
-		const gainNode = audioContext.createGain();
+  function playNotification() {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    oscillator.frequency.value = 800;
+    oscillator.type = 'sine';
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.5);
 
-		oscillator.connect(gainNode);
-		gainNode.connect(audioContext.destination);
+    setTimeout(() => {
+      const osc2 = audioContext.createOscillator();
+      const gain2 = audioContext.createGain();
+      osc2.connect(gain2);
+      gain2.connect(audioContext.destination);
+      osc2.frequency.value = 800;
+      osc2.type = 'sine';
+      gain2.gain.setValueAtTime(0, audioContext.currentTime);
+      gain2.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+      gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      osc2.start();
+      osc2.stop(audioContext.currentTime + 0.5);
+    }, 200);
 
-		oscillator.frequency.value = 800;
-		oscillator.type = 'sine';
+    setTimeout(() => {
+      const osc3 = audioContext.createOscillator();
+      const gain3 = audioContext.createGain();
+      osc3.connect(gain3);
+      gain3.connect(audioContext.destination);
+      osc3.frequency.value = 1000;
+      osc3.type = 'sine';
+      gain3.gain.setValueAtTime(0, audioContext.currentTime);
+      gain3.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + 0.01);
+      gain3.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.7);
+      osc3.start();
+      osc3.stop(audioContext.currentTime + 0.7);
+    }, 400);
+  }
 
-		gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-		gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
-		gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+  function formatTime(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
 
-		oscillator.start();
-		oscillator.stop(audioContext.currentTime + 0.5);
+  function updateDisplay() {
+    timerDisplay.textContent = formatTime(currentTime);
 
-		// Play three beeps
-		setTimeout(() => {
-			const osc2 = audioContext.createOscillator();
-			const gain2 = audioContext.createGain();
-			osc2.connect(gain2);
-			gain2.connect(audioContext.destination);
-			osc2.frequency.value = 800;
-			osc2.type = 'sine';
-			gain2.gain.setValueAtTime(0, audioContext.currentTime);
-			gain2.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
-			gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-			osc2.start();
-			osc2.stop(audioContext.currentTime + 0.5);
-		}, 200);
+    const progress = ((totalTime - currentTime) / totalTime) * 100;
+    const pct = Math.floor(progress);
+    const totalBlocks = 30;
+    const filled = Math.round((pct / 100) * totalBlocks);
+    const empty = totalBlocks - filled;
+    progressPct.textContent = `${pct}%`;
+    progressBlocks.innerHTML =
+      `<span class="${isRest ? 'text-tertiary-container' : 'text-primary-container'}">${'▮'.repeat(filled)}</span><span class="text-surface-container-high">${'▯'.repeat(empty)}</span>`;
 
-		setTimeout(() => {
-			const osc3 = audioContext.createOscillator();
-			const gain3 = audioContext.createGain();
-			osc3.connect(gain3);
-			gain3.connect(audioContext.destination);
-			osc3.frequency.value = 1000;
-			osc3.type = 'sine';
-			gain3.gain.setValueAtTime(0, audioContext.currentTime);
-			gain3.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + 0.01);
-			gain3.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.7);
-			osc3.start();
-			osc3.stop(audioContext.currentTime + 0.7);
-		}, 400);
-	}
+    if (currentTime <= 60 && isRunning) {
+      timerDisplay.classList.add('timer-ending');
+    } else {
+      timerDisplay.classList.remove('timer-ending');
+    }
 
-	function formatTime(seconds: number): string {
-		const mins = Math.floor(seconds / 60);
-		const secs = seconds % 60;
-		return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-	}
+    if (isRest) {
+      phaseIndicator.textContent = 'REST';
+      phaseIndicator.className = 'font-mono text-xs font-bold tracking-[0.2em] uppercase text-tertiary-container';
+      phaseIcon.textContent = 'self_improvement';
+      phaseIcon.className = 'material-symbols-outlined text-tertiary-container text-xl';
+      phaseLabel.textContent = `${formatTime(REST_TIME)} REST`;
+      phaseLabel.className = 'font-mono text-sm font-bold text-tertiary-container';
+    } else {
+      phaseIndicator.textContent = 'FOCUS';
+      phaseIndicator.className = 'font-mono text-xs font-bold tracking-[0.2em] uppercase text-primary-container';
+      phaseIcon.textContent = 'timer';
+      phaseIcon.className = 'material-symbols-outlined text-primary-container text-xl';
+      phaseLabel.textContent = `${formatTime(FOCUS_TIME)} FOCUS`;
+      phaseLabel.className = 'font-mono text-sm font-bold text-primary-container';
+    }
+  }
 
-	function updateDisplay() {
-		timerDisplay.textContent = formatTime(currentTime);
+  function startTimer() {
+    if (!isRunning) {
+      isRunning = true;
+      startBtn.classList.add('hidden');
+      pauseBtn.classList.remove('hidden');
+      timerDisplay.classList.add('text-primary-container');
 
-		// Update progress bar
-		const progress = ((totalTime - currentTime) / totalTime) * 100;
-		progressBar.style.setProperty('--progress', `${progress}%`);
+      interval = setInterval(() => {
+        if (currentTime > 0) {
+          currentTime--;
+          updateDisplay();
 
-		// Create terminal-style progress bar
-		const filled = Math.floor(progress / 2.5); // 40 chars total
-		const empty = 40 - filled;
-		const progressText = `[${'█'.repeat(filled)}${'░'.repeat(empty)}] ${Math.floor(progress)}%`;
-		progressBar.setAttribute('data-progress', progressText);
+          if (!isRest && currentTime % 60 === 0) {
+            totalFocusMinutes++;
+            updateStats();
+          }
+        } else {
+          playNotification();
 
-		// Visual feedback when time is running out
-		if (currentTime <= 60 && isRunning) {
-			timerDisplay.classList.add('ending');
-		} else {
-			timerDisplay.classList.remove('ending');
-		}
+          if (!isRest) {
+            isRest = true;
+            currentTime = REST_TIME;
+            totalTime = REST_TIME;
+          } else {
+            isRest = false;
+            currentTime = FOCUS_TIME;
+            totalTime = FOCUS_TIME;
+            sessionCount++;
+            updateStats();
+          }
+          updateDisplay();
+        }
+      }, 1000);
+    }
+  }
 
-		// Update phase indicator
-		if (isRest) {
-			phaseIndicator.textContent = 'REST';
-			phaseIndicator.className = 'phase-indicator rest';
-			progressBar.style.setProperty('--accent-color', '#00BFFF');
-		} else {
-			phaseIndicator.textContent = 'FOCUS';
-			phaseIndicator.className = 'phase-indicator focus';
-			progressBar.style.setProperty('--accent-color', '#00FF41');
-		}
-	}
+  function pauseTimer() {
+    isRunning = false;
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+    startBtn.classList.remove('hidden');
+    pauseBtn.classList.add('hidden');
+    timerDisplay.classList.remove('text-primary-container');
+  }
 
-	function startTimer() {
-		if (!isRunning) {
-			isRunning = true;
-			startBtn.style.display = 'none';
-			pauseBtn.style.display = 'inline-block';
-			timerDisplay.classList.add('active');
+  function resetTimer() {
+    pauseTimer();
+    isRest = false;
+    currentTime = FOCUS_TIME;
+    totalTime = FOCUS_TIME;
+    updateDisplay();
+  }
 
-			interval = setInterval(() => {
-				if (currentTime > 0) {
-					currentTime--;
-					updateDisplay();
+  function updateStats() {
+    sessionCountEl.textContent = sessionCount.toString();
 
-					// Update total focus time
-					if (!isRest && currentTime % 60 === 0) {
-						totalFocusMinutes++;
-						updateStats();
-					}
-				} else {
-					// Timer finished
-					playNotification();
+    if (totalFocusMinutes < 60) {
+      totalFocusEl.textContent = `${totalFocusMinutes}m`;
+    } else {
+      const hours = Math.floor(totalFocusMinutes / 60);
+      const mins = totalFocusMinutes % 60;
+      totalFocusEl.textContent = `${hours}h ${mins}m`;
+    }
+  }
 
-					if (!isRest) {
-						// Switch to rest
-						isRest = true;
-						currentTime = REST_TIME;
-						totalTime = REST_TIME;
-					} else {
-						// Switch to focus
-						isRest = false;
-						currentTime = FOCUS_TIME;
-						totalTime = FOCUS_TIME;
-						sessionCount++;
-						updateStats();
-					}
+  startBtn.addEventListener('click', startTimer);
+  pauseBtn.addEventListener('click', pauseTimer);
+  resetBtn.addEventListener('click', resetTimer);
 
-					updateDisplay();
-				}
-			}, 1000);
-		}
-	}
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    } else if (e.code === 'KeyR' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      resetTimer();
+    }
+  });
 
-	function pauseTimer() {
-		isRunning = false;
-		if (interval) {
-			clearInterval(interval);
-			interval = null;
-		}
-		startBtn.style.display = 'inline-block';
-		pauseBtn.style.display = 'none';
-		timerDisplay.classList.remove('active');
-	}
+  updateDisplay();
+  updateStats();
 
-	function resetTimer() {
-		pauseTimer();
-		isRest = false;
-		currentTime = FOCUS_TIME;
-		totalTime = FOCUS_TIME;
-		updateDisplay();
-	}
+  let wakeLock: any = null;
 
-	function updateStats() {
-		sessionCountEl.textContent = sessionCount.toString();
+  async function requestWakeLock() {
+    try {
+      if ('wakeLock' in navigator) {
+        wakeLock = await (navigator as any).wakeLock.request('screen');
+      }
+    } catch (err) {
+      // Wake Lock API not supported or failed
+    }
+  }
 
-		if (totalFocusMinutes < 60) {
-			totalFocusEl.textContent = `${totalFocusMinutes}m`;
-		} else {
-			const hours = Math.floor(totalFocusMinutes / 60);
-			const mins = totalFocusMinutes % 60;
-			totalFocusEl.textContent = `${hours}h ${mins}m`;
-		}
-	}
+  const originalStartTimer = startTimer;
+  startTimer = function() {
+    requestWakeLock();
+    originalStartTimer();
+  };
 
-	// Event listeners
-	startBtn.addEventListener('click', startTimer);
-	pauseBtn.addEventListener('click', pauseTimer);
-	resetBtn.addEventListener('click', resetTimer);
-
-	// Keyboard shortcuts
-	document.addEventListener('keydown', (e) => {
-		if (e.code === 'Space') {
-			e.preventDefault();
-			if (isRunning) {
-				pauseTimer();
-			} else {
-				startTimer();
-			}
-		} else if (e.code === 'KeyR' && (e.metaKey || e.ctrlKey)) {
-			e.preventDefault();
-			resetTimer();
-		}
-	});
-
-	// Initialize display
-	updateDisplay();
-	updateStats();
-
-	// Prevent page from sleeping
-	let wakeLock: any = null;
-
-	async function requestWakeLock() {
-		try {
-			if ('wakeLock' in navigator) {
-				wakeLock = await (navigator as any).wakeLock.request('screen');
-			}
-		} catch (err) {
-			// Wake Lock API not supported or failed
-		}
-	}
-
-	// Request wake lock when timer starts
-	const originalStartTimer = startTimer;
-	startTimer = function() {
-		requestWakeLock();
-		originalStartTimer();
-	};
-
-	// Page visibility change
-	document.addEventListener('visibilitychange', () => {
-		if (wakeLock !== null && document.visibilityState === 'visible') {
-			requestWakeLock();
-		}
-	});
+  document.addEventListener('visibilitychange', () => {
+    if (wakeLock !== null && document.visibilityState === 'visible') {
+      requestWakeLock();
+    }
+  });
 </script>
