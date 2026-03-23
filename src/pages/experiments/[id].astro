@@ -1,0 +1,178 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const experiments = await getCollection('experiments');
+  return experiments.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const statusColors: Record<string, { bg: string; text: string; label: string }> = {
+  active: { bg: 'bg-primary/10', text: 'text-primary', label: 'ACTIVE' },
+  stable: { bg: 'bg-[#00bcd4]/10', text: 'text-[#00bcd4]', label: 'STABLE' },
+  critical: { bg: 'bg-secondary/10', text: 'text-secondary', label: 'CRITICAL' },
+  archived: { bg: 'bg-outline/10', text: 'text-outline', label: 'ARCHIVED' },
+};
+
+const status = statusColors[entry.data.status] || statusColors.active;
+---
+
+<Layout title={`~/gvc // ${entry.data.title}`} activeNav="experiments">
+  <Fragment slot="head">
+    <style>
+      .prose {
+        color: var(--color-on-surface-variant);
+        line-height: 1.8;
+      }
+      .prose h2 {
+        color: var(--color-on-surface);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: -0.025em;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--color-surface-container-high);
+      }
+      .prose h3 {
+        color: var(--color-on-surface);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+      }
+      .prose p {
+        margin-bottom: 1.25rem;
+        font-size: 0.875rem;
+      }
+      .prose ul, .prose ol {
+        margin-bottom: 1.25rem;
+        padding-left: 1.5rem;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+      }
+      .prose ul li {
+        list-style-type: none;
+        position: relative;
+        padding-left: 1rem;
+      }
+      .prose ul li::before {
+        content: '>';
+        position: absolute;
+        left: 0;
+        color: var(--color-primary);
+        font-weight: bold;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .prose strong {
+        color: var(--color-on-surface);
+        font-weight: 700;
+      }
+      .prose code {
+        background: var(--color-surface-container);
+        padding: 0.125rem 0.375rem;
+        font-size: 0.8rem;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .pulse-dot {
+        box-shadow: 0 0 8px #00ff7f;
+      }
+    </style>
+  </Fragment>
+
+  <main class="max-w-4xl mx-auto pt-24 pb-20 px-6 min-h-screen flex-grow">
+    <!-- Back link -->
+    <a
+      href="/experiments"
+      class="inline-flex items-center gap-2 text-on-surface-variant text-xs font-label uppercase tracking-widest hover:text-primary transition-colors mb-8"
+    >
+      <span class="material-symbols-outlined text-sm">arrow_back</span>
+      EXPERIMENTS
+    </a>
+
+    <!-- Header -->
+    <header class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="w-2 h-2 rounded-full bg-primary pulse-dot"></span>
+        <span class="text-on-surface-variant font-label text-[10px] tracking-widest uppercase">
+          PROJECT_ID: {entry.data.projectId}
+        </span>
+        <span class={`px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase ${status.bg} ${status.text}`}>
+          {status.label}
+        </span>
+      </div>
+
+      <h1 class="text-4xl md:text-6xl font-black font-headline tracking-tighter text-on-surface uppercase leading-none mb-4">
+        {entry.data.title}
+      </h1>
+
+      <p class="text-on-surface-variant text-sm leading-relaxed max-w-2xl mb-6">
+        {entry.data.description}
+      </p>
+
+      <!-- Meta row -->
+      <div class="flex flex-wrap gap-4 text-[10px] font-label uppercase">
+        <div class="bg-surface-container-lowest px-4 py-2 border border-surface-container">
+          <span class="text-outline">DATE:</span>
+          <span class="text-on-surface ml-1">{entry.data.date.toISOString().split('T')[0]}</span>
+        </div>
+        {entry.data.stack && (
+          <div class="bg-surface-container-lowest px-4 py-2 border border-surface-container">
+            <span class="text-outline">STACK:</span>
+            <span class="text-on-surface ml-1">{entry.data.stack}</span>
+          </div>
+        )}
+        {entry.data.stats?.map((stat) => (
+          <div class="bg-surface-container-lowest px-4 py-2 border border-surface-container">
+            <span class="text-outline">{stat.label}:</span>
+            <span class="text-primary font-headline font-bold ml-1">{stat.value}</span>
+          </div>
+        ))}
+      </div>
+    </header>
+
+    <!-- Hero image -->
+    {entry.data.image && (
+      <div class="relative mb-12 overflow-hidden">
+        <img
+          src={entry.data.image}
+          alt={entry.data.title}
+          class="w-full h-64 md:h-80 object-cover opacity-60"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+      </div>
+    )}
+
+    <!-- Content -->
+    <article class="prose">
+      <Content />
+    </article>
+
+    <!-- Footer nav -->
+    <div class="mt-16 pt-8 border-t border-surface-container flex justify-between items-center">
+      <a
+        href="/experiments"
+        class="inline-flex items-center gap-2 text-on-surface-variant text-xs font-label uppercase tracking-widest hover:text-primary transition-colors"
+      >
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        ALL_EXPERIMENTS
+      </a>
+      <div class="flex items-center gap-2 text-[9px] text-outline font-label uppercase">
+        <span class="text-primary">CONN:</span>
+        <span>ENCRYPTED_AES256</span>
+      </div>
+    </div>
+  </main>
+</Layout>

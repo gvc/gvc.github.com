@@ -1,0 +1,195 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const logs = await getCollection('logs');
+  return logs.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const severityStyles: Record<string, { border: string; accent: string; label: string }> = {
+  success:  { border: 'border-primary-container',   accent: 'text-primary-container',   label: 'SUCCESS' },
+  info:     { border: 'border-primary-container',   accent: 'text-primary-container',   label: 'INFO' },
+  warning:  { border: 'border-tertiary-container',  accent: 'text-tertiary-container',  label: 'WARNING' },
+  critical: { border: 'border-secondary',           accent: 'text-secondary',           label: 'CRITICAL' },
+  archive:  { border: 'border-secondary-container', accent: 'text-secondary-container', label: 'ARCHIVE' },
+};
+
+const tagStyles: Record<string, { bg: string; text: string; border: string }> = {
+  STABLE:                 { bg: 'bg-primary-container/10',   text: 'text-primary-container',     border: 'border-primary-container/20' },
+  SUCCESS:                { bg: 'bg-secondary-container/10', text: 'text-secondary-container',   border: 'border-secondary-container/20' },
+  ENCRYPTED:              { bg: 'bg-zinc-800',               text: 'text-zinc-400',              border: 'border-zinc-700' },
+  PATCH_REQUIRED:         { bg: 'bg-tertiary-container/10',  text: 'text-on-tertiary-container', border: 'border-tertiary-container/20' },
+  SECURITY_BREACH_ATTEMPT:{ bg: 'bg-zinc-800',               text: 'text-zinc-400',              border: 'border-zinc-700' },
+  ARCHIVE:                { bg: 'bg-secondary-container/10', text: 'text-secondary-container',   border: 'border-secondary-container/20' },
+  DEPRECATED:             { bg: 'bg-zinc-800',               text: 'text-zinc-400',              border: 'border-zinc-700' },
+};
+
+const defaultTag = { bg: 'bg-zinc-800', text: 'text-zinc-400', border: 'border-zinc-700' };
+
+const style = severityStyles[entry.data.severity] || severityStyles.info;
+
+function formatDateTime(date: Date): string {
+  const d = date.toISOString().split('T');
+  return `${d[0].replace(/-/g, '.')} @ ${d[1].substring(0, 8)}`;
+}
+---
+
+<Layout title={`~/gvc // ${entry.data.title}`} activeNav="writings">
+  <Fragment slot="head">
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .prose {
+        color: var(--color-on-surface-variant);
+        line-height: 1.8;
+      }
+      .prose h2 {
+        color: var(--color-on-surface);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: -0.025em;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--color-surface-container-high);
+      }
+      .prose h3 {
+        color: var(--color-on-surface);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+      }
+      .prose p {
+        margin-bottom: 1.25rem;
+        font-size: 0.875rem;
+      }
+      .prose ul, .prose ol {
+        margin-bottom: 1.25rem;
+        padding-left: 1.5rem;
+      }
+      .prose li {
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+      }
+      .prose ul li {
+        list-style-type: none;
+        position: relative;
+        padding-left: 1rem;
+      }
+      .prose ul li::before {
+        content: '>';
+        position: absolute;
+        left: 0;
+        color: var(--color-primary);
+        font-weight: bold;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .prose ol li {
+        list-style-type: decimal;
+      }
+      .prose strong {
+        color: var(--color-on-surface);
+        font-weight: 700;
+      }
+      .prose code {
+        background: var(--color-surface-container);
+        padding: 0.125rem 0.375rem;
+        font-size: 0.8rem;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.5rem;
+        font-size: 0.875rem;
+      }
+      .prose th {
+        text-align: left;
+        padding: 0.5rem 1rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        color: var(--color-on-surface);
+        border-bottom: 2px solid var(--color-surface-container-high);
+      }
+      .prose td {
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid var(--color-surface-container);
+      }
+    </style>
+  </Fragment>
+
+  <main class="max-w-4xl mx-auto pt-24 pb-20 px-6 min-h-screen flex-grow">
+    <!-- Back link -->
+    <a
+      href="/writings"
+      class="inline-flex items-center gap-2 text-on-surface-variant text-xs font-mono uppercase tracking-widest hover:text-primary-container transition-colors mb-8"
+    >
+      <span class="material-symbols-outlined text-sm">arrow_back</span>
+      SYSTEM_LOGS
+    </a>
+
+    <!-- Header -->
+    <header class={`mb-12 border-l-4 ${style.border} pl-6 py-4`}>
+
+      <h1 class="text-3xl md:text-5xl font-black font-headline tracking-tighter text-on-surface uppercase leading-none mb-4">
+        {entry.data.title}
+      </h1>
+
+      <p class="text-on-surface-variant text-sm leading-relaxed max-w-2xl mb-6">
+        {entry.data.description}
+      </p>
+
+      <!-- Tags & meta -->
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="font-mono text-xs text-outline">
+          {formatDateTime(entry.data.date)}
+        </span>
+        {entry.data.tags.map((tag) => {
+          const ts = tagStyles[tag] || defaultTag;
+          return (
+            <span class={`${ts.bg} ${ts.text} font-mono text-[10px] px-2 py-0.5 border ${ts.border}`}>
+              [{tag}]
+            </span>
+          );
+        })}
+      </div>
+    </header>
+
+    <!-- Content -->
+    <article class="prose">
+      <Content />
+    </article>
+
+    <!-- Footer nav -->
+    <div class="mt-16 pt-8 border-t border-outline-variant/30 flex justify-between items-center">
+      <a
+        href="/writings"
+        class="inline-flex items-center gap-2 text-on-surface-variant text-xs font-mono uppercase tracking-widest hover:text-primary-container transition-colors"
+      >
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        ALL_LOGS
+      </a>
+      <div class="flex items-center gap-2 font-mono text-[9px] text-outline uppercase">
+        <span class="text-primary-container">CONN:</span>
+        <span>ENCRYPTED_AES256</span>
+      </div>
+    </div>
+  </main>
+</Layout>

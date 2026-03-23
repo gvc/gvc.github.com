@@ -1,0 +1,201 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allExperiments = await getCollection('experiments');
+const experiments = allExperiments.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const statusColors: Record<string, { bg: string; text: string; label: string }> = {
+  active: { bg: 'bg-primary/10', text: 'text-primary', label: 'ACTIVE' },
+  stable: { bg: 'bg-[#00bcd4]/10', text: 'text-[#00bcd4]', label: 'STABLE' },
+  critical: { bg: 'bg-secondary/10', text: 'text-secondary', label: 'CRITICAL' },
+  archived: { bg: 'bg-outline/10', text: 'text-outline', label: 'ARCHIVED' },
+};
+
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+---
+
+<Layout title="~/gvc // EXPERIMENTS" activeNav="experiments">
+  <Fragment slot="head">
+    <style>
+      .recessed-well {
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .pulse-dot {
+        box-shadow: 0 0 8px #00ff7f;
+      }
+    </style>
+  </Fragment>
+
+  <main class="max-w-7xl mx-auto pt-24 pb-20 px-6 min-h-screen flex-grow">
+    <!-- Header -->
+    <header class="mb-12">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="w-2 h-2 rounded-full bg-primary pulse-dot"></span>
+            <span class="text-on-surface-variant font-label text-[10px] tracking-widest uppercase">
+              ACTIVE_DIRECTORY / EXPERIMENTS
+            </span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-black font-headline tracking-tighter text-on-surface uppercase leading-none">
+            EXPERIMENT_LOG
+          </h1>
+        </div>
+        <div class="text-[10px] font-label text-outline uppercase tracking-widest">
+          <span class="text-primary">{experiments.length}</span> ENTRIES // SORTED BY RECENCY
+        </div>
+      </div>
+    </header>
+
+    <!-- Project Grid (Asymmetric Bento) -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+      {experiments.map((experiment, index) => {
+        const status = statusColors[experiment.data.status] || statusColors.active;
+        const isFeaturedWithImage = experiment.data.featured && experiment.data.image;
+
+        // First featured item gets the large hero card
+        if (index === 0 && isFeaturedWithImage) {
+          return (
+            <a
+              href={`/experiments/${experiment.id}`}
+              class="md:col-span-8 group relative bg-surface-container-low overflow-hidden hover:ring-2 hover:ring-secondary-container transition-all duration-300 no-underline"
+            >
+              <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent z-10 opacity-90" />
+              <img
+                alt={experiment.data.title}
+                class="w-full h-96 object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                src={experiment.data.image}
+              />
+              <div class="absolute bottom-0 left-0 p-8 z-20 w-full">
+                <div class="flex justify-between items-end">
+                  <div class="max-w-xl">
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="text-secondary-container font-label text-[10px] tracking-[0.3em] font-bold uppercase block">
+                        PROJECT_ID: {experiment.data.projectId}
+                      </span>
+                      <span class={`px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase ${status.bg} ${status.text}`}>
+                        {status.label}
+                      </span>
+                    </div>
+                    <h2 class="text-3xl font-black font-headline text-on-surface uppercase tracking-tight mb-4">
+                      {experiment.data.title}
+                    </h2>
+                    <p class="text-on-surface-variant text-sm font-body leading-relaxed mb-6 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                      {experiment.data.description}
+                    </p>
+                    <div class="flex gap-4 opacity-0 group-hover:opacity-100 transition-all delay-100">
+                      {experiment.data.stats?.map((stat) => (
+                        <div class="bg-surface-container-highest px-4 py-2">
+                          <div class="text-[9px] text-outline uppercase font-bold">{stat.label}</div>
+                          <div class="text-primary font-headline font-bold">{stat.value}</div>
+                        </div>
+                      ))}
+                      <div class="bg-surface-container-highest px-4 py-2">
+                        <div class="text-[9px] text-outline uppercase font-bold">Date</div>
+                        <div class="text-primary font-headline font-bold">{formatDate(experiment.data.date)}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-secondary-container opacity-0 group-hover:opacity-100 transition-all">
+                    <span class="material-symbols-outlined text-4xl">arrow_outward</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          );
+        }
+
+        // Featured items with images get tall vertical cards
+        if (isFeaturedWithImage) {
+          return (
+            <a
+              href={`/experiments/${experiment.id}`}
+              class="md:col-span-4 md:row-span-2 relative group overflow-hidden bg-[#0c0e12] no-underline"
+            >
+              <img
+                alt={experiment.data.title}
+                class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 transition-transform duration-700"
+                src={experiment.data.image}
+              />
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface-container-lowest z-10" />
+              <div class="relative z-20 h-full p-8 flex flex-col justify-end min-h-[400px]">
+                <span class={`mb-4 inline-block w-fit px-2 py-1 font-bold text-[9px] uppercase tracking-widest ${status.bg} ${status.text}`}>
+                  {experiment.data.projectId}
+                </span>
+                <h3 class="text-2xl font-black font-headline text-on-surface uppercase tracking-tight mb-2">
+                  {experiment.data.title}
+                </h3>
+                <p class="text-on-surface-variant text-xs mb-4 leading-relaxed">
+                  {experiment.data.description}
+                </p>
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-label text-outline uppercase">{formatDate(experiment.data.date)}</span>
+                  <span class="material-symbols-outlined text-secondary-container text-xl opacity-0 group-hover:opacity-100 transition-all">arrow_outward</span>
+                </div>
+              </div>
+            </a>
+          );
+        }
+
+        // Regular cards (no image)
+        return (
+          <a
+            href={`/experiments/${experiment.id}`}
+            class="md:col-span-4 group bg-surface-container-lowest border-2 border-surface-container p-6 hover:border-secondary-container transition-all no-underline"
+          >
+            <div class="flex justify-between items-start mb-12">
+              <span class="material-symbols-outlined text-primary text-3xl">{experiment.data.icon}</span>
+              <div class="flex items-center gap-2">
+                <span class={`px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase ${status.bg} ${status.text}`}>
+                  {status.label}
+                </span>
+                <span class="text-[10px] font-label text-outline uppercase">{experiment.data.projectId}</span>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-headline text-on-surface uppercase mb-4 tracking-tighter">
+              {experiment.data.title}
+            </h3>
+            <p class="text-on-surface-variant text-xs font-body mb-8 leading-relaxed">
+              {experiment.data.description}
+            </p>
+            <div class="space-y-3">
+              {experiment.data.metadata?.map((meta) => (
+                <div class="flex justify-between items-center text-[10px] font-label border-b border-outline-variant pb-2">
+                  <span class="text-outline uppercase">{meta.label}</span>
+                  <span class="text-on-surface">{meta.value}</span>
+                </div>
+              ))}
+              <div class="flex justify-between items-center text-[10px] font-label border-b border-outline-variant pb-2">
+                <span class="text-outline uppercase">Date</span>
+                <span class="text-on-surface">{formatDate(experiment.data.date)}</span>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Terminal Status Footer -->
+    <div class="mt-24 p-6 bg-surface-container-lowest border-2 border-surface-container flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-6 text-[10px] font-label text-outline uppercase">
+        <div class="flex items-center space-x-2">
+          <span class="text-primary">ENTRIES:</span>
+          <span class="text-on-surface">{experiments.length}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-primary">LAST_UPDATED:</span>
+          <span class="text-on-surface">{experiments[0] ? formatDate(experiments[0].data.date) : 'N/A'}</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-primary">CONN:</span>
+          <span class="text-on-surface">ENCRYPTED_AES256</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

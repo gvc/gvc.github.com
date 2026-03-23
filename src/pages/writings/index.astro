@@ -1,0 +1,190 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allLogs = await getCollection('logs');
+const logs = allLogs.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const severityStyles: Record<string, { border: string; accent: string; hoverText: string }> = {
+  success:  { border: 'border-primary-container',    accent: 'text-primary-container',    hoverText: 'group-hover:text-primary-container' },
+  info:     { border: 'border-primary-container',    accent: 'text-primary-container',    hoverText: 'group-hover:text-primary-container' },
+  warning:  { border: 'border-tertiary-container',   accent: 'text-tertiary-container',   hoverText: 'group-hover:text-tertiary-container' },
+  critical: { border: 'border-secondary',            accent: 'text-secondary',            hoverText: 'group-hover:text-secondary' },
+  archive:  { border: 'border-secondary-container',  accent: 'text-secondary-container',  hoverText: 'group-hover:text-secondary-container' },
+};
+
+const tagStyles: Record<string, { bg: string; text: string; border: string }> = {
+  STABLE:                 { bg: 'bg-primary-container/10',   text: 'text-primary-container',   border: 'border-primary-container/20' },
+  SUCCESS:                { bg: 'bg-secondary-container/10', text: 'text-secondary-container', border: 'border-secondary-container/20' },
+  ENCRYPTED:              { bg: 'bg-zinc-800',               text: 'text-zinc-400',            border: 'border-zinc-700' },
+  PATCH_REQUIRED:         { bg: 'bg-tertiary-container/10',  text: 'text-on-tertiary-container', border: 'border-tertiary-container/20' },
+  SECURITY_BREACH_ATTEMPT:{ bg: 'bg-zinc-800',               text: 'text-zinc-400',            border: 'border-zinc-700' },
+  ARCHIVE:                { bg: 'bg-secondary-container/10', text: 'text-secondary-container', border: 'border-secondary-container/20' },
+  DEPRECATED:             { bg: 'bg-zinc-800',               text: 'text-zinc-400',            border: 'border-zinc-700' },
+};
+
+const defaultTag = { bg: 'bg-zinc-800', text: 'text-zinc-400', border: 'border-zinc-700' };
+
+function formatDateTime(date: Date): { date: string; time: string } {
+  const d = date.toISOString().split('T');
+  return {
+    date: d[0].replace(/-/g, '.'),
+    time: d[1].substring(0, 8),
+  };
+}
+---
+
+<Layout title="~/gvc // LOGS" activeNav="writings">
+  <Fragment slot="head">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .scanline {
+        background: linear-gradient(
+          to bottom,
+          transparent 50%,
+          rgba(0, 255, 127, 0.02) 50%
+        );
+        background-size: 100% 4px;
+      }
+    </style>
+  </Fragment>
+
+  <main class="flex-grow pt-24 pb-16 px-6 max-w-7xl mx-auto w-full">
+    <!-- Header Section -->
+    <section class="mb-16 border-l-4 border-primary-container pl-6 py-4">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="font-mono text-xs text-primary-container tracking-widest uppercase mb-2 block">
+            DIRECTORY: /SYSTEM/LOGS/ROOT
+          </span>
+          <h1 class="text-5xl md:text-7xl font-black font-headline tracking-tighter uppercase leading-none">
+            System Logs
+          </h1>
+        </div>
+        <div class="font-mono text-xs text-outline space-y-1">
+          <p>STATUS: <span class="text-primary-container">[ONLINE]</span></p>
+          <p>ENTRIES: <span class="text-primary-container">{logs.length}</span> // SORTED BY RECENCY</p>
+          <p>LAST_SYNC: <span class="text-primary-container">{logs[0] ? formatDateTime(logs[0].data.date).date : 'N/A'}</span></p>
+          <p>ENCRYPTION: AES-256_ACTIVE</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logs Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <!-- Active Terminal Status Widget -->
+      <div class="md:col-span-4 bg-surface-container-low p-6 flex flex-col justify-between border-t-2 border-secondary-container relative overflow-hidden">
+        <div class="scanline absolute inset-0 pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="flex justify-between items-start mb-8">
+            <span class="font-mono text-[10px] text-secondary-container tracking-widest">[KERNEL_FEED]</span>
+            <span
+              class="material-symbols-outlined text-secondary-container"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+            >sensors</span>
+          </div>
+          <div class="space-y-4 font-mono text-[11px] text-on-surface-variant leading-relaxed">
+            <p>&gt; INITIALIZING_LOG_STREAM...</p>
+            <p>&gt; PARSING_METADATA_BLOCKS...</p>
+            <p>&gt; FETCHING_REMOTE_ASSETS [OK]</p>
+            <p>&gt; INDEXING <span class="text-primary-container">{logs.length}</span> LOG_ENTRIES...</p>
+            <p class="text-primary-container">&gt; CONNECTION_STABLE_W_LATENCY: 14MS</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Log Entries -->
+      <div class="md:col-span-8 space-y-8">
+        {logs.map((log) => {
+          const style = severityStyles[log.data.severity] || severityStyles.info;
+          const dt = formatDateTime(log.data.date);
+
+          return (
+            <a
+              href={`/writings/${log.id}`}
+              class={`group relative block bg-surface-container-low p-8 border-t-2 ${style.border} transition-all hover:bg-surface-container-high no-underline`}
+            >
+              <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-32 flex-shrink-0">
+                  <time class={`font-mono text-sm text-outline ${style.hoverText} transition-colors`}>
+                    <span set:html={`${dt.date}<br/>${dt.time}`} />
+                  </time>
+                </div>
+                <div class="flex-grow">
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    {log.data.tags.map((tag) => {
+                      const ts = tagStyles[tag] || defaultTag;
+                      return (
+                        <span class={`${ts.bg} ${ts.text} font-mono text-[10px] px-2 py-0.5 border ${ts.border}`}>
+                          [{tag}]
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <h2 class={`text-2xl font-headline font-bold text-on-background mb-3 ${style.hoverText} transition-colors`}>
+                    {log.data.title}
+                  </h2>
+                  <p class="text-on-surface-variant text-sm leading-relaxed mb-6 font-body">
+                    {log.data.description}
+                  </p>
+                  <div class="flex items-center gap-4">
+                    <span class={`font-mono text-xs uppercase tracking-widest ${style.accent} flex items-center gap-2 group-hover:gap-3 transition-all`}>
+                      Read_Full_Log
+                      <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- Featured Visualization / Tech Graph -->
+    <!-- <section class="mt-20"> -->
+    <!--   <div class="bg-surface-container-highest/30 p-8 border border-outline-variant/20 relative"> -->
+    <!--     <div class="flex flex-col md:flex-row gap-12 items-center"> -->
+    <!--       <div class="w-full md:w-1/2"> -->
+    <!--         <h3 class="text-3xl font-headline font-black uppercase tracking-tighter mb-4 text-primary-container"> -->
+    <!--           Substrate Activity -->
+    <!--         </h3> -->
+    <!--         <p class="text-on-surface-variant text-sm mb-6 max-w-md"> -->
+    <!--           Visualizing system entropy and background task intensity across -->
+    <!--           the root cluster. Current load remains nominal with periodic -->
+    <!--           spikes during log encryption cycles. -->
+    <!--         </p> -->
+    <!--         <div class="space-y-4"> -->
+    <!--           <div class="h-1 bg-zinc-800 w-full overflow-hidden"> -->
+    <!--             <div class="h-full bg-primary-container w-[72%]"></div> -->
+    <!--           </div> -->
+    <!--           <div class="flex justify-between font-mono text-[10px] uppercase text-outline"> -->
+    <!--             <span>CPU_CORE_CLUSTER</span> -->
+    <!--             <span>72% LOAD</span> -->
+    <!--           </div> -->
+    <!--         </div> -->
+    <!--       </div> -->
+    <!--       <div class="w-full md:w-1/2 aspect-video bg-zinc-950 flex items-center justify-center border border-outline-variant/50 relative group overflow-hidden"> -->
+    <!--         <img -->
+    <!--           alt="Circuitry Detail" -->
+    <!--           class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale group-hover:grayscale-0 transition-all duration-700" -->
+    <!--           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm_MG0UK3B98Vkitqb1HVJp48LB8Vkzo2hO0EFaXdX8pTn3WagqbsXlXXco3M-duinDxM3s2SkSkbO_Yx8bsdiefcJF-jhCg1WBn51YvwPuSQpuSge_bS5ivVSsSD8G0IN4b4aEp2p59HHKPcENozF60xK4snjm3fPifOGhCNdDihOz1EJvb2bqEmoQcqm3BGFt4grXX50TmsGIpgNCIvrawuFwo4tpZdw54GxN8qYFL9Dc1OBLAza4191fNkSQEmNMKazKIM0RcM" -->
+    <!--         /> -->
+    <!--         <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div> -->
+    <!--         <div class="relative z-10 text-primary-container text-center"> -->
+    <!--           <span class="material-symbols-outlined text-4xl mb-2">monitoring</span> -->
+    <!--           <div class="font-mono text-[10px] uppercase tracking-widest"> -->
+    <!--             Live_Telemetry_Active -->
+    <!--           </div> -->
+    <!--         </div> -->
+    <!--       </div> -->
+    <!--     </div> -->
+    <!--   </div> -->
+    <!-- </section> -->
+  </main>
+</Layout>

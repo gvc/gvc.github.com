@@ -1,37 +1,184 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+
+const allLogs = await getCollection('logs');
+const recentLogs = allLogs
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 4);
+
+function formatTime(date: Date): string {
+  return date.toISOString().split('T')[1]?.substring(0, 8) ?? '';
+}
 ---
 
-<Layout title="Home">
-	<section class="intro">
-		<h1>Who am I?</h1>
-		<p>
-Hello, I'm Guilherme Carvalho, a Staff Engineer at VTEX. Co-founder of <a href="https://guava.software/">Guava</a>, a Ruby/Rails development studio.
-			Computer Science graduate from UFPE (Universidade Federal de Pernambuco).
-			Master's degree on ensemble methods for machine learning from UFPE.
-		</p>
-	</section>
+<Layout title="~/gvc // HOME" activeNav="home">
+  <Fragment slot="head">
+    <style>
+      .scanline-overlay {
+        background:
+          linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+          linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.06),
+            rgba(0, 255, 0, 0.02),
+            rgba(0, 255, 0, 0.06)
+          );
+        background-size:
+          100% 2px,
+          3px 100%;
+        pointer-events: none;
+      }
+    </style>
+  </Fragment>
+
+  <main class="w-full pt-16 flex-grow relative">
+    <div class="scanline-overlay absolute inset-0 z-10 opacity-30"></div>
+    <!-- HERO SECTION -->
+    <section
+      class="relative min-h-[800px] flex flex-col justify-center px-8 md:px-16 lg:px-24 border-b-2 border-surface-container-high bg-surface overflow-hidden"
+    >
+      <div
+        class="absolute top-10 right-10 text-on-surface-variant font-headline text-[10px] leading-relaxed opacity-40 select-none hidden lg:block"
+      >
+        KERNEL_LOAD_ADR: 0x00FF7F<br />
+        MEMORY_MAP: SUCCESS<br />
+        DRV_INIT: [OK]<br />
+        SHELL_ESTABLISHED: TRUE
+      </div>
+      <div class="z-20 max-w-5xl mx-auto w-full">
+        <div
+          class="inline-flex items-center gap-2 mb-6 px-3 py-1 bg-surface-container-lowest border-l-4 border-primary-container"
+        >
+          <span
+            class="text-primary-container font-headline text-[10px] tracking-widest uppercase font-black"
+          >SYSTEM BOOT: SUCCESSFUL</span>
+        </div>
+        <h1
+          class="text-6xl md:text-8xl font-black font-headline tracking-tighter text-on-surface leading-[0.9] mb-8 uppercase"
+        >
+          GUILHERME<br />
+          <span class="text-primary-container">CARVALHO.</span>
+        </h1>
+        <p
+          class="text-lg md:text-xl text-on-surface-variant font-body max-w-2xl mb-12 leading-relaxed"
+        >
+          Staff engineer, studio co-founder, and ML researcher.
+          14 years of building software that works — from Rails
+          startups to commerce at scale.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/experiments"
+            class="px-8 py-4 bg-secondary-container text-on-secondary font-headline text-sm tracking-widest uppercase font-black hover:brightness-110 active:scale-[0.98] transition-all flex items-center gap-3 no-underline"
+          >
+            VIEW_PROJECTS
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+          <a
+            href="/writings"
+            class="px-8 py-4 bg-surface-container-low text-on-surface font-headline text-sm tracking-widest uppercase font-black border-2 border-[#1e2024] hover:bg-surface-container transition-all no-underline"
+          >
+            SYSTEM_LOGS
+          </a>
+        </div>
+      </div>
+      <!-- ASYMMETRIC DECORATION -->
+      <div
+        class="absolute bottom-0 right-0 w-1/3 h-px bg-primary-container opacity-20"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 w-px h-1/3 bg-primary-container opacity-20"
+      ></div>
+    </section>
+    <!-- QUICK LINKS BENTO GRID -->
+    <section class="p-8 md:p-16 lg:p-24 bg-surface-container-low">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Link 1: Experiments -->
+        <a
+          href="/experiments"
+          class="group relative bg-surface-container p-8 h-80 flex flex-col justify-between overflow-hidden cursor-pointer hover:translate-y-[-4px] transition-transform duration-300 no-underline"
+        >
+          <div
+            class="absolute top-0 right-0 p-4 opacity-10 text-primary-container group-hover:opacity-30 transition-opacity"
+          >
+            <span class="material-symbols-outlined text-9xl">code_blocks</span>
+          </div>
+          <div class="z-20">
+            <span
+              class="text-on-tertiary-container font-headline text-[10px] tracking-widest uppercase mb-4 block"
+            >MODULE_01</span>
+            <h3
+              class="text-3xl font-black font-headline tracking-tighter text-primary-container uppercase"
+            >
+              EXPERIMENTS
+            </h3>
+          </div>
+          <div class="z-20">
+            <p class="text-on-surface-variant text-sm mb-6 max-w-[200px]">
+              Examine high-fidelity experiments and architectural schematics.
+            </p>
+            <span
+              class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform"
+            >arrow_right_alt</span>
+          </div>
+        </a>
+        <!-- Link 2: Logs -->
+        <a
+          href="/writings"
+          class="group relative bg-surface-container p-8 h-80 flex flex-col justify-between overflow-hidden cursor-pointer hover:translate-y-[-4px] transition-transform duration-300 no-underline"
+        >
+          <div
+            class="absolute top-0 right-0 p-4 opacity-10 text-secondary-container group-hover:opacity-30 transition-opacity"
+          >
+            <span class="material-symbols-outlined text-9xl">terminal</span>
+          </div>
+          <div class="z-20">
+            <span
+              class="text-on-tertiary-container font-headline text-[10px] tracking-widest uppercase mb-4 block"
+            >MODULE_02</span>
+            <h3
+              class="text-3xl font-black font-headline tracking-tighter text-secondary-container uppercase"
+            >
+              SYSTEM_LOGS
+            </h3>
+          </div>
+          <div class="z-20">
+            <p class="text-on-surface-variant text-sm mb-6 max-w-[200px]">
+              Browse system dispatches, field notes, and encrypted transmissions.
+            </p>
+            <span
+              class="material-symbols-outlined text-secondary-container group-hover:translate-x-2 transition-transform"
+            >arrow_right_alt</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <!-- RECENT_SYSTEM_LOGS SECTION -->
+    <section
+      class="px-8 md:px-16 lg:px-24 py-20 bg-surface-container-lowest border-t-2 border-[#1e2024]"
+    >
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-2xl font-black font-headline tracking-tighter text-on-surface uppercase mb-10 flex items-center gap-4"
+        >
+          <span class="material-symbols-outlined text-primary-container">terminal</span>
+          RECENT_SYSTEM_LOGS
+          <span class="flex-grow h-px bg-[#1e2024]"></span>
+        </h2>
+        <div class="space-y-2 font-['Space_Grotesk']">
+          {recentLogs.map((log) => (
+            <a
+              href={`/writings/${log.id}`}
+              class="grid grid-cols-[100px_1fr_100px] items-center py-4 px-6 bg-surface-container-low border border-[#1e2024] hover:border-primary-container transition-all group no-underline"
+            >
+              <span class="text-[10px] tracking-widest text-on-tertiary-container font-medium">{formatTime(log.data.date)}</span>
+              <span class="text-sm font-medium text-on-surface uppercase tracking-tight">{log.data.title}</span>
+              <span class="text-[10px] font-bold text-primary-container text-right uppercase tracking-widest">[{log.data.severity.toUpperCase()}]</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
-
-<style>
-	.intro {
-		max-width: 650px;
-	}
-
-	.intro h1 {
-		color: var(--accent-color);
-		font-family: var(--font-mono);
-		font-size: 1.75rem;
-		margin-bottom: 2rem;
-	}
-
-	.intro p {
-		margin-bottom: 1.5rem;
-		line-height: 1.8;
-		font-size: 1.05rem;
-	}
-
-	.intro p:last-child {
-		margin-bottom: 0;
-	}
-</style>
