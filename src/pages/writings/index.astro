@@ -76,30 +76,9 @@ function formatDateTime(date: Date): { date: string; time: string } {
     </section>
 
     <!-- Logs Bento Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-      <!-- Active Terminal Status Widget -->
-      <div class="md:col-span-4 bg-surface-container-low p-6 flex flex-col justify-between border-t-2 border-secondary-container relative overflow-hidden">
-        <div class="scanline absolute inset-0 pointer-events-none"></div>
-        <div class="relative z-10">
-          <div class="flex justify-between items-start mb-8">
-            <span class="font-mono text-[10px] text-secondary-container tracking-widest">[KERNEL_FEED]</span>
-            <span
-              class="material-symbols-outlined text-secondary-container"
-              style="font-variation-settings: &quot;FILL&quot; 1"
-            >sensors</span>
-          </div>
-          <div class="space-y-4 font-mono text-[11px] text-on-surface-variant leading-relaxed">
-            <p>&gt; INITIALIZING_LOG_STREAM...</p>
-            <p>&gt; PARSING_METADATA_BLOCKS...</p>
-            <p>&gt; FETCHING_REMOTE_ASSETS [OK]</p>
-            <p>&gt; INDEXING <span class="text-primary-container">{logs.length}</span> LOG_ENTRIES...</p>
-            <p class="text-primary-container">&gt; CONNECTION_STABLE_W_LATENCY: 14MS</p>
-          </div>
-        </div>
-      </div>
-
+    <div class="grid grid-cols-1 gap-8">
       <!-- Main Log Entries -->
-      <div class="md:col-span-8 space-y-8">
+      <div class="space-y-8">
         {logs.map((log) => {
           const style = severityStyles[log.data.severity] || severityStyles.info;
           const dt = formatDateTime(log.data.date);
