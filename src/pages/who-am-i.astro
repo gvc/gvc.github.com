@@ -287,64 +287,6 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </section>
     </div>
-    <!-- Terminal Status Log -->
-    <section
-      class="mt-8 bg-surface-container-lowest border-2 border-surface-container p-6 relative group overflow-hidden"
-    >
-      <div
-        class="flex items-center justify-between mb-4 border-b border-surface-container pb-4"
-      >
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-primary-container">terminal</span>
-          <span
-            class="font-mono text-[11px] font-black uppercase tracking-[0.3em] text-on-surface-variant"
-          >CONSOLE_OUTPUT // KERNEL_LOG_8842X</span>
-        </div>
-        <div class="flex gap-1">
-          <div class="w-2 h-2 rounded-full bg-error/40"></div>
-          <div class="w-2 h-2 rounded-full bg-secondary-container/40"></div>
-          <div class="w-2 h-2 rounded-full bg-primary-container/40"></div>
-        </div>
-      </div>
-      <div
-        class="font-mono text-[10px] md:text-[12px] space-y-1.5 text-primary-container/70 selection:bg-primary-container selection:text-on-primary"
-      >
-        <p>
-          <span class="opacity-40">[%]</span> INITIALIZING BIOMETRIC SCAN...
-          <span class="text-primary-container font-black">[SUCCESS]</span>
-        </p>
-        <p>
-          <span class="opacity-40">[%]</span> HANDSHAKE ESTABLISHED WITH
-          REMOTE NODE 10.42.0.1
-        </p>
-        <p>
-          <span class="opacity-40">[%]</span> ACCESSING ENCRYPTED DOSSIER
-          #8842-X...
-        </p>
-        <p>
-          <span class="opacity-40">[%]</span> DECRYPTING SUBJECT BACKGROUND
-          RECORDS... 100%
-        </p>
-        <p>
-          <span class="opacity-40">[%]</span> DATA INTEGRITY VERIFIED. 0
-          ERRORS DETECTED.
-        </p>
-        <p>
-          <span class="opacity-40">[%]</span> DISPLAYING SUBJECT RECORD FOR
-          AUTHORIZED OPERATORS ONLY.
-        </p>
-        <p class="text-primary-container flex items-center gap-1">
-          <span class="opacity-40">[%]</span> <span>&gt;</span>
-          <span class="animate-pulse">_</span>
-        </p>
-      </div>
-      <!-- Corner Accents -->
-      <div
-        class="absolute bottom-2 right-2 flex flex-col items-end opacity-20 group-hover:opacity-100 transition-opacity"
-      >
-        <div class="text-[8px] font-mono text-primary-container">SYS_STABLE</div>
-        <div class="text-[8px] font-mono text-primary-container">TEMP_32C</div>
-      </div>
-    </section>
+
   </main>
 </Layout>

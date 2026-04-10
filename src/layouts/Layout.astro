@@ -95,10 +95,17 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
     <footer
       class="w-full py-6 px-8 flex flex-col md:flex-row justify-between items-center bg-[#0c0e12] border-t-2 border-[#1e2024] relative z-20 gap-4 mt-auto"
     >
-      <div
-        class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8]"
-      >
-        &copy; 2026 GUILHERME CARVALHO
+      <div class="flex flex-col gap-1">
+        <div
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8]"
+        >
+          &copy; 2026 GUILHERME CARVALHO
+        </div>
+        <div
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8]/50"
+        >
+          Vibe coded with <span class="text-[#00FF7F]/60">Claude</span>
+        </div>
       </div>
       <div class="flex gap-8">
         <a
