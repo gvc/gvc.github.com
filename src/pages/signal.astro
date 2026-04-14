@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="~/gvc // SIGNAL" activeNav="">
+  <Fragment slot="head">
+    <style>
+      .scanline-effect {
+        background: linear-gradient(
+          to bottom,
+          transparent 50%,
+          rgba(0, 255, 127, 0.03) 50%
+        );
+        background-size: 100% 4px;
+      }
+    </style>
+  </Fragment>
+
+  <div class="fixed inset-0 scanline-effect z-0 pointer-events-none opacity-60"></div>
+  <main class="pt-28 pb-32 px-6 md:px-16 min-h-screen max-w-4xl mx-auto relative z-10 flex-grow">
+
+    <div class="mb-16">
+      <span class="font-mono text-[10px] text-primary-container tracking-widest uppercase mb-4 block">
+        /SIGNAL // RESTRICTED
+      </span>
+      <h1 class="text-5xl md:text-6xl font-black font-headline tracking-tighter uppercase leading-none mb-4">
+        ACCESS_DENIED
+      </h1>
+      <p class="font-mono text-xs text-on-surface-variant/60">
+        REF: FIELD_REPORT_7714 // PENDING_DECLASSIFICATION
+      </p>
+    </div>
+
+    <div class="space-y-8 font-mono text-sm text-on-surface-variant leading-relaxed">
+      <div class="border-l-2 border-primary-container/30 pl-6">
+        <p class="text-xs text-on-surface-variant/50">
+          This document is restricted. Contents will be available once the post-mortem review cycle completes.
+        </p>
+        <p class="text-xs text-on-surface-variant/30 mt-4">
+          You found it. That's enough for now.
+        </p>
+      </div>
+    </div>
+
+  </main>
+</Layout>
