@@ -70,7 +70,7 @@ function formatDateTime(date: Date): { date: string; time: string } {
           <p>STATUS: <span class="text-primary-container">[ONLINE]</span></p>
           <p>ENTRIES: <span class="text-primary-container">{logs.length}</span> // SORTED BY RECENCY</p>
           <p>LAST_SYNC: <span class="text-primary-container">{logs[0] ? formatDateTime(logs[0].data.date).date : 'N/A'}</span></p>
-          <p>ENCRYPTION: AES-256_ACTIVE</p>
+          <p>ENCRYPTION: <a href="/signal" class="text-primary-container hover:underline">AES-256_ACTIVE</a></p>
         </div>
       </div>
     </section>
