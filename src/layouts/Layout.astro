@@ -39,14 +39,14 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
       class="fixed top-0 left-0 w-full z-50 bg-[#111317] border-b-2 border-[#1e2024] flex justify-between items-center px-6 py-4"
     >
       <div class="flex items-center gap-8">
-        <a href="/" class="text-xl font-black text-[#00FF7F] tracking-widest font-headline no-underline hover:no-underline">~/gvc</a>
+        <a href="/" class="text-xl font-black text-[#50b850] tracking-widest font-headline no-underline hover:no-underline">~/gvc</a>
         <nav class="hidden md:flex gap-6 items-center">
           <a
             class:list={[
               "font-['Space_Grotesk'] tracking-tighter uppercase text-xs font-bold transition-colors",
               activeNav === 'home'
-                ? "text-[#00FF7F] border-b-2 border-[#00FF7F] pb-1"
-                : "text-[#b9cbb8] hover:text-[#00FF7F]"
+                ? "text-[#50b850] border-b-2 border-[#50b850] pb-1"
+                : "text-[#9aaabb] hover:text-[#50b850]"
             ]}
             href="/"
           >DASHBOARD</a>
@@ -54,8 +54,8 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
             class:list={[
               "font-['Space_Grotesk'] tracking-tighter uppercase text-xs font-bold transition-colors",
               activeNav === 'experiments'
-                ? "text-[#00FF7F] border-b-2 border-[#00FF7F] pb-1"
-                : "text-[#b9cbb8] hover:text-[#00FF7F]"
+                ? "text-[#50b850] border-b-2 border-[#50b850] pb-1"
+                : "text-[#9aaabb] hover:text-[#50b850]"
             ]}
             href="/experiments"
           >EXPERIMENTS</a>
@@ -63,8 +63,8 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
             class:list={[
               "font-['Space_Grotesk'] tracking-tighter uppercase text-xs font-bold transition-colors",
               activeNav === 'writings'
-                ? "text-[#00FF7F] border-b-2 border-[#00FF7F] pb-1"
-                : "text-[#b9cbb8] hover:text-[#00FF7F]"
+                ? "text-[#50b850] border-b-2 border-[#50b850] pb-1"
+                : "text-[#9aaabb] hover:text-[#50b850]"
             ]}
             href="/writings"
           >LOGS</a>
@@ -72,8 +72,8 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
             class:list={[
               "font-['Space_Grotesk'] tracking-tighter uppercase text-xs font-bold transition-colors",
               activeNav === 'who-am-i'
-                ? "text-[#00FF7F] border-b-2 border-[#00FF7F] pb-1"
-                : "text-[#b9cbb8] hover:text-[#00FF7F]"
+                ? "text-[#50b850] border-b-2 border-[#50b850] pb-1"
+                : "text-[#9aaabb] hover:text-[#50b850]"
             ]}
             href="/who-am-i"
           >WHO_AM_I</a>
@@ -97,27 +97,27 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
     >
       <div class="flex flex-col gap-1">
         <div
-          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8]"
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#9aaabb]"
         >
           &copy; 2026 GUILHERME CARVALHO
         </div>
         <div
-          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8]/50"
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#9aaabb]/50"
         >
           Assembled with available tools
         </div>
       </div>
       <div class="flex gap-8">
         <a
-          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8] hover:text-[#fe5f00] transition-colors focus:ring-1 focus:ring-[#fe5f00] outline-none"
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#9aaabb] hover:text-[#d07030] transition-colors focus:ring-1 focus:ring-[#d07030] outline-none"
           href="https://github.com/gvc"
         >GITHUB</a>
         <a
-          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8] hover:text-[#fe5f00] transition-colors focus:ring-1 focus:ring-[#fe5f00] outline-none"
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#9aaabb] hover:text-[#d07030] transition-colors focus:ring-1 focus:ring-[#d07030] outline-none"
           href="https://www.linkedin.com/in/guieevc/"
         >LINKEDIN</a>
         <a
-          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#b9cbb8] hover:text-[#fe5f00] transition-colors focus:ring-1 focus:ring-[#fe5f00] outline-none"
+          class="font-['Space_Grotesk'] text-[9px] leading-none uppercase text-[#9aaabb] hover:text-[#d07030] transition-colors focus:ring-1 focus:ring-[#d07030] outline-none"
           href="https://x.com/guieevc"
         >TWITTER</a>
       </div>
@@ -127,19 +127,19 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
     <nav
       class="md:hidden fixed bottom-0 left-0 w-full bg-[#111317] flex justify-around items-center py-4 z-[60] border-t border-[#1e2024]"
     >
-      <a class:list={["flex flex-col items-center gap-1", activeNav === 'home' ? "text-[#00FF7F]" : "text-[#b9cbb8]"]} href="/">
+      <a class:list={["flex flex-col items-center gap-1", activeNav === 'home' ? "text-[#50b850]" : "text-[#9aaabb]"]} href="/">
         <span class="material-symbols-outlined">grid_view</span>
         <span class="text-[8px] uppercase tracking-tighter font-bold">HOME</span>
       </a>
-      <a class:list={["flex flex-col items-center gap-1", activeNav === 'experiments' ? "text-[#00FF7F]" : "text-[#b9cbb8]"]} href="/experiments">
+      <a class:list={["flex flex-col items-center gap-1", activeNav === 'experiments' ? "text-[#50b850]" : "text-[#9aaabb]"]} href="/experiments">
         <span class="material-symbols-outlined">account_tree</span>
         <span class="text-[8px] uppercase tracking-tighter font-bold">WORK</span>
       </a>
-      <a class:list={["flex flex-col items-center gap-1", activeNav === 'writings' ? "text-[#00FF7F]" : "text-[#b9cbb8]"]} href="/writings">
+      <a class:list={["flex flex-col items-center gap-1", activeNav === 'writings' ? "text-[#50b850]" : "text-[#9aaabb]"]} href="/writings">
         <span class="material-symbols-outlined">terminal</span>
         <span class="text-[8px] uppercase tracking-tighter font-bold">LOGS</span>
       </a>
-      <a class:list={["flex flex-col items-center gap-1", activeNav === 'who-am-i' ? "text-[#00FF7F]" : "text-[#b9cbb8]"]} href="/who-am-i">
+      <a class:list={["flex flex-col items-center gap-1", activeNav === 'who-am-i' ? "text-[#50b850]" : "text-[#9aaabb]"]} href="/who-am-i">
         <span class="material-symbols-outlined">person</span>
         <span class="text-[8px] uppercase tracking-tighter font-bold">ID</span>
       </a>

@@ -15,7 +15,7 @@ const { Content } = await render(entry);
 
 const statusColors: Record<string, { bg: string; text: string; label: string }> = {
   active: { bg: 'bg-primary/10', text: 'text-primary', label: 'ACTIVE' },
-  stable: { bg: 'bg-[#00bcd4]/10', text: 'text-[#00bcd4]', label: 'STABLE' },
+  stable: { bg: 'bg-[#40a0b0]/10', text: 'text-[#40a0b0]', label: 'STABLE' },
   critical: { bg: 'bg-secondary/10', text: 'text-secondary', label: 'CRITICAL' },
   archived: { bg: 'bg-outline/10', text: 'text-outline', label: 'ARCHIVED' },
 };
@@ -87,7 +87,7 @@ const status = statusColors[entry.data.status] || statusColors.active;
         font-family: 'JetBrains Mono', monospace;
       }
       .pulse-dot {
-        box-shadow: 0 0 8px #00ff7f;
+        box-shadow: 0 0 8px #50b850;
       }
     </style>
   </Fragment>
