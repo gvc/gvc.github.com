@@ -27,6 +27,12 @@ const { title, activeNav = '', bodyClass = '' } = Astro.props;
       rel="stylesheet"
     />
     <slot name="head" />
+    <!-- Umami Analytics -->
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="130f9c41-b9e1-45af-b744-87811a524a78"
+    ></script>
   </head>
   <body
     class:list={[
