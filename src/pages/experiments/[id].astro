@@ -25,7 +25,7 @@ const status = statusColors[entry.data.status] || statusColors.active;
 
 <Layout title={`~/gvc // ${entry.data.title}`} activeNav="experiments">
   <Fragment slot="head">
-    <style>
+    <style is:global>
       .prose {
         color: var(--color-on-surface-variant);
         line-height: 1.8;
@@ -79,6 +79,17 @@ const status = statusColors[entry.data.status] || statusColors.active;
       .prose strong {
         color: var(--color-on-surface);
         font-weight: 700;
+      }
+      .prose a {
+        color: var(--color-secondary);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-thickness: 1px;
+        transition: color 0.15s ease, background-color 0.15s ease;
+      }
+      .prose a:hover {
+        background-color: var(--color-secondary);
+        color: var(--color-background);
       }
       .prose code {
         background: var(--color-surface-container);
