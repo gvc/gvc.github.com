@@ -179,11 +179,6 @@ components:
     textColor: "{colors.ink}"
     typography: "{typography.title}"
     padding: "0 0 0 1.9rem"
-  cta-box:
-    textColor: "{colors.ink}"
-    typography: "{typography.headline}"
-    rounded: "{rounded.none}"
-    padding: "clamp(1.75rem, 4vw, 2.75rem)"
   activity-bar:
     backgroundColor: "{colors.moss}"
     height: "7.5rem"
@@ -222,7 +217,7 @@ This world replaces the earlier dark terminal look and now serves every public r
 - Parchment sheet, brown ink, ember reserved for interaction.
 - Terrain is data: strata, year grid, contours raised under marks, a river for research, a single moss series for activity.
 - Archivo in two widths (expanded caps for sheet lettering, condensed for margin data); Source Serif 4 for everything read; a system monospace for code only.
-- Double neatline frames sheet objects: the map field, title blocks, plates, the call to action.
+- Double neatline frames sheet objects: the map field, title blocks, plates.
 - One authored motion: the survey sweeps in once, off under reduced motion.
 - Hover or focus on any dated feature lights its span of time on the sheet.
 
@@ -272,7 +267,7 @@ The ramp has four families. Sizes that differ by a sixteenth of a rem are treate
 
 - **Display** (Archivo 800, width 125%, uppercase, line-height 0.95 to 1): page names. Page scale clamp(2.25rem, 5vw, 3.5rem) on `/who-am-i` and indexes; the home name uses the same step at clamp(2.25rem, 3.4vw, 3.1rem) to fit the collar; case titles go large at clamp(2rem, 8vw, 4.5rem). One per page.
 - **Article Title** (Source Serif 600, clamp(2rem, 4.6vw, 3.25rem), 1.1, balanced): writing and experiment detail pages, where the page name is a sentence.
-- **Headline** (Source Serif, 1.375 to 2.25rem fluid, 1.2 to 1.3): the closing line (400, clamp(1.375rem, 2.6vw, 2rem)), role titles (600, clamp(1.5rem, 2.6vw, 1.875rem)), the case call to action (600, clamp(1.5rem, 3vw, 2.25rem)).
+- **Headline** (Source Serif, 1.375 to 2.25rem fluid, 1.2 to 1.3): the closing line (400, clamp(1.375rem, 2.6vw, 2rem)), role titles (600, clamp(1.5rem, 2.6vw, 1.875rem)).
 - **Lede** (Source Serif 400, 1.25rem, 1.45 to 1.5): the home claim, the article dek (italic), the case summary (fluid up to 1.5rem, max 38ch).
 - **Title** (Source Serif 600, 1.3125rem, 1.3): gazetteer entry titles, decision headings. Compact size 1.1875rem in the home index. Map mark names use the sheet's own scale (15 viewBox units, floor 12px; experiments 1.12x).
 - **Reading** (Source Serif 400, 1.1875rem, 1.65, max 64 to 66ch): prose, bio, case body, shipped lists, call-to-action text, paper titles (italic), working materials.
@@ -320,7 +315,7 @@ The sheet is flat. There are no box-shadows. Depth is conveyed by the double nea
 
 Square corners. Radius appears only as 2px on focus outlines and inline code, and 1.5px on activity bar tops. Circles belong to the symbol set, not to containers: the ringed benchmark, the paper dot, and the ring bullets in prose and shipped lists. Framing is done with rules: the double neatline, 1.5px ink rules above sections, heads and footers, and 1px hairlines (Ink 4 at 45%) between rows. The symbol set is fixed: a filled triangle summit for experiments and case decisions, a ringed benchmark for writing and shipped items, a filled slate dot for papers. Hatching carries two meanings: 45-degree ink hatch for overlapping roles, -45-degree faint hatch for the unsurveyed future.
 
-**The Neatline Rule.** A double neatline marks an object that belongs to the sheet itself: the map field, title blocks, plates, the call to action. Do not use it as a generic card border.
+**The Neatline Rule.** A double neatline marks an object that belongs to the sheet itself: the map field, title blocks, plates. Do not use it as a generic card border.
 
 ## Components
 
@@ -387,7 +382,7 @@ One authored moment: on load, the map grid and contours sweep in from 2010 towar
 - **Do** reserve Ember (#a14e08) for focus, hover, current page, link underlines, the span highlight, and the active chart bar.
 - **Do** set names and section heads in expanded Archivo caps and dates, coordinates, counts, and fact labels in condensed tabular Archivo.
 - **Do** set everything read in Source Serif 4 on the ramp's steps (Reading 1.1875rem for prose, Title 1.3125rem for entry headings, Body 1.0625rem for descriptions).
-- **Do** frame sheet objects (map, title blocks, plates, call to action) with the double neatline (1.5px border plus 0.5px outline, offset 3 to 4px, inset 5px).
+- **Do** frame sheet objects (map, title blocks, plates) with the double neatline (1.5px border plus 0.5px outline, offset 3 to 4px, inset 5px).
 - **Do** print images as numbered plates and key dated items with the sheet's symbols: summit for experiments and decisions, benchmark for writing and shipped items, slate dot for papers.
 - **Do** give every chart a table view and every dated feature a hover and focus state.
 - **Do** keep the single survey sweep as the only entrance motion, and switch it off under reduced motion.

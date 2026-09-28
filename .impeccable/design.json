@@ -326,7 +326,7 @@
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Closing line (400), role titles and case CTA (600); 1.375 to 2.25rem fluid."
+        "purpose": "Closing line (400), role titles (600); 1.375 to 2.25rem fluid."
       },
       "lede": {
         "displayName": "Lede",
@@ -338,7 +338,7 @@
       },
       "reading": {
         "displayName": "Reading",
-        "purpose": "Prose, bio, case body, CTA text, paper titles; max 64-66ch."
+        "purpose": "Prose, bio, case body, paper titles; max 64-66ch."
       },
       "body": {
         "displayName": "Body",
@@ -554,14 +554,6 @@
       "css": ".ds-dec{display:grid;gap:1.75rem;max-width:66ch;list-style:none;margin:0;padding:0;background:var(--page)}.ds-dec li{position:relative;padding-left:1.9rem}.ds-dec li::before{content:'';position:absolute;left:.1rem;top:.45rem;width:.85rem;height:.75rem;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}.ds-dec h3{margin:0;padding-top:.1rem;font-family:var(--serif);font-size:1.3125rem;font-weight:600;line-height:1.3;color:var(--ink)}.ds-dec p{margin:.4rem 0 0;font-family:var(--serif);font-size:1.0625rem;line-height:1.6;color:var(--ink-2)}"
     },
     {
-      "name": "Neatline CTA Box",
-      "kind": "card",
-      "refersTo": "cta-box",
-      "description": "Closing call to action on case pages inside a double neatline.",
-      "html": "<section class=\"ds-cta\"><h2>Have a project like this?</h2><p>I take projects from brief to deploy. Message me on <a href=\"#\">LinkedIn</a> or see more of my code on <a href=\"#\">GitHub</a>.</p></section>",
-      "css": ".ds-cta{margin:5px;padding:clamp(1.75rem,4vw,2.75rem);border:1.5px solid var(--neat);outline:.5px solid var(--neat);outline-offset:4px;background:var(--page)}.ds-cta h2{margin:0;font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.25rem);font-weight:600;line-height:1.2;color:var(--ink)}.ds-cta p{margin:.75rem 0 0;font-family:var(--serif);font-size:1.1875rem;line-height:1.6;color:var(--ink-2);max-width:58ch}.ds-cta a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:.22em}.ds-cta a:hover{color:var(--ember)}.ds-cta a:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}"
-    },
-    {
       "name": "Activity Chart",
       "kind": "custom",
       "refersTo": "activity-bar",
@@ -585,7 +577,7 @@
       "Parchment sheet, brown ink, ember reserved for interaction.",
       "Terrain is data: strata, year grid, contours raised under marks, a river for research, a single moss series for activity.",
       "Archivo in two widths (expanded caps for sheet lettering, condensed for margin data); Source Serif 4 for everything read; a system monospace for code only.",
-      "Double neatline frames sheet objects: the map field, title blocks, plates, the call to action.",
+      "Double neatline frames sheet objects: the map field, title blocks, plates.",
       "One authored motion: the survey sweeps in once, off under reduced motion.",
       "Hover or focus on any dated feature lights its span of time on the sheet."
     ],
@@ -632,7 +624,7 @@
       },
       {
         "name": "The Neatline Rule",
-        "body": "A double neatline marks an object that belongs to the sheet itself: the map field, title blocks, plates, the call to action. Do not use it as a generic card border.",
+        "body": "A double neatline marks an object that belongs to the sheet itself: the map field, title blocks, plates. Do not use it as a generic card border.",
         "section": "shapes"
       }
     ],
@@ -641,7 +633,7 @@
       "**Do** reserve Ember (#a14e08) for focus, hover, current page, link underlines, the span highlight, and the active chart bar.",
       "**Do** set names and section heads in expanded Archivo caps and dates, coordinates, counts, and fact labels in condensed tabular Archivo.",
       "**Do** set everything read in Source Serif 4 on the ramp's steps (Reading 1.1875rem for prose, Title 1.3125rem for entry headings, Body 1.0625rem for descriptions).",
-      "**Do** frame sheet objects (map, title blocks, plates, call to action) with the double neatline (1.5px border plus 0.5px outline, offset 3 to 4px, inset 5px).",
+      "**Do** frame sheet objects (map, title blocks, plates) with the double neatline (1.5px border plus 0.5px outline, offset 3 to 4px, inset 5px).",
       "**Do** print images as numbered plates and key dated items with the sheet's symbols: summit for experiments and decisions, benchmark for writing and shipped items, slate dot for papers.",
       "**Do** give every chart a table view and every dated feature a hover and focus state.",
       "**Do** keep the single survey sweep as the only entrance motion, and switch it off under reduced motion.",

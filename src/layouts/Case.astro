@@ -1,5 +1,6 @@
 ---
 import Sheet from './Sheet.astro';
+import SheetClose from '../components/SheetClose.astro';
 
 export interface Props {
   title: string;
@@ -34,17 +35,8 @@ const { title, summary, facts, links } = Astro.props;
     </header>
 
     <slot />
-
-    <section class="case__cta" aria-labelledby="cta-title">
-      <h2 id="cta-title">Have a project like this?</h2>
-      <p>
-        I take projects from brief to deploy. Message me on
-        <a href="https://www.linkedin.com/in/guieevc/" rel="noopener">LinkedIn</a> or see more of my code on
-        <a href="https://github.com/gvc" rel="noopener">GitHub</a>.
-      </p>
-    </section>
   </main>
-  <p class="case__meta">© {new Date().getUTCFullYear()} Guilherme Carvalho · Recife, Pernambuco</p>
+  <SheetClose />
 </Sheet>
 
 <style>
@@ -287,50 +279,6 @@ const { title, summary, facts, links } = Astro.props;
   }
 
   /* ------------------------------------------------------------ call to action */
-
-  .case__cta {
-    margin: clamp(4rem, 10vh, 6rem) 5px 0;
-    padding: clamp(1.75rem, 4vw, 2.75rem);
-    border: 1.5px solid var(--neat);
-    outline: 0.5px solid var(--neat);
-    outline-offset: 4px;
-  }
-
-  .case__cta h2 {
-    font-family: var(--serif);
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    font-weight: 600;
-    line-height: 1.2;
-    color: var(--ink);
-  }
-
-  .case__cta p {
-    margin-top: 0.75rem;
-    font-family: var(--serif);
-    font-size: 1.1875rem;
-    line-height: 1.6;
-    color: var(--ink-2);
-    max-width: 58ch;
-  }
-
-  .case__cta a {
-    color: var(--ink);
-    font-weight: 600;
-    text-decoration-color: var(--ember);
-    text-decoration-thickness: 2px;
-  }
-
-  .case__cta a:hover {
-    color: var(--ember);
-  }
-
-  .case__meta {
-    padding: 2rem var(--gutter) 2.5rem;
-    font-stretch: 88%;
-    font-size: 0.8125rem;
-    letter-spacing: 0.06em;
-    color: var(--ink-3);
-  }
 
   @media (max-width: 860px) {
     .case__head {
