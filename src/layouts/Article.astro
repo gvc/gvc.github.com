@@ -1,0 +1,169 @@
+---
+import '../styles/prose.css';
+import Sheet from './Sheet.astro';
+import SheetClose from '../components/SheetClose.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  datetime: string;
+  date: string;
+  back: { href: string; label: string };
+  symbol: 'summit' | 'benchmark';
+  facts?: { label: string; value: string }[];
+}
+
+const { title, description, datetime, date, back, symbol, facts = [] } = Astro.props;
+const breakable = (text: string) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/(_|\/+)/g, '$1<wbr>');
+---
+
+<Sheet title={`${title} — Guilherme Carvalho`} description={description}>
+  <main class="article">
+    <a class="back" href={back.href}>{back.label}</a>
+
+    <header class="article__head">
+      <h1 set:html={breakable(title)} />
+      <p class="article__dek">{description}</p>
+      <dl class="facts">
+        <div>
+          <dt>{symbol === 'summit' ? 'Started' : 'Published'}</dt>
+          <dd class="facts__date">
+            <svg viewBox="-8 -8 16 16" aria-hidden="true">
+              {symbol === 'summit' ? (
+                <path d="M0 -6.5 L6.5 5 L-6.5 5 Z" class="fill" />
+              ) : (
+                <>
+                  <circle r="5" class="ring" />
+                  <circle r="1.6" class="fill" />
+                </>
+              )}
+            </svg>
+            <time datetime={datetime}>{date}</time>
+          </dd>
+        </div>
+        {facts.map((f) => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </header>
+
+    <article class="prose">
+      <slot />
+    </article>
+
+    <a class="back back--foot" href={back.href}>{back.label}</a>
+  </main>
+  <SheetClose />
+</Sheet>
+
+<style>
+  .article {
+    width: 100%;
+    max-width: 50rem;
+    padding: clamp(1.5rem, 5vh, 3rem) var(--gutter) clamp(3rem, 8vh, 5rem);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-stretch: 88%;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-decoration: none;
+  }
+
+  .back::before {
+    content: '';
+    width: 1.1rem;
+    height: 1px;
+    background: currentColor;
+    transform-origin: right;
+    transition: transform 200ms var(--ease-out);
+  }
+
+  .back:hover {
+    color: var(--ink);
+  }
+
+  .back:hover::before {
+    transform: scaleX(1.45);
+  }
+
+  .back--foot {
+    margin-top: 3.5rem;
+  }
+
+  .article__head {
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1.5px solid var(--neat);
+  }
+
+  .facts__date {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .facts__date svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    overflow: visible;
+  }
+
+  .fill { fill: var(--ink); }
+  .ring { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2rem, 4.6vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .article__dek {
+    margin-top: 1rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 58ch;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2.5rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .facts dt {
+    font-stretch: 82%;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .facts dd {
+    margin: 0.15rem 0 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--ink);
+  }
+</style>

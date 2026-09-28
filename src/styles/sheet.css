@@ -1,0 +1,138 @@
+/* Survey sheet: Imladris tuned for the web. Light parchment is canonical,
+   "evening Rivendell" follows the OS preference. */
+
+:root {
+  color-scheme: light dark;
+
+  --page: #f2e5bc;
+  --mantle: #ecdeb0;
+  --surface: #e6d5a4;
+  --overlay: #dcc894;
+
+  --ink: #3f2d23;
+  --ink-2: #654735;
+  --ink-3: #62574c;
+  --ink-4: #9a8878;
+
+  --moss: #5f6928;
+  --gold: #8d5907;
+  --slate: #336874;
+  --brick: #b03c3c;
+  --ember: #a14e08;
+
+  --band-moss: color-mix(in oklab, #6c782e 34%, var(--page));
+  --band-gold: color-mix(in oklab, #b47109 30%, var(--page));
+  --band-slate: color-mix(in oklab, #336874 28%, var(--page));
+  --contour: color-mix(in oklab, #8a5a2b 62%, var(--page));
+  --grid: color-mix(in oklab, #c14a4a 55%, var(--page));
+  --water: #336874;
+  --neat: var(--ink);
+
+  /* Lettering inside the map field, darkened to hold AA on every stratum. */
+  --field-muted: #4e3e30;
+  --field-water: #1f4d57;
+
+  --sans: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, serif;
+
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #2a2520;
+    --mantle: #322c25;
+    --surface: #3c352c;
+    --overlay: #4a4034;
+
+    --ink: #efe3c6;
+    --ink-2: #e8d9b8;
+    --ink-3: #c2b294;
+    --ink-4: #8f8168;
+
+    --moss: #a9b665;
+    --gold: #d8a657;
+    --slate: #7daea3;
+    --brick: #ea6962;
+    --ember: #e78a4e;
+
+    --band-moss: color-mix(in oklab, #a9b665 30%, var(--page));
+    --band-gold: color-mix(in oklab, #e0a24a 34%, var(--page));
+    --band-slate: color-mix(in oklab, #6fa9c0 30%, var(--page));
+    --contour: color-mix(in oklab, #d4be98 36%, var(--page));
+    --grid: color-mix(in oklab, #ea6962 45%, var(--page));
+    --water: #7daea3;
+
+    --field-muted: #dccdae;
+    --field-water: #a8d5ca;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--page);
+  color: var(--ink-2);
+  font-family: var(--sans);
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  scrollbar-color: var(--ink-4) var(--mantle);
+  accent-color: var(--ember);
+  caret-color: var(--ember);
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--page);
+}
+
+::selection {
+  background: var(--overlay);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+figure {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

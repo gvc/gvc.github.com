@@ -1,0 +1,71 @@
+---
+// A screenshot printed as a numbered plate inside the sheet's neatline.
+interface Props {
+  src: string;
+  alt: string;
+  number: number;
+  caption: string;
+  width: number;
+  height: number;
+  frame?: 'desktop' | 'phone';
+}
+
+const { src, alt, number, caption, width, height, frame = 'desktop' } = Astro.props;
+---
+
+<figure class:list={['plate', `plate--${frame}`]}>
+  <div class="plate__frame">
+    <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+  </div>
+  <figcaption>
+    <span class="plate__number">Plate {number}</span>
+    <span>{caption}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .plate {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+  }
+
+  .plate__frame {
+    border: 1.5px solid var(--neat);
+    outline: 0.5px solid var(--neat);
+    outline-offset: 4px;
+    margin: 5px;
+    background: var(--mantle);
+    overflow: hidden;
+  }
+
+  .plate img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .plate--phone {
+    max-width: 17rem;
+  }
+
+  figcaption {
+    display: grid;
+    gap: 0.15rem;
+    padding-inline: 5px;
+    font-family: var(--serif);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+
+  .plate__number {
+    font-family: var(--sans);
+    font-stretch: 82%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+</style>

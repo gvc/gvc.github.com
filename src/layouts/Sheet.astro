@@ -1,0 +1,104 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/source-serif-4/opsz.css';
+import '@fontsource-variable/source-serif-4/opsz-italic.css';
+import '../styles/sheet.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/writings', label: 'Writing' },
+  { href: '/experiments', label: 'Experiments' },
+  { href: '/who-am-i', label: 'About' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#f2e5bc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#2a2520" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>{title}</title>
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="130f9c41-b9e1-45af-b744-87811a524a78"
+    ></script>
+  </head>
+  <body>
+    <header class="margin">
+      <a class="margin__home" href="/">gvc</a>
+      <nav aria-label="Primary">
+        <ul>
+          {nav.map((n) => (
+            <li>
+              <a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    <slot />
+  </body>
+</html>
+
+<style>
+  .margin {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem var(--gutter) 0.85rem;
+    font-stretch: 112%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .margin__home {
+    color: var(--ink);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+  }
+
+  .margin ul {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2.25rem);
+  }
+
+  .margin nav a {
+    text-decoration: none;
+    padding-block: 0.35rem;
+    transition: color 160ms var(--ease-out);
+  }
+
+  .margin nav a[aria-current='page'] {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--ember);
+  }
+
+  .margin nav a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--ember);
+  }
+</style>

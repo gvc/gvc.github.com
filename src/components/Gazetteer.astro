@@ -1,0 +1,124 @@
+---
+// A gazetteer: dated entries keyed with the survey sheet's symbols.
+export interface Entry {
+  href: string;
+  datetime: string;
+  date: string;
+  title: string;
+  description: string;
+  meta?: string;
+}
+
+interface Props {
+  entries: Entry[];
+  symbol: 'summit' | 'benchmark';
+}
+
+const { entries, symbol } = Astro.props;
+const breakable = (text: string) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/(_|\/+)/g, '$1<wbr>');
+---
+
+<ol class="gazetteer">
+  {entries.map((e) => (
+    <li>
+      <a href={e.href}>
+        <time datetime={e.datetime}>{e.date}</time>
+        <span class="gazetteer__title">
+          <svg class="gazetteer__sym" viewBox="-8 -8 16 16" aria-hidden="true">
+            {symbol === 'summit' ? (
+              <path d="M0 -6.5 L6.5 5 L-6.5 5 Z" class="fill" />
+            ) : (
+              <>
+                <circle r="5" class="ring" />
+                <circle r="1.6" class="fill" />
+              </>
+            )}
+          </svg>
+          <span set:html={breakable(e.title)} />
+        </span>
+        <span class="gazetteer__desc">{e.description}</span>
+        {e.meta && <span class="gazetteer__meta">{e.meta}</span>}
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .gazetteer a {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+    row-gap: 0.3rem;
+    padding: 1.2rem 0 1.3rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--ink-4) 45%, transparent);
+    text-decoration: none;
+  }
+
+  .gazetteer time {
+    grid-row: span 3;
+    padding-top: 0.25rem;
+    font-stretch: 88%;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+  }
+
+  .gazetteer__title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    font-family: var(--serif);
+    font-size: 1.3125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .gazetteer__sym {
+    flex: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    overflow: visible;
+  }
+
+  .fill { fill: var(--ink); }
+  .ring { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+
+  .gazetteer a:hover .gazetteer__title {
+    text-decoration: underline;
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 1.5px;
+  }
+
+  .gazetteer__desc {
+    padding-left: 1.35rem;
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 62ch;
+  }
+
+  .gazetteer__meta {
+    padding-left: 1.35rem;
+    font-stretch: 82%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 520px) {
+    .gazetteer a {
+      grid-template-columns: 1fr;
+    }
+
+    .gazetteer time {
+      grid-row: auto;
+    }
+  }
+</style>

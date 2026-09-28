@@ -1,184 +1,573 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../layouts/Layout.astro';
+import Sheet from '../layouts/Sheet.astro';
+import SurveyMap from '../components/SurveyMap.astro';
+import SheetClose from '../components/SheetClose.astro';
+import { buildMap, decimalYear, makeScale, type Mark, type Role } from '../lib/survey';
 
-const allLogs = await getCollection('logs');
-const recentLogs = allLogs
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 4);
+const now = new Date();
+const present = decimalYear(now);
 
-function formatTime(date: Date): string {
-  return date.toISOString().split('T')[1]?.substring(0, 8) ?? '';
-}
+const monthYear = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const dayMonthYear = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const ym = (y: number, m: number) => y + (m - 1) / 12;
+
+const writings = (await getCollection('logs')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const experiments = (await getCollection('experiments')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const roles: Role[] = [
+  { id: 'guava', name: 'Guava Software', title: 'Co-founder & lead developer', from: ym(2011, 1), to: ym(2021, 8), tone: 'moss', range: 'Jan 2011 – Aug 2021' },
+  { id: 'faststore', name: 'FastStore', title: 'Engineering Manager, VTEX', from: ym(2021, 9), to: ym(2024, 3), tone: 'gold', range: 'Sep 2021 – Mar 2024' },
+  { id: 'staff', name: 'VTEX', title: 'Staff Software Engineer', from: ym(2023, 9), to: null, tone: 'slate', range: `Sep 2023 – ${monthYear(now)}` },
+];
+
+const marks: Mark[] = [
+  ...experiments.map((e) => ({
+    kind: 'experiment' as const,
+    label: e.data.title,
+    detail: [e.data.stack, monthYear(e.data.date)].filter(Boolean).join(' · '),
+    href: `/experiments/${e.id}`,
+    t: decimalYear(e.data.date),
+    to: e.data.status === 'active' ? present : undefined,
+    range: e.data.status === 'active' ? `${monthYear(e.data.date)} – ongoing` : monthYear(e.data.date),
+  })),
+  ...writings.slice(0, 6).map((w) => ({
+    kind: 'writing' as const,
+    label: w.data.title,
+    detail: dayMonthYear(w.data.date),
+    href: `/writings/${w.id}`,
+    t: decimalYear(w.data.date),
+    range: dayMonthYear(w.data.date),
+  })),
+  {
+    kind: 'paper',
+    label: 'Pedestrian detection with PCA-based reconstruction',
+    detail: 'IEEE · 2011',
+    href: 'https://ieeexplore.ieee.org/document/6033472',
+    t: 2011.5,
+    range: '2011',
+    external: true,
+  },
+  {
+    kind: 'paper',
+    label: 'Combining diversity measures for ensemble pruning',
+    detail: 'Pattern Recognition Letters · 2016',
+    href: 'https://www.inf.ufpr.br/lesoliveira/download/PRL2016.pdf',
+    t: 2016.5,
+    range: '2016',
+    external: true,
+  },
+];
+
+const landscape = buildMap('landscape', { present, roles, marks });
+const portrait = buildMap('portrait', { present, roles, marks });
+const surveyedLabel = monthYear(now);
+const scale = makeScale(present);
+const breakable = (text: string) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/(_|\/+)/g, '$1<wbr>');
 ---
 
-<Layout title="~/gvc // HOME" activeNav="home">
-  <Fragment slot="head">
-    <style>
-      .scanline-overlay {
-        background:
-          linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-          linear-gradient(
-            90deg,
-            rgba(255, 0, 0, 0.06),
-            rgba(80, 184, 80, 0.02),
-            rgba(80, 184, 80, 0.06)
-          );
-        background-size:
-          100% 2px,
-          3px 100%;
-        pointer-events: none;
-      }
-    </style>
-  </Fragment>
+<Sheet
+  title="Guilherme Carvalho — Staff Software Engineer"
+  description="Guilherme Carvalho is a Staff Software Engineer at VTEX in Recife, building software since 2011 and writing about how engineering changes with AI."
+>
+  <main class="home">
+    <section class="quad" aria-labelledby="name">
+      <div class="collar">
+        <div class="title-block">
+          <h1 id="name">Guilherme<br />Carvalho</h1>
+          <p class="role-line">Staff Software Engineer at VTEX · Recife, Brazil</p>
+          <p class="claim">
+            Building software since 2011, from the Rails studio I co-founded to commerce
+            platforms at scale. Now working out how engineering changes with AI.
+          </p>
+          <ul class="contact">
+            <li><a href="https://github.com/gvc" rel="me">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/guieevc/" rel="me">LinkedIn</a></li>
+          </ul>
+        </div>
 
-  <main class="w-full pt-16 flex-grow relative">
-    <div class="scanline-overlay absolute inset-0 z-10 opacity-30"></div>
-    <!-- HERO SECTION -->
-    <section
-      class="relative min-h-[800px] flex flex-col justify-center px-8 md:px-16 lg:px-24 border-b-2 border-surface-container-high bg-surface overflow-hidden"
-    >
-      <div
-        class="absolute top-10 right-10 text-on-surface-variant font-headline text-[10px] leading-relaxed opacity-40 select-none hidden lg:block"
-      >
-        KERNEL_LOAD_ADR: 0x50B850<br />
-        MEMORY_MAP: SUCCESS<br />
-        DRV_INIT: [OK]<br />
-        SHELL_ESTABLISHED: TRUE
+        <nav class="legend" aria-labelledby="legend-title">
+          <h2 id="legend-title">Legend</h2>
+          <ul>
+            <li>
+              <a href="/experiments">
+                <svg viewBox="-8 -8 16 16" aria-hidden="true"><path d="M0 -6.5 L6.5 5 L-6.5 5 Z" class="sym-fill" /></svg>
+                <span>Experiments</span>
+                <span class="legend__count">{experiments.length}</span>
+              </a>
+            </li>
+            <li>
+              <a href="/writings">
+                <svg viewBox="-8 -8 16 16" aria-hidden="true"><circle r="5" class="sym-ring" /><circle r="1.6" class="sym-fill" /></svg>
+                <span>Writing</span>
+                <span class="legend__count">{writings.length}</span>
+              </a>
+            </li>
+            <li>
+              <a href="/who-am-i#roles">
+                <svg viewBox="0 0 24 14" aria-hidden="true">
+                  <rect x="0" y="1" width="8" height="12" class="band-moss" />
+                  <rect x="8" y="1" width="8" height="12" class="band-gold" />
+                  <rect x="16" y="1" width="8" height="12" class="band-slate" />
+                </svg>
+                <span>Roles, 2011 to now</span>
+              </a>
+            </li>
+            <li>
+              <a href="/who-am-i#research">
+                <svg viewBox="0 0 24 14" aria-hidden="true"><path d="M1 9 C6 3, 10 12, 15 6 S21 5, 23 7" class="sym-water" /></svg>
+                <span class="legend__water">Research</span>
+              </a>
+            </li>
+            <li class="legend__key">
+              <svg viewBox="0 0 24 14" aria-hidden="true">
+                <defs>
+                  <pattern id="key-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" class="key-line" /></pattern>
+                </defs>
+                <rect x="0" y="1" width="24" height="12" class="band-slate" />
+                <rect x="0" y="1" width="24" height="12" fill="url(#key-hatch)" />
+              </svg>
+              <span>Two roles at once</span>
+            </li>
+            <li class="legend__key">
+              <svg viewBox="0 0 24 14" aria-hidden="true">
+                <defs>
+                  <pattern id="key-void" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="3" class="key-void" /></pattern>
+                </defs>
+                <rect x="0" y="1" width="24" height="12" fill="url(#key-void)" />
+              </svg>
+              <span>Not yet surveyed</span>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <div class="z-20 max-w-5xl mx-auto w-full">
-        <div
-          class="inline-flex items-center gap-2 mb-6 px-3 py-1 bg-surface-container-lowest border-l-4 border-primary-container"
-        >
-          <span
-            class="text-primary-container font-headline text-[10px] tracking-widest uppercase font-black"
-          >SYSTEM BOOT: SUCCESSFUL</span>
-        </div>
-        <h1
-          class="text-6xl md:text-8xl font-black font-headline tracking-tighter text-on-surface leading-[0.9] mb-8 uppercase"
-        >
-          GUILHERME<br />
-          <span class="text-primary-container">CARVALHO.</span>
-        </h1>
-        <p
-          class="text-lg md:text-xl text-on-surface-variant font-body max-w-2xl mb-12 leading-relaxed"
-        >
-          Staff engineer, studio co-founder, and ML researcher.
-          14 years of building software that works — from Rails
-          startups to commerce at scale.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a
-            href="/experiments"
-            class="px-8 py-4 bg-secondary-container text-on-secondary font-headline text-sm tracking-widest uppercase font-black hover:brightness-110 active:scale-[0.98] transition-all flex items-center gap-3 no-underline"
-          >
-            VIEW_PROJECTS
-            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-          </a>
-          <a
-            href="/writings"
-            class="px-8 py-4 bg-surface-container-low text-on-surface font-headline text-sm tracking-widest uppercase font-black border-2 border-[#1e2024] hover:bg-surface-container transition-all no-underline"
-          >
-            SYSTEM_LOGS
-          </a>
-        </div>
+
+      <div class="field-wrap field-wrap--landscape">
+        <SurveyMap map={landscape} surveyedLabel={surveyedLabel} />
       </div>
-      <!-- ASYMMETRIC DECORATION -->
-      <div
-        class="absolute bottom-0 right-0 w-1/3 h-px bg-primary-container opacity-20"
-      ></div>
-      <div
-        class="absolute bottom-0 right-0 w-px h-1/3 bg-primary-container opacity-20"
-      ></div>
-    </section>
-    <!-- QUICK LINKS BENTO GRID -->
-    <section class="p-8 md:p-16 lg:p-24 bg-surface-container-low">
-      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Link 1: Experiments -->
-        <a
-          href="/experiments"
-          class="group relative bg-surface-container p-8 h-80 flex flex-col justify-between overflow-hidden cursor-pointer hover:translate-y-[-4px] transition-transform duration-300 no-underline"
-        >
-          <div
-            class="absolute top-0 right-0 p-4 opacity-10 text-primary-container group-hover:opacity-30 transition-opacity"
-          >
-            <span class="material-symbols-outlined text-9xl">code_blocks</span>
-          </div>
-          <div class="z-20">
-            <span
-              class="text-on-tertiary-container font-headline text-[10px] tracking-widest uppercase mb-4 block"
-            >MODULE_01</span>
-            <h3
-              class="text-3xl font-black font-headline tracking-tighter text-primary-container uppercase"
-            >
-              EXPERIMENTS
-            </h3>
-          </div>
-          <div class="z-20">
-            <p class="text-on-surface-variant text-sm mb-6 max-w-[200px]">
-              Examine high-fidelity experiments and architectural schematics.
-            </p>
-            <span
-              class="material-symbols-outlined text-primary-container group-hover:translate-x-2 transition-transform"
-            >arrow_right_alt</span>
-          </div>
-        </a>
-        <!-- Link 2: Logs -->
-        <a
-          href="/writings"
-          class="group relative bg-surface-container p-8 h-80 flex flex-col justify-between overflow-hidden cursor-pointer hover:translate-y-[-4px] transition-transform duration-300 no-underline"
-        >
-          <div
-            class="absolute top-0 right-0 p-4 opacity-10 text-secondary-container group-hover:opacity-30 transition-opacity"
-          >
-            <span class="material-symbols-outlined text-9xl">terminal</span>
-          </div>
-          <div class="z-20">
-            <span
-              class="text-on-tertiary-container font-headline text-[10px] tracking-widest uppercase mb-4 block"
-            >MODULE_02</span>
-            <h3
-              class="text-3xl font-black font-headline tracking-tighter text-secondary-container uppercase"
-            >
-              SYSTEM_LOGS
-            </h3>
-          </div>
-          <div class="z-20">
-            <p class="text-on-surface-variant text-sm mb-6 max-w-[200px]">
-              Browse system dispatches, field notes, and encrypted transmissions.
-            </p>
-            <span
-              class="material-symbols-outlined text-secondary-container group-hover:translate-x-2 transition-transform"
-            >arrow_right_alt</span>
-          </div>
-        </a>
+      <div class="field-wrap field-wrap--portrait">
+        <SurveyMap map={portrait} surveyedLabel={surveyedLabel} />
       </div>
     </section>
-    <!-- RECENT_SYSTEM_LOGS SECTION -->
-    <section
-      class="px-8 md:px-16 lg:px-24 py-20 bg-surface-container-lowest border-t-2 border-[#1e2024]"
-    >
-      <div class="max-w-6xl mx-auto">
-        <h2
-          class="text-2xl font-black font-headline tracking-tighter text-on-surface uppercase mb-10 flex items-center gap-4"
-        >
-          <span class="material-symbols-outlined text-primary-container">terminal</span>
-          RECENT_SYSTEM_LOGS
-          <span class="flex-grow h-px bg-[#1e2024]"></span>
-        </h2>
-        <div class="space-y-2 font-['Space_Grotesk']">
-          {recentLogs.map((log) => (
-            <a
-              href={`/writings/${log.id}`}
-              class="grid grid-cols-[100px_1fr_100px] items-center py-4 px-6 bg-surface-container-low border border-[#1e2024] hover:border-primary-container transition-all group no-underline"
-            >
-              <span class="text-[10px] tracking-widest text-on-tertiary-container font-medium">{formatTime(log.data.date)}</span>
-              <span class="text-sm font-medium text-on-surface uppercase tracking-tight">{log.data.title}</span>
-              <span class="text-[10px] font-bold text-primary-container text-right uppercase tracking-widest">[{log.data.severity.toUpperCase()}]</span>
-            </a>
-          ))}
-        </div>
+
+    <section class="index" aria-labelledby="writing-title">
+      <div class="index__col">
+        <h2 id="writing-title">Writing</h2>
+        {writings.length === 0 && <p class="empty">Nothing published yet. New writing will appear here.</p>}
+        <ol class="entries">
+          {writings.map((w) => {
+            const u = scale(decimalYear(w.data.date));
+            return (
+            <li>
+              <a href={`/writings/${w.id}`} data-from={u} data-to={u} data-range={dayMonthYear(w.data.date)}>
+                <time datetime={w.data.date.toISOString()}>{dayMonthYear(w.data.date)}</time>
+                <span class="entries__title">
+                  <svg class="entries__sym" viewBox="-8 -8 16 16" aria-hidden="true"><circle r="5" class="sym-ring" /><circle r="1.6" class="sym-fill" /></svg>
+                  <span set:html={breakable(w.data.title)} />
+                </span>
+                <span class="entries__desc">{w.data.description}</span>
+              </a>
+            </li>
+            );
+          })}
+        </ol>
+        <a class="more" href="/writings">All writing</a>
+      </div>
+      <div class="index__col">
+        <h2>Experiments</h2>
+        <ol class="entries">
+          {experiments.map((e) => {
+            const u = scale(decimalYear(e.data.date));
+            const active = e.data.status === 'active';
+            return (
+            <li>
+              <a
+                href={`/experiments/${e.id}`}
+                data-from={u}
+                data-to={active ? scale(present) : u}
+                data-range={active ? `${monthYear(e.data.date)} – ongoing` : monthYear(e.data.date)}
+              >
+                <time datetime={e.data.date.toISOString()}>{monthYear(e.data.date)}</time>
+                <span class="entries__title">
+                  <svg class="entries__sym" viewBox="-8 -8 16 16" aria-hidden="true"><path d="M0 -6.5 L6.5 5 L-6.5 5 Z" class="sym-fill" /></svg>
+                  <span set:html={breakable(e.data.title)} />
+                </span>
+                <span class="entries__desc">{e.data.description}</span>
+              </a>
+            </li>
+            );
+          })}
+        </ol>
+        <a class="more" href="/experiments">All experiments</a>
       </div>
     </section>
+
   </main>
-</Layout>
+  <SheetClose />
+</Sheet>
+
+<script>
+  // Hovering or focusing a feature lights up its span of time on the sheet.
+  // Gazetteer entries below the fold drive the same highlight on every map.
+  const figures = [...document.querySelectorAll<HTMLElement>('[data-survey]')];
+  const light = (el: HTMLElement, on: boolean) => {
+    const name = el.querySelector('.entries__title')?.textContent?.trim() ?? '';
+    for (const figure of figures) {
+      const field = figure.querySelector<HTMLElement>('.survey__field');
+      const readout = figure.querySelector<HTMLElement>('[data-readout]');
+      if (!field || !readout) continue;
+      field.style.setProperty('--s0', el.dataset.from ?? '0');
+      field.style.setProperty('--s1', el.dataset.to ?? '0');
+      field.classList.toggle('is-spanning', on);
+      readout.textContent = on ? `${name} — ${el.dataset.range ?? ''}` : '';
+    }
+  };
+  for (const el of document.querySelectorAll<HTMLElement>('.entries [data-from]')) {
+    el.addEventListener('pointerenter', () => light(el, true));
+    el.addEventListener('pointerleave', () => light(el, false));
+    el.addEventListener('focus', () => light(el, true));
+    el.addEventListener('blur', () => light(el, false));
+  }
+  for (const figure of figures) {
+    const field = figure.querySelector<HTMLElement>('.survey__field');
+    const readout = figure.querySelector<HTMLElement>('[data-readout]');
+    if (!field || !readout) continue;
+    const show = (el: HTMLElement) => {
+      field.style.setProperty('--s0', el.dataset.from ?? '0');
+      field.style.setProperty('--s1', el.dataset.to ?? '0');
+      field.classList.add('is-spanning');
+      el.classList.add('is-active');
+      const name = el.querySelector('.mark__name, .role__name')?.textContent ?? '';
+      readout.textContent = `${name} — ${el.dataset.range ?? ''}`;
+    };
+    const hide = (el: HTMLElement) => {
+      field.classList.remove('is-spanning');
+      el.classList.remove('is-active');
+      readout.textContent = '';
+    };
+    for (const el of field.querySelectorAll<HTMLElement>('[data-from]')) {
+      el.addEventListener('pointerenter', () => show(el));
+      el.addEventListener('pointerleave', () => hide(el));
+      el.addEventListener('focus', () => show(el));
+      el.addEventListener('blur', () => hide(el));
+    }
+  }
+</script>
+
+<style>
+  .home {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ------------------------------------------------------------ first viewport */
+
+  .quad {
+    display: grid;
+    grid-template-columns: minmax(18rem, 25rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    padding: clamp(0.5rem, 2vh, 1.5rem) var(--gutter) clamp(2rem, 5vh, 3.5rem);
+    align-items: start;
+  }
+
+  .collar {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vh, 3.5rem);
+    padding-top: 1.75rem;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: clamp(2.25rem, 3.4vw, 3.1rem);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .role-line {
+    margin-top: 1.1rem;
+    font-stretch: 88%;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .claim {
+    margin-top: 1.5rem;
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    line-height: 1.45;
+    color: var(--ink-2);
+    max-width: 30ch;
+    text-wrap: pretty;
+  }
+
+  .contact {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .contact a {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 2px;
+  }
+
+  .contact a:hover {
+    color: var(--ember);
+  }
+
+  .legend {
+    border-top: 1.5px solid var(--neat);
+    padding-top: 0.9rem;
+    max-width: 19rem;
+  }
+
+  .legend h2 {
+    font-stretch: 125%;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .legend a {
+    display: grid;
+    grid-template-columns: 1.75rem 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--ink-4) 45%, transparent);
+  }
+
+  .legend a:hover span:not(.legend__count) {
+    text-decoration: underline;
+    text-decoration-color: var(--ember);
+  }
+
+  .legend svg {
+    width: 1.5rem;
+    height: 0.9rem;
+    overflow: visible;
+  }
+
+  .legend__count {
+    font-variant-numeric: tabular-nums;
+    font-stretch: 88%;
+    font-size: 0.8125rem;
+    color: var(--ink-3);
+  }
+
+  .legend__water {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--water);
+  }
+
+  .legend__key {
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0;
+    font-size: 0.875rem;
+    color: var(--ink-3);
+    border-bottom: 1px solid color-mix(in oklab, var(--ink-4) 45%, transparent);
+  }
+
+  .legend__key svg {
+    width: 1.5rem;
+    height: 0.9rem;
+  }
+
+  .key-line { stroke: var(--ink-2); stroke-width: 1; opacity: 0.6; }
+  .key-void { stroke: var(--ink-4); stroke-width: 0.8; }
+
+  .sym-fill { fill: var(--ink); }
+  .sym-ring { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+  .sym-water { fill: none; stroke: var(--water); stroke-width: 2; }
+  .band-moss { fill: var(--band-moss); }
+  .band-gold { fill: var(--band-gold); }
+  .band-slate { fill: var(--band-slate); }
+
+  .field-wrap {
+    min-width: 0;
+  }
+
+  .field-wrap--landscape :global(.survey) {
+    width: min(100%, calc((100svh - 11rem) * 1000 / 700));
+  }
+
+  .field-wrap--portrait {
+    display: none;
+  }
+
+  @media (max-width: 1080px) {
+    .quad {
+      grid-template-columns: 1fr;
+    }
+
+    .collar {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      align-items: end;
+      padding-top: 1rem;
+    }
+
+    .field-wrap--landscape :global(.survey) {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .collar {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .legend {
+      max-width: none;
+    }
+
+    .field-wrap--landscape {
+      display: none;
+    }
+
+    .field-wrap--portrait {
+      display: block;
+    }
+  }
+
+  /* ------------------------------------------------------------ index */
+
+  .index {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 5rem);
+    padding: clamp(3rem, 8vh, 5.5rem) var(--gutter) clamp(3rem, 8vh, 5rem);
+    background: var(--mantle);
+    border-top: 1.5px solid var(--neat);
+  }
+
+  .index h2 {
+    font-stretch: 125%;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding-bottom: 0.75rem;
+    border-bottom: 1.5px solid var(--neat);
+  }
+
+  .entries a {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+    row-gap: 0.3rem;
+    padding: 1.1rem 0 1.2rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--ink-4) 45%, transparent);
+    text-decoration: none;
+  }
+
+  .entries time {
+    grid-row: span 2;
+    padding-top: 0.2rem;
+    font-stretch: 88%;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+  }
+
+  .entries__title {
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+  }
+
+  .entries__sym {
+    flex: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    overflow: visible;
+  }
+
+  .entries a:hover .entries__title {
+    text-decoration: underline;
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 1.5px;
+  }
+
+  .entries__desc {
+    padding-left: 1.35rem;
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 60ch;
+  }
+
+  .empty {
+    padding: 1.1rem 0 1.2rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-3);
+    border-bottom: 1px solid color-mix(in oklab, var(--ink-4) 45%, transparent);
+  }
+
+  .more {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration-color: var(--ember);
+  }
+
+  @media (max-width: 860px) {
+    .index {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .entries a {
+      grid-template-columns: 1fr;
+    }
+
+    .entries time {
+      grid-row: auto;
+    }
+  }
+</style>

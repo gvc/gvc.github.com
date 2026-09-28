@@ -1,0 +1,107 @@
+---
+import Case from '../../layouts/Case.astro';
+import Plate from '../../components/Plate.astro';
+import Activity from '../../components/Activity.astro';
+import activity from '../../data/cases/van-damme-activity.json';
+---
+
+<Case
+  title="Van Damme"
+  summary="A terminal dashboard for running many Claude Code sessions in tmux, built in Rust over five months, and retired once a better tool covered the same need."
+  facts={[
+    { label: 'Type', value: 'Open-source developer tool' },
+    { label: 'My role', value: 'Design, development, maintenance' },
+    { label: 'Timeline', value: 'Mar – Jul 2026' },
+    { label: 'Stack', value: 'Rust, Ratatui, tmux, Claude Code hooks' },
+    { label: 'Status', value: 'Retired at v0.9.17, replaced by Orca' },
+  ]}
+  links={[{ label: 'Source on GitHub', href: 'https://github.com/gvc/van-damme' }]}
+>
+  <section class="case-section" aria-labelledby="brief">
+    <h2 id="brief">The problem</h2>
+    <div class="case-body">
+      <p>
+        Once Claude Code became my daily driver, I was running several sessions at once, each with
+        its own tmux session, windows, worktree and editor, and I kept losing track of which one was
+        which and which one was waiting on me.
+      </p>
+      <p>
+        So I built a manager for them and named it Van Damme, because it manages Jean-Claude
+        sessions. It was also my way into Rust: I wanted to learn the language on something I would
+        use every day.
+      </p>
+    </div>
+  </section>
+
+  <section class="case-section" aria-labelledby="work">
+    <h2 id="work">What I built</h2>
+    <ol class="decisions">
+      <li>
+        <h3>One task, one isolated environment</h3>
+        <p>
+          A short form (title, directory with autocomplete, optional first prompt, model, CLI flags)
+          creates a tmux session running Claude in its own git worktree or branch, with the editor
+          alongside. Existing worktrees are reused, and killing a session offers to clean its worktree
+          up in the background.
+        </p>
+      </li>
+      <li>
+        <h3>Live status from Claude's own hooks</h3>
+        <p>
+          Instead of polling, Van Damme listens to Claude Code's lifecycle hooks, so every session
+          shows at a glance whether Claude is working, waiting for permission or idle. Sessions are
+          grouped by directory, searchable, and survive restarts of the dashboard.
+        </p>
+      </li>
+      <li>
+        <h3>Shipped like a real tool</h3>
+        <p>
+          Install and uninstall commands that wire up the hooks, shell completions, a themeable colour
+          system with hot reload, workspace management, and version bumps automated through GitHub Actions:
+          <strong>45 feature changes</strong> on the way to v0.9.17.
+        </p>
+      </li>
+      <li>
+        <h3>Knowing when to stop</h3>
+        <p>
+          It's easy to keep adding features to your own tool. When I found that
+          <strong>Orca</strong> does what I needed, I stopped building and switched. Herder is next on my
+          list to try. Retiring your own project when something better exists is part of the job.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="case-section" aria-labelledby="plates">
+    <h2 id="plates">The tool</h2>
+    <div class="plates plates--wide">
+      <Plate
+        number={1}
+        src="/cases/van-damme/session-list.svg"
+        width={800}
+        height={512}
+        alt="Van Damme session list: active sessions with their state and directory, and keyboard shortcuts along the bottom."
+        caption="Session list, from the project README."
+      />
+      <Plate
+        number={2}
+        src="/cases/van-damme/new-task.svg"
+        width={800}
+        height={512}
+        alt="Van Damme new task form with title, directory, prompt and arguments fields."
+        caption="New task form, from the project README."
+      />
+    </div>
+  </section>
+
+  <section class="case-section" aria-labelledby="shipped">
+    <h2 id="shipped">What shipped</h2>
+    <div class="case-body">
+      <ul class="shipped">
+        <li><strong>v0.9.17</strong>, open source, used daily for my own work until I moved to Orca.</li>
+        <li><strong>112 commits</strong> of mine in five months, learning Rust along the way.</li>
+      </ul>
+      <Activity data={activity} label="Commits per week" />
+    </div>
+  </section>
+</Case>

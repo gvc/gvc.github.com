@@ -1,0 +1,661 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-28T00:30:00-03:00",
+  "title": "Design System: Guilherme Carvalho",
+  "extensions": {
+    "colorMeta": {
+      "ember": {
+        "role": "primary",
+        "displayName": "Ember",
+        "canonical": "#a14e08",
+        "tonalRamp": [
+          "#430000",
+          "#621100",
+          "#813100",
+          "#a14e09",
+          "#c36c32",
+          "#e48b53",
+          "#ffb178",
+          "#ffd8a5"
+        ],
+        "evening": "#e78a4e",
+        "purpose": "Focus, hover underlines, span highlight. Interaction only."
+      },
+      "water": {
+        "role": "secondary",
+        "displayName": "Slate Water",
+        "canonical": "#336874",
+        "tonalRamp": [
+          "#00212b",
+          "#003a45",
+          "#1f5561",
+          "#3d727e",
+          "#5b909c",
+          "#79afbc",
+          "#9ed5e2",
+          "#c7f9ff"
+        ],
+        "evening": "#7daea3",
+        "purpose": "Hydrography: research river, paper symbols, rule beside papers."
+      },
+      "brick": {
+        "role": "secondary",
+        "displayName": "Survey Brick",
+        "canonical": "#b03c3c",
+        "tonalRamp": [
+          "#4b0000",
+          "#6c0002",
+          "#8d1820",
+          "#af3b3b",
+          "#d25b58",
+          "#f57a75",
+          "#ffa09a",
+          "#ffc9c2"
+        ],
+        "evening": "#ea6962",
+        "purpose": "Year numerals: map scale, section column ticks, gazetteer year labels."
+      },
+      "moss": {
+        "role": "secondary",
+        "displayName": "Moss Ink",
+        "canonical": "#5f6928",
+        "tonalRamp": [
+          "#191e00",
+          "#303800",
+          "#4a530e",
+          "#656f2f",
+          "#828d4c",
+          "#a0ac6a",
+          "#c6d38f",
+          "#eaf7b2"
+        ],
+        "evening": "#a9b665",
+        "purpose": "Single data series in activity charts; 4.7:1 on parchment."
+      },
+      "grid": {
+        "role": "secondary",
+        "displayName": "Grid Brick",
+        "canonical": "color-mix(in oklab, #c14a4a 55%, var(--page))",
+        "tonalRamp": [
+          "#3c0000",
+          "#591c08",
+          "#783724",
+          "#975440",
+          "#b8715c",
+          "#d98f79",
+          "#ffb59e",
+          "#ffdbc6"
+        ],
+        "evening": "color-mix(in oklab, #ea6962 45%, var(--page))",
+        "purpose": "Year lines in the field."
+      },
+      "band-moss": {
+        "role": "tertiary",
+        "displayName": "Moss Stratum",
+        "canonical": "color-mix(in oklab, #6c782e 34%, var(--page))",
+        "tonalRamp": [
+          "#201b00",
+          "#383400",
+          "#534f1e",
+          "#6f6b3a",
+          "#8c8957",
+          "#aba874",
+          "#d1ce99",
+          "#f4f2c1"
+        ],
+        "evening": "color-mix(in oklab, #a9b665 30%, var(--page))",
+        "purpose": "First role stratum."
+      },
+      "band-gold": {
+        "role": "tertiary",
+        "displayName": "Autumn Gold Stratum",
+        "canonical": "color-mix(in oklab, #b47109 30%, var(--page))",
+        "tonalRamp": [
+          "#2c1400",
+          "#462e00",
+          "#624814",
+          "#7f6432",
+          "#9e824f",
+          "#bda06d",
+          "#e4c692",
+          "#ffebbb"
+        ],
+        "evening": "color-mix(in oklab, #e0a24a 34%, var(--page))",
+        "purpose": "Second role stratum."
+      },
+      "band-slate": {
+        "role": "tertiary",
+        "displayName": "Slate Stratum",
+        "canonical": "color-mix(in oklab, #336874 28%, var(--page))",
+        "tonalRamp": [
+          "#1a1d09",
+          "#323521",
+          "#4c503a",
+          "#676c55",
+          "#858972",
+          "#a3a88f",
+          "#c9ceb5",
+          "#edf2da"
+        ],
+        "evening": "color-mix(in oklab, #6fa9c0 30%, var(--page))",
+        "purpose": "Third role stratum."
+      },
+      "contour": {
+        "role": "tertiary",
+        "displayName": "Contour Umber",
+        "canonical": "color-mix(in oklab, #8a5a2b 62%, var(--page))",
+        "tonalRamp": [
+          "#2f1200",
+          "#4a2b00",
+          "#664619",
+          "#846236",
+          "#a27f53",
+          "#c29d71",
+          "#e9c396",
+          "#ffe8be"
+        ],
+        "evening": "color-mix(in oklab, #d4be98 36%, var(--page))",
+        "purpose": "Contours; every fifth is an index contour."
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "Parchment",
+        "canonical": "#f2e5bc",
+        "tonalRamp": [
+          "#241900",
+          "#3d320c",
+          "#584c28",
+          "#746843",
+          "#928660",
+          "#b1a47d",
+          "#d7caa2",
+          "#faeec9"
+        ],
+        "evening": "#2a2520",
+        "purpose": "Sheet ground, field ground, lettering halo."
+      },
+      "mantle": {
+        "role": "neutral",
+        "displayName": "Mantle",
+        "canonical": "#ecdeb0",
+        "tonalRamp": [
+          "#241900",
+          "#3e3204",
+          "#594c22",
+          "#75683e",
+          "#93865b",
+          "#b2a478",
+          "#d8ca9d",
+          "#fbeec5"
+        ],
+        "evening": "#322c25",
+        "purpose": "Home gazetteer band, plate grounds, code, scrollbar track."
+      },
+      "overlay": {
+        "role": "neutral",
+        "displayName": "Overlay",
+        "canonical": "#dcc894",
+        "tonalRamp": [
+          "#281700",
+          "#413000",
+          "#5d4b18",
+          "#796736",
+          "#978453",
+          "#b6a370",
+          "#ddc995",
+          "#ffedbe"
+        ],
+        "evening": "#4a4034",
+        "purpose": "Selection and code borders."
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#3f2d23",
+        "tonalRamp": [
+          "#26160d",
+          "#402e24",
+          "#5c483e",
+          "#796459",
+          "#978175",
+          "#b69f93",
+          "#ddc5b9",
+          "#ffeade"
+        ],
+        "evening": "#efe3c6",
+        "purpose": "Names, headings, symbols, neatlines."
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "#654735",
+        "tonalRamp": [
+          "#2c1303",
+          "#472b1a",
+          "#634533",
+          "#81614e",
+          "#9f7e6b",
+          "#bf9c88",
+          "#e6c2ad",
+          "#ffe7d3"
+        ],
+        "evening": "#e8d9b8",
+        "purpose": "Running text, descriptions."
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "#62574c",
+        "tonalRamp": [
+          "#22190f",
+          "#3b3127",
+          "#564b40",
+          "#72675b",
+          "#908478",
+          "#afa296",
+          "#d5c8bb",
+          "#f8ece1"
+        ],
+        "evening": "#c2b294",
+        "purpose": "Margin data on parchment only."
+      },
+      "ink-4": {
+        "role": "neutral",
+        "displayName": "Ink 4",
+        "canonical": "#9a8878",
+        "tonalRamp": [
+          "#25170a",
+          "#3f2f22",
+          "#5a4a3b",
+          "#766556",
+          "#948273",
+          "#b3a190",
+          "#dac7b6",
+          "#fdebdb"
+        ],
+        "evening": "#8f8168",
+        "purpose": "Hairlines and hatching. Never text."
+      },
+      "field-muted": {
+        "role": "neutral",
+        "displayName": "Field Muted",
+        "canonical": "#4e3e30",
+        "tonalRamp": [
+          "#25170a",
+          "#3f2f22",
+          "#5a493b",
+          "#776556",
+          "#958273",
+          "#b4a191",
+          "#dac7b6",
+          "#fdebdb"
+        ],
+        "evening": "#dccdae",
+        "purpose": "Muted lettering on strata; AA on every band."
+      },
+      "field-water": {
+        "role": "neutral",
+        "displayName": "Field Water",
+        "canonical": "#1f4d57",
+        "tonalRamp": [
+          "#002029",
+          "#073943",
+          "#27545f",
+          "#44717b",
+          "#618f9a",
+          "#7faeb9",
+          "#a4d4e0",
+          "#ccf7ff"
+        ],
+        "evening": "#a8d5ca",
+        "purpose": "Water lettering on strata; AA on every band."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page names, uppercase Archivo 125%. Home name uses clamp(2.25rem, 3.4vw, 3.1rem) on the same step."
+      },
+      "display-case": {
+        "displayName": "Display Case",
+        "purpose": "Case study titles, large."
+      },
+      "article-title": {
+        "displayName": "Article Title",
+        "purpose": "Serif sentence titles on detail pages."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Closing line (400), role titles and case CTA (600); 1.375 to 2.25rem fluid."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Home claim, article dek (italic), case summary (up to 1.5rem)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Gazetteer and decision headings; compact 1.1875rem on home."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "Prose, bio, case body, CTA text, paper titles; max 64-66ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions under titles, 1 to 1.125rem."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Plate captions; italic notes at 0.8125rem."
+      },
+      "hydrography": {
+        "displayName": "Hydrography",
+        "purpose": "Serif italic water lettering on the map."
+      },
+      "sheet-lettering": {
+        "displayName": "Sheet Lettering",
+        "purpose": "Expanded tracked caps: section heads, strata, companies, chart titles; 0.8125 to 0.875rem."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Legend entries, links, fact values; 0.875 to 0.9375rem."
+      },
+      "margin-data": {
+        "displayName": "Margin Data",
+        "purpose": "Condensed tabular data: dates, counts, ranges, back links."
+      },
+      "margin-data-small": {
+        "displayName": "Margin Data Small",
+        "purpose": "Fact labels, plate numbers, venues, chart axes (0.75rem); coordinates and map years at 0.6875rem."
+      },
+      "year-label": {
+        "displayName": "Year Label",
+        "purpose": "Brick year column in gazetteer indexes."
+      },
+      "margin-nav": {
+        "displayName": "Margin Nav",
+        "purpose": "Header wordmark and primary nav."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "System monospace, code only; inline 0.84em; Shiki gruvbox soft light/dark."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lettering-halo",
+        "value": "0 0 3px var(--page), 0 0 3px var(--page), 0 0 6px var(--page)",
+        "purpose": "text-shadow halo behind map lettering over terrain only. No box-shadows exist."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The only easing curve."
+      },
+      {
+        "name": "survey-sweep",
+        "value": "clip-path inset(0 100% 0 0) to inset(0), 1600ms ease-out, both",
+        "purpose": "One-time reveal of grid and contours from 2010 toward the present; upward on portrait. Only under prefers-reduced-motion: no-preference."
+      },
+      {
+        "name": "state-feedback",
+        "value": "120-240ms ease-out",
+        "purpose": "Bar fill 120ms, nav color 160ms, span wash and back-link rule 200ms, symbol scale 1.35x 220ms, stratum opacity 240ms."
+      },
+      {
+        "name": "back-rule",
+        "value": "scaleX(1.45), 200ms ease-out",
+        "purpose": "Back link leading rule stretches on hover."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "collar-above",
+        "value": "1080px"
+      },
+      {
+        "name": "single-column",
+        "value": "860px"
+      },
+      {
+        "name": "about-single-column",
+        "value": "820px"
+      },
+      {
+        "name": "portrait-transect",
+        "value": "640px"
+      },
+      {
+        "name": "narrow-section-column",
+        "value": "560px"
+      },
+      {
+        "name": "gazetteer-stack",
+        "value": "520px"
+      },
+      {
+        "name": "home-entry-stack",
+        "value": "480px"
+      }
+    ],
+    "modes": {
+      "canonical": "light parchment",
+      "dark": "evening walnut via prefers-color-scheme: dark; values under colorMeta.*.evening"
+    },
+    "focus": {
+      "value": "2px solid var(--ember); outline-offset 3px; border-radius 2px",
+      "purpose": "Every focusable element."
+    },
+    "containers": [
+      {
+        "name": "article",
+        "value": "50rem"
+      },
+      {
+        "name": "index",
+        "value": "62rem"
+      },
+      {
+        "name": "about",
+        "value": "72rem"
+      },
+      {
+        "name": "case",
+        "value": "76rem"
+      }
+    ],
+    "codeThemes": {
+      "light": "gruvbox-light-soft",
+      "dark": "gruvbox-dark-soft",
+      "ground": "var(--mantle) with 1px var(--overlay) border"
+    }
+  },
+  "components": [
+    {
+      "name": "Margin Nav",
+      "kind": "nav",
+      "refersTo": "margin-nav-link",
+      "description": "Shared header: wordmark and primary nav in the sheet margin.",
+      "html": "<header class=\"ds-margin\"><a class=\"ds-margin__home\" href=\"#\">gvc</a><nav><a href=\"#\" aria-current=\"page\">Writing</a><a href=\"#\">Experiments</a><a href=\"#\">About</a></nav></header>",
+      "css": ".ds-margin{display:flex;align-items:baseline;justify-content:space-between;gap:1.5rem;padding:1rem clamp(1rem,3vw,2.5rem) .85rem;background:var(--page);font-family:var(--sans);font-stretch:112%;font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}.ds-margin__home{color:var(--ink);font-weight:800;letter-spacing:.2em;text-decoration:none}.ds-margin nav{display:flex;gap:clamp(1rem,3vw,2.25rem)}.ds-margin nav a{color:inherit;text-decoration:none;padding-block:.35rem;transition:color 160ms var(--ease-out)}.ds-margin nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ember);text-underline-offset:.22em}.ds-margin a:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}.ds-margin nav a[aria-current='page']{color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--ember);text-underline-offset:.22em}"
+    },
+    {
+      "name": "Contact Link",
+      "kind": "button",
+      "refersTo": "contact-link",
+      "description": "Primary call to GitHub or LinkedIn: bold ink with a 2px ember underline.",
+      "html": "<a class=\"ds-contact\" href=\"#\">GitHub</a> <a class=\"ds-contact\" href=\"#\">LinkedIn</a>",
+      "css": ".ds-contact{font-family:var(--sans);font-weight:700;font-size:.9375rem;color:var(--ink);text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:.22em;margin-right:1.5rem}.ds-contact:hover{color:var(--ember)}.ds-contact:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}"
+    },
+    {
+      "name": "Legend",
+      "kind": "nav",
+      "refersTo": "legend-item",
+      "description": "Map legend that doubles as section navigation: symbol, label, count.",
+      "html": "<nav class=\"ds-legend\"><h2>Legend</h2><a href=\"#\"><svg viewBox=\"-8 -8 16 16\"><path d=\"M0 -6.5 L6.5 5 L-6.5 5 Z\" fill=\"currentColor\"/></svg><span>Experiments</span><span class=\"ds-legend__n\">1</span></a><a href=\"#\"><svg viewBox=\"-8 -8 16 16\"><circle r=\"5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"/><circle r=\"1.6\" fill=\"currentColor\"/></svg><span>Writing</span><span class=\"ds-legend__n\">2</span></a><a href=\"#\"><svg viewBox=\"0 0 24 14\"><path d=\"M1 9 C6 3, 10 12, 15 6 S21 5, 23 7\" fill=\"none\" stroke=\"var(--water)\" stroke-width=\"2\"/></svg><span class=\"ds-legend__water\">Research</span><span></span></a></nav>",
+      "css": ".ds-legend{max-width:19rem;border-top:1.5px solid var(--neat);padding-top:.9rem;font-family:var(--sans);background:var(--page)}.ds-legend h2{margin:0 0 .5rem;font-stretch:125%;font-size:.6875rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--ink)}.ds-legend a{display:grid;grid-template-columns:1.75rem 1fr auto;align-items:center;gap:.6rem;padding:.45rem 0;font-size:.9375rem;font-weight:500;color:var(--ink-2);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--ink-4) 45%,transparent)}.ds-legend svg{width:1.5rem;height:.9rem;overflow:visible;color:var(--ink)}.ds-legend a:hover span:not(.ds-legend__n){text-decoration:underline;text-decoration-color:var(--ember);text-underline-offset:.22em}.ds-legend a:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}.ds-legend__n{font-stretch:88%;font-size:.8125rem;font-variant-numeric:tabular-nums;color:var(--ink-3)}.ds-legend__water{font-family:var(--serif);font-style:italic;color:var(--water)}"
+    },
+    {
+      "name": "Gazetteer Entry",
+      "kind": "card",
+      "refersTo": "gazetteer-entry",
+      "description": "Index row keyed with the sheet symbol, grouped under a brick year label; compact variant on the home mantle band.",
+      "html": "<section class=\"ds-gaz\"><h2 class=\"ds-gaz__year\">2026</h2><ol><li><a href=\"#\"><time>21 Mar 2026</time><span class=\"ds-gaz__title\"><svg viewBox=\"-8 -8 16 16\"><circle r=\"5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"/><circle r=\"1.6\" fill=\"currentColor\"/></svg>System init</span><span class=\"ds-gaz__desc\">Expect more writing from me on this space.</span></a></li></ol></section>",
+      "css": ".ds-gaz{display:grid;grid-template-columns:5rem minmax(0,1fr);gap:1.5rem;background:var(--page);padding:1rem}.ds-gaz ol{list-style:none;margin:0;padding:0}.ds-gaz__year{margin:0;padding-top:1.35rem;border-top:1px solid var(--grid);font-family:var(--sans);font-stretch:82%;font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(--brick)}.ds-gaz a{display:grid;grid-template-columns:7.5rem minmax(0,1fr);column-gap:1.25rem;row-gap:.3rem;padding:1.2rem 0 1.3rem;border-bottom:1px solid color-mix(in oklab,var(--ink-4) 45%,transparent);text-decoration:none}.ds-gaz time{grid-row:span 3;padding-top:.25rem;font-family:var(--sans);font-stretch:88%;font-size:.8125rem;font-weight:600;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--ink-3)}.ds-gaz__title{display:flex;align-items:baseline;gap:.55rem;font-family:var(--serif);font-size:1.3125rem;font-weight:600;line-height:1.3;color:var(--ink)}.ds-gaz__title svg{flex:none;width:.8rem;height:.8rem;overflow:visible}.ds-gaz a:hover .ds-gaz__title{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:1.5px}.ds-gaz a:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}.ds-gaz__desc{padding-left:1.35rem;font-family:var(--serif);font-size:1.0625rem;line-height:1.55;color:var(--ink-2);max-width:62ch}"
+    },
+    {
+      "name": "Map Marks and Stratum Label",
+      "kind": "custom",
+      "refersTo": "stratum-label",
+      "description": "Field lettering on a stratum: summit (experiment), benchmark (writing), paper (research) with halo, plus a stratum name. Uses the AA field tokens.",
+      "html": "<div class=\"ds-field\"><a class=\"ds-mark\" href=\"#\"><svg viewBox=\"-8 -8 16 16\"><path d=\"M0 -6.5 L6.5 5 L-6.5 5 Z\"/></svg><span class=\"ds-mark__name\">A system for managing Claude sessions</span><span class=\"ds-mark__detail\">Rust / Ratatui · May 2026</span></a><a class=\"ds-mark ds-mark--paper\" href=\"#\"><svg viewBox=\"-8 -8 16 16\"><circle r=\"3.6\"/></svg><span class=\"ds-mark__name\">Combining diversity measures</span><span class=\"ds-mark__detail\">Pattern Recognition Letters · 2016</span></a><a class=\"ds-role\" href=\"#\"><span class=\"ds-role__name\">FastStore</span><span class=\"ds-role__title\">Engineering Manager, VTEX</span></a></div>",
+      "css": ".ds-field{display:grid;gap:1.25rem;padding:1.25rem;background:var(--band-slate);border:1.5px solid var(--neat);outline:.5px solid var(--neat);outline-offset:4px;margin:6px;font-family:var(--sans)}.ds-mark,.ds-role{display:flex;flex-direction:column;gap:.15em;text-decoration:none}.ds-mark svg{width:16px;height:16px;fill:var(--ink);overflow:visible;transition:transform 220ms var(--ease-out)}.ds-mark__name{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.2;color:var(--ink);text-shadow:0 0 3px var(--page),0 0 3px var(--page),0 0 6px var(--page)}.ds-mark__detail{font-stretch:82%;font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--field-muted);text-shadow:0 0 3px var(--page),0 0 3px var(--page)}.ds-mark--paper svg{fill:var(--water)}.ds-mark--paper .ds-mark__name{font-style:italic;font-weight:500;color:var(--field-water)}.ds-mark:hover svg,.ds-mark:focus-visible svg{transform:scale(1.35)}.ds-mark:hover .ds-mark__name,.ds-mark:focus-visible .ds-mark__name{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:1.5px}.ds-role{align-items:flex-start}.ds-role__name{font-stretch:125%;font-weight:800;font-size:13.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);line-height:1.15}.ds-role__title{font-family:var(--serif);font-size:13px;color:var(--field-muted)}.ds-role:hover .ds-role__name,.ds-role:focus-visible .ds-role__name{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px}.ds-field a:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}"
+    },
+    {
+      "name": "Span Highlight",
+      "kind": "custom",
+      "refersTo": "survey-field",
+      "description": "Hover or focus on a dated feature washes its span of time across the field in ember.",
+      "html": "<div class=\"ds-span-field\" tabindex=\"0\"><div class=\"ds-span-field__span\"></div><span class=\"ds-span-field__hint\">Hover or focus: Guava Software — Jan 2011 – Aug 2021</span></div>",
+      "css": ".ds-span-field{position:relative;height:120px;background:linear-gradient(90deg,var(--band-moss) 0 55%,var(--band-gold) 55% 75%,var(--band-slate) 75%);border:1.5px solid var(--neat);outline:.5px solid var(--neat);outline-offset:4px;margin:6px;font-family:var(--sans)}.ds-span-field__span{position:absolute;top:0;bottom:0;left:4%;width:51%;opacity:0;background:color-mix(in oklab,var(--ember) 16%,transparent);border:0 solid var(--ember);border-inline-width:1.5px;transition:opacity 200ms var(--ease-out);pointer-events:none}.ds-span-field:hover .ds-span-field__span,.ds-span-field:focus-visible .ds-span-field__span{opacity:1}.ds-span-field:focus-visible{outline:2px solid var(--ember)}.ds-span-field__hint{position:absolute;left:.75rem;bottom:.5rem;font-size:.8125rem;font-weight:700;color:var(--ink)}"
+    },
+    {
+      "name": "Plate",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "A screenshot printed as a numbered plate inside a double neatline on mantle.",
+      "html": "<figure class=\"ds-plate\"><div class=\"ds-plate__frame\"><svg viewBox=\"0 0 320 180\" width=\"100%\"><rect width=\"320\" height=\"180\" fill=\"var(--mantle)\"/><rect x=\"24\" y=\"24\" width=\"120\" height=\"10\" fill=\"var(--ink-4)\"/><rect x=\"24\" y=\"44\" width=\"272\" height=\"112\" fill=\"var(--overlay)\"/></svg></div><figcaption><span class=\"ds-plate__n\">Plate 1</span><span>The session list with live status from Claude hooks.</span></figcaption></figure>",
+      "css": ".ds-plate{display:grid;gap:.6rem;margin:0;max-width:24rem}.ds-plate__frame{border:1.5px solid var(--neat);outline:.5px solid var(--neat);outline-offset:4px;margin:5px;background:var(--mantle);overflow:hidden;line-height:0}.ds-plate figcaption{display:grid;gap:.15rem;padding-inline:5px;font-family:var(--serif);font-size:.9375rem;line-height:1.45;color:var(--ink-2)}.ds-plate__n{font-family:var(--sans);font-stretch:82%;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}"
+    },
+    {
+      "name": "Article Facts Row",
+      "kind": "custom",
+      "refersTo": "facts-row-value",
+      "description": "Article header: back link, serif title, italic dek, and a row of condensed fact pairs.",
+      "html": "<header class=\"ds-art\"><a class=\"ds-back\" href=\"#\">All experiments</a><h1>A system for managing Claude sessions</h1><p class=\"ds-art__dek\">A Rust terminal dashboard for many Claude Code sessions.</p><dl class=\"ds-facts\"><div><dt>Started</dt><dd><svg viewBox=\"-8 -8 16 16\"><path d=\"M0 -6.5 L6.5 5 L-6.5 5 Z\" fill=\"currentColor\"/></svg>May 2026</dd></div><div><dt>Status</dt><dd>Retired</dd></div><div><dt>Stack</dt><dd>Rust, Ratatui</dd></div></dl></header>",
+      "css": ".ds-art{max-width:50rem;padding-bottom:2rem;border-bottom:1.5px solid var(--neat);background:var(--page)}.ds-back{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--sans);font-stretch:88%;font-size:.8125rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-decoration:none}.ds-back::before{content:'';width:1.1rem;height:1px;background:currentColor;transform-origin:right;transition:transform 200ms var(--ease-out)}.ds-back:hover{color:var(--ink)}.ds-back:hover::before{transform:scaleX(1.45)}.ds-back:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}.ds-art h1{margin:2rem 0 0;font-family:var(--serif);font-weight:600;font-size:clamp(2rem,4.6vw,3.25rem);line-height:1.1;letter-spacing:-.01em;color:var(--ink);text-wrap:balance}.ds-art__dek{margin:1rem 0 0;font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.5;color:var(--ink-2);max-width:58ch}.ds-facts{display:flex;flex-wrap:wrap;gap:.75rem 2.5rem;margin:1.5rem 0 0}.ds-facts dt{font-family:var(--sans);font-stretch:82%;font-size:.6875rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}.ds-facts dd{display:flex;align-items:center;gap:.45rem;margin:.15rem 0 0;font-family:var(--sans);font-weight:600;font-size:.9375rem;color:var(--ink)}.ds-facts svg{width:.75rem;height:.75rem;color:var(--ink)}"
+    },
+    {
+      "name": "Case Title Block",
+      "kind": "card",
+      "refersTo": "case-title-block",
+      "description": "Case facts as a double-neatlined map title block.",
+      "html": "<dl class=\"ds-tblock\"><div><dt>Type</dt><dd>Open-source developer tool</dd></div><div><dt>Timeline</dt><dd>Mar – Jul 2026</dd></div><div><dt>Stack</dt><dd>Rust, Ratatui, tmux</dd></div></dl>",
+      "css": ".ds-tblock{margin:5px;max-width:26rem;border:1.5px solid var(--neat);outline:.5px solid var(--neat);outline-offset:4px;background:var(--page)}.ds-tblock div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1rem;padding:.6rem .9rem}.ds-tblock div+div{border-top:1px solid color-mix(in oklab,var(--ink-4) 55%,transparent)}.ds-tblock dt{font-family:var(--sans);font-stretch:82%;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding-top:.15rem}.ds-tblock dd{margin:0;font-family:var(--sans);font-size:.9375rem;font-weight:600;color:var(--ink)}"
+    },
+    {
+      "name": "Decisions",
+      "kind": "custom",
+      "refersTo": "decision",
+      "description": "Case decisions as survey stations marked with the sheet triangle.",
+      "html": "<ol class=\"ds-dec\"><li><h3>One task, one isolated environment</h3><p>A short form creates a tmux session running Claude in its own git worktree, with the editor alongside.</p></li><li><h3>Live status from Claude’s own hooks</h3><p>Hooks report which session is waiting on you.</p></li></ol>",
+      "css": ".ds-dec{display:grid;gap:1.75rem;max-width:66ch;list-style:none;margin:0;padding:0;background:var(--page)}.ds-dec li{position:relative;padding-left:1.9rem}.ds-dec li::before{content:'';position:absolute;left:.1rem;top:.45rem;width:.85rem;height:.75rem;background:var(--ink);clip-path:polygon(50% 0,100% 100%,0 100%)}.ds-dec h3{margin:0;padding-top:.1rem;font-family:var(--serif);font-size:1.3125rem;font-weight:600;line-height:1.3;color:var(--ink)}.ds-dec p{margin:.4rem 0 0;font-family:var(--serif);font-size:1.0625rem;line-height:1.6;color:var(--ink-2)}"
+    },
+    {
+      "name": "Neatline CTA Box",
+      "kind": "card",
+      "refersTo": "cta-box",
+      "description": "Closing call to action on case pages inside a double neatline.",
+      "html": "<section class=\"ds-cta\"><h2>Have a project like this?</h2><p>I take projects from brief to deploy. Message me on <a href=\"#\">LinkedIn</a> or see more of my code on <a href=\"#\">GitHub</a>.</p></section>",
+      "css": ".ds-cta{margin:5px;padding:clamp(1.75rem,4vw,2.75rem);border:1.5px solid var(--neat);outline:.5px solid var(--neat);outline-offset:4px;background:var(--page)}.ds-cta h2{margin:0;font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.25rem);font-weight:600;line-height:1.2;color:var(--ink)}.ds-cta p{margin:.75rem 0 0;font-family:var(--serif);font-size:1.1875rem;line-height:1.6;color:var(--ink-2);max-width:58ch}.ds-cta a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:.22em}.ds-cta a:hover{color:var(--ember)}.ds-cta a:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}"
+    },
+    {
+      "name": "Activity Chart",
+      "kind": "custom",
+      "refersTo": "activity-bar",
+      "description": "Single-series weekly commit chart in moss with a peak marker, hover readout, and table view.",
+      "html": "<figure class=\"ds-act\"><figcaption class=\"ds-act__head\"><span class=\"ds-act__title\">Commits per week</span><span class=\"ds-act__meta\">412 commits · 2 Mar – 20 Jul 2026</span></figcaption><svg viewBox=\"0 0 160 60\" preserveAspectRatio=\"none\"><line x1=\"0\" x2=\"160\" y1=\"59.5\" y2=\"59.5\" class=\"ds-act__base\"/><rect x=\"2\" y=\"40\" width=\"16\" height=\"20\" rx=\"1.5\"/><rect x=\"22\" y=\"28\" width=\"16\" height=\"32\" rx=\"1.5\"/><rect x=\"42\" y=\"8\" width=\"16\" height=\"52\" rx=\"1.5\"/><rect x=\"62\" y=\"22\" width=\"16\" height=\"38\" rx=\"1.5\"/><rect x=\"82\" y=\"34\" width=\"16\" height=\"26\" rx=\"1.5\"/><rect x=\"102\" y=\"44\" width=\"16\" height=\"16\" rx=\"1.5\"/><rect x=\"122\" y=\"50\" width=\"16\" height=\"10\" rx=\"1.5\"/><rect x=\"142\" y=\"54\" width=\"16\" height=\"6\" rx=\"1.5\"/></svg><details><summary>Show as table</summary></details><p class=\"ds-act__src\">Source: git log of the public repository.</p></figure>",
+      "css": ".ds-act{display:grid;gap:.5rem;margin:0;background:var(--page);font-family:var(--sans)}.ds-act__head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.25rem 1.5rem;align-items:baseline}.ds-act__title{font-stretch:125%;font-size:.8125rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}.ds-act__meta{font-stretch:82%;font-size:.75rem;font-weight:600;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--ink-3)}.ds-act svg{display:block;width:100%;height:7.5rem}.ds-act rect{fill:var(--moss);transition:fill 120ms var(--ease-out)}.ds-act rect:hover{fill:var(--ember)}.ds-act__base{stroke:var(--ink);stroke-width:1;vector-effect:non-scaling-stroke}.ds-act summary{cursor:pointer;font-size:.8125rem;font-weight:600;color:var(--ink-2);width:fit-content}.ds-act summary:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}.ds-act__src{margin:0;font-family:var(--serif);font-style:italic;font-size:.75rem;color:var(--ink-3)}"
+    },
+    {
+      "name": "Code Block",
+      "kind": "custom",
+      "refersTo": "code-block",
+      "description": "Prose code on mantle; Shiki gruvbox soft paints the tokens.",
+      "html": "<pre class=\"ds-pre\"><code>pnpm <span style=\"color:#af3a03\">build</span></code></pre><p class=\"ds-p\">Run <code class=\"ds-code\">astro check</code> first.</p>",
+      "css": ".ds-pre{margin:0;background:var(--mantle);border:1px solid var(--overlay);padding:1rem 1.2rem;overflow-x:auto;line-height:1.5;font-size:.9375rem;font-family:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;color:var(--ink)}.ds-p{font-family:var(--serif);font-size:1.1875rem;color:var(--ink-2)}.ds-code{font-family:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;font-size:.84em;background:var(--mantle);border:1px solid var(--overlay);padding:.1em .35em;border-radius:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Survey Quadrangle",
+    "overview": "The site is a printed survey sheet, tuned for the web. Parchment paper, brown ink, a neatline with coordinates in the collar, a legend that doubles as navigation, and a map field where every feature is data: time runs across the field, roles are tinted strata, shipped work and writing are dated survey marks, research is a slate-blue river lettered in italic. Nothing on the sheet is ornament; terrain that carries no data does not get drawn. Inner pages keep the same vocabulary at reading scale: gazetteers on a brick year grid, a stratigraphic section column for roles, screenshots printed as numbered plates, case facts in a map title block, decisions marked with survey triangles.\n\nDensity is cartographic: small, precise lettering in two Archivo widths sits against generous parchment, and reading copy moves into Source Serif 4. The sheet is flat. Depth comes from double neatlines, tinted strata, and a darker mantle parchment for indexes, plates, and code, never from shadows or rounded cards. Light parchment is canonical; an \"evening walnut\" dark sheet follows the OS preference with the same structure and retuned pigments, and code follows it through Shiki's gruvbox soft themes (light and dark).\n\nThis world replaces the earlier dark terminal look and now serves every public route: home, `/who-am-i`, `/writings`, `/experiments`, their detail pages, and `/cases/*`. Only `/pomodoro` and `/signal` still use the legacy layout (Tailwind, dark terminal tokens); they are pending migration, not a second system.",
+    "keyCharacteristics": [
+      "Parchment sheet, brown ink, ember reserved for interaction.",
+      "Terrain is data: strata, year grid, contours raised under marks, a river for research, a single moss series for activity.",
+      "Archivo in two widths (expanded caps for sheet lettering, condensed for margin data); Source Serif 4 for everything read; a system monospace for code only.",
+      "Double neatline frames sheet objects: the map field, title blocks, plates, the call to action.",
+      "One authored motion: the survey sweeps in once, off under reduced motion.",
+      "Hover or focus on any dated feature lights its span of time on the sheet."
+    ],
+    "rules": [
+      {
+        "name": "The Field Lettering Rule",
+        "body": "Lettering on strata uses Ink, Field Muted, or Field Water, never Ink 3 or Slate Water. The strata drop Ink 3 to 3.7:1 and Slate Water to 3.3:1; the field tokens exist to hold AA (at least 4.9:1) on every stratum in both modes. Any new field token must pass 4.5:1 against all three bands, light and evening.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ember Is Interaction Rule",
+        "body": "Ember appears only in response to the visitor (focus, hover, current page, span highlight, active bar) or as a link underline. A resting surface with an ember fill is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Water Is Research Rule",
+        "body": "Slate blue means academic research. Do not use water for general links or decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Widths Rule",
+        "body": "Expanded Archivo (125%) names things: people, companies, strata, sections, the sheet. Condensed Archivo (80 to 88%) measures things: dates, coordinates, counts, years, fact labels. Do not set data wide or names narrow.",
+        "section": "typography"
+      },
+      {
+        "name": "The Serif Reads Rule",
+        "body": "Anything longer than a label is Source Serif. Italic is a secondary voice: water, deks, notes, captions of provenance, and quotations. It is not used to style labels or headings.",
+        "section": "typography"
+      },
+      {
+        "name": "The Code Stays Code Rule",
+        "body": "Monospace appears only for code, inside prose or decisions, on mantle. Never use it for labels, dates, or chrome.",
+        "section": "typography"
+      },
+      {
+        "name": "The Data-Bearing Terrain Rule",
+        "body": "Every stratum, grid line, contour hill, bar, and symbol encodes a real role, year, or dated artifact. Contours rise under marks; nothing is drawn as wallpaper.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Sheet Rule",
+        "body": "Nothing lifts off the paper. If a surface needs separation, give it a neatline, a rule, or a mantle ground, not a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Neatline Rule",
+        "body": "A double neatline marks an object that belongs to the sheet itself: the map field, title blocks, plates, the call to action. Do not use it as a generic card border.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** letter anything on strata in Ink, Field Muted (#4e3e30), or Field Water (#1f4d57), and check any new field color at 4.5:1 against all three strata in both modes.",
+      "**Do** reserve Ember (#a14e08) for focus, hover, current page, link underlines, the span highlight, and the active chart bar.",
+      "**Do** set names and section heads in expanded Archivo caps and dates, coordinates, counts, and fact labels in condensed tabular Archivo.",
+      "**Do** set everything read in Source Serif 4 on the ramp's steps (Reading 1.1875rem for prose, Title 1.3125rem for entry headings, Body 1.0625rem for descriptions).",
+      "**Do** frame sheet objects (map, title blocks, plates, call to action) with the double neatline (1.5px border plus 0.5px outline, offset 3 to 4px, inset 5px).",
+      "**Do** print images as numbered plates and key dated items with the sheet's symbols: summit for experiments and decisions, benchmark for writing and shipped items, slate dot for papers.",
+      "**Do** give every chart a table view and every dated feature a hover and focus state.",
+      "**Do** keep the single survey sweep as the only entrance motion, and switch it off under reduced motion.",
+      "**Do** design both the parchment sheet and the evening walnut sheet; parchment is canonical."
+    ],
+    "donts": [
+      "**Don't** letter on strata with Ink 3 or Slate Water; they fall to 3.3 to 3.7:1 there.",
+      "**Don't** draw contours, hatching, grids, or bars that carry no data.",
+      "**Don't** add box-shadows, rounded cards, or radii beyond the 2px focus and code corners.",
+      "**Don't** bring back the terminal look: no scanlines, SYSTEM_ labels, or fake readouts.",
+      "**Don't** use monospace outside code.",
+      "**Don't** use tracked caps as eyebrows or kickers above headings; expanded caps name the sheet's own features (sections, strata, companies), they do not decorate headlines.",
+      "**Don't** use slate water for anything that is not research.",
+      "**Don't** fill resting surfaces with ember."
+    ]
+  }
+}

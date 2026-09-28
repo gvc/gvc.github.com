@@ -1,0 +1,92 @@
+{
+ "source": "git log of github.com/gvc/van-damme, author commits only",
+ "first": "2026-03-13",
+ "last": "2026-07-31",
+ "total": 112,
+ "weeks": [
+  {
+   "week": "2026-03-09",
+   "commits": 27
+  },
+  {
+   "week": "2026-03-16",
+   "commits": 5
+  },
+  {
+   "week": "2026-03-23",
+   "commits": 5
+  },
+  {
+   "week": "2026-03-30",
+   "commits": 4
+  },
+  {
+   "week": "2026-04-06",
+   "commits": 5
+  },
+  {
+   "week": "2026-04-13",
+   "commits": 19
+  },
+  {
+   "week": "2026-04-20",
+   "commits": 5
+  },
+  {
+   "week": "2026-04-27",
+   "commits": 7
+  },
+  {
+   "week": "2026-05-04",
+   "commits": 15
+  },
+  {
+   "week": "2026-05-11",
+   "commits": 2
+  },
+  {
+   "week": "2026-05-18",
+   "commits": 4
+  },
+  {
+   "week": "2026-05-25",
+   "commits": 5
+  },
+  {
+   "week": "2026-06-01",
+   "commits": 5
+  },
+  {
+   "week": "2026-06-08",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-15",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-22",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-29",
+   "commits": 1
+  },
+  {
+   "week": "2026-07-06",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-13",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-20",
+   "commits": 1
+  },
+  {
+   "week": "2026-07-27",
+   "commits": 2
+  }
+ ]
+}

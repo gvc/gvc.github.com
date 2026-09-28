@@ -9,11 +9,14 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.2.2",
     "tailwindcss": "^4.2.2"
   },
   "volta": {
     "node": "24.14.0"
-  }
+  },
+  "packageManager": "pnpm@11.3.0"
 }

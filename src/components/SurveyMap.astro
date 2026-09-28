@@ -1,0 +1,608 @@
+---
+import type { SurveyMap } from '../lib/survey';
+
+interface Props {
+  map: SurveyMap;
+  surveyedLabel: string;
+}
+
+const { map, surveyedLabel } = Astro.props;
+const o = map.orientation;
+const land = o === 'landscape';
+const id = `survey-${o}`;
+const surveyX = land ? map.surveyedAt * map.w : 0;
+const surveyY = land ? 0 : (1 - map.surveyedAt) * map.h;
+const pct = (n: number) => `${(n * 100).toFixed(3)}%`;
+// Allow line breaks after underscores and slashes so titles never split mid-token.
+const breakable = (text: string) =>
+  text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/(_|\/+)/g, '$1<wbr>');
+---
+
+<figure class:list={['survey', `survey--${o}`]} data-survey>
+  <div class="survey__corners" aria-hidden="true">
+    {land ? (
+      <>
+        <span class="corner corner--tl">8°00′S · 34°57′30″W</span>
+        <span class="corner corner--tr">8°00′S · 34°50′W</span>
+      </>
+    ) : (
+      <>
+        <span class="corner corner--tl">8°00′S</span>
+        <span class="corner corner--tr">34°50′W</span>
+      </>
+    )}
+  </div>
+
+  <div class="survey__sheet">
+    {!land && (
+      <ol class="survey__years" aria-hidden="true">
+        {map.years.filter((y) => y.labelled).map((y) => (
+          <li style={`top:${pct(1 - y.pos)}`}>{y.year}</li>
+        ))}
+      </ol>
+    )}
+
+    <div
+      class="survey__field"
+      style={`--w:${map.w};--h:${map.h}`}
+      data-orientation={o}
+    >
+      <svg
+        class="survey__terrain"
+        viewBox={`0 0 ${map.w} ${map.h}`}
+        aria-hidden="true"
+        focusable="false"
+      >
+        <defs>
+          <pattern id={`${id}-hatch`} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="7" class="hatch" />
+          </pattern>
+          <pattern id={`${id}-void`} width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+            <line x1="0" y1="0" x2="0" y2="5" class="void" />
+          </pattern>
+        </defs>
+
+        <g class="strata">
+          {map.roles.map((r) => (
+            <path d={r.path} class:list={['stratum', `stratum--${r.tone}`]} data-role={r.id} />
+          ))}
+          {map.overlap && <path d={map.overlap} fill={`url(#${id}-hatch)`} />}
+          <path d={map.unsurveyed} fill={`url(#${id}-void)`} />
+        </g>
+
+        <g class="grid">
+          {map.years.map((y) =>
+            land ? (
+              <line x1={y.pos * map.w} x2={y.pos * map.w} y1="0" y2={map.h} />
+            ) : (
+              <line y1={(1 - y.pos) * map.h} y2={(1 - y.pos) * map.h} x1="0" x2={map.w} />
+            ),
+          )}
+        </g>
+
+        <g class="contours">
+          {map.contours.map((c) => <path d={c.d} class:list={{ index: c.index }} />)}
+        </g>
+
+        <path id={`${id}-river`} d={map.river} class="river" />
+        <text class="river-label" dy="-6">
+          <textPath href={`#${id}-river`} startOffset={land ? '36%' : '42%'}>
+            Machine learning
+          </textPath>
+        </text>
+
+        {land ? (
+          <line class="surveyed" x1={surveyX} x2={surveyX} y1="0" y2={map.h} />
+        ) : (
+          <line class="surveyed" y1={surveyY} y2={surveyY} x1="0" x2={map.w} />
+        )}
+
+        <g class="leaders">
+          {map.marks.filter((m) => m.leader).map((m) => (
+            <polyline
+              points={`${m.x},${m.y} ${m.side === 'right' ? m.lx - 3 : m.lx + m.lw + 3},${m.ly + 10}`}
+            />
+          ))}
+        </g>
+      </svg>
+
+      <div class="survey__span" aria-hidden="true"></div>
+
+      <span
+        class="survey__date"
+        style={land ? `left:${pct(map.surveyedAt)}` : `top:${pct(1 - map.surveyedAt)}`}
+      >
+        Surveyed {surveyedLabel}
+      </span>
+
+      {map.roles.map((r) => (
+        <a
+          class:list={['role', `role--${r.tone}`]}
+          href="/who-am-i"
+          style={`--lx:${r.lx};--ly:${r.ly};--lw:${r.lw}`}
+          data-from={r.span.from}
+          data-to={r.span.to}
+          data-range={r.range}
+        >
+          <span class="role__name">{r.name}</span>
+          <span class="role__title">{r.title}</span>
+        </a>
+      ))}
+
+      {map.marks.map((m) => (
+        <a
+          class:list={['mark', `mark--${m.kind}`, `mark--${m.side}`]}
+          href={m.href}
+          style={`--lx:${m.lx};--ly:${m.ly};--lw:${m.lw};--sx:${m.x - m.lx};--sy:${m.y - m.ly}`}
+          data-from={m.span.from}
+          data-to={m.span.to}
+          data-range={m.range}
+          {...(m.external ? { rel: 'noopener', target: '_blank' } : {})}
+        >
+          <svg class="mark__sym" viewBox="-8 -8 16 16" aria-hidden="true" focusable="false">
+            {m.kind === 'experiment' && <path d="M0 -6.5 L6.5 5 L-6.5 5 Z" />}
+            {m.kind === 'writing' && (
+              <>
+                <circle r="5" class="ring" />
+                <circle r="1.6" />
+              </>
+            )}
+            {m.kind === 'paper' && <circle r="3.6" />}
+          </svg>
+          <span class="mark__name" set:html={breakable(m.label)} />
+          <span class="mark__detail">{m.detail}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  {land && (
+    <div class="survey__scale" aria-hidden="true">
+      <ol class="survey__years">
+        {map.years.filter((y) => y.labelled).map((y) => (
+          <li style={`left:${pct(y.pos)}`}>{y.year}</li>
+        ))}
+      </ol>
+    </div>
+  )}
+
+  <figcaption class="survey__caption">
+    <span class="survey__readout" aria-live="polite" data-readout></span>
+    <span class="scale-bar" aria-hidden="true">
+      <span class="scale-bar__row">
+        <span class="scale-bar__bar" style={`--len:${map.yearWidth.then}`}></span>
+        <span>1 year in 2012</span>
+      </span>
+      <span class="scale-bar__row">
+        <span class="scale-bar__bar" style={`--len:${map.yearWidth.now}`}></span>
+        <span>1 year now</span>
+      </span>
+    </span>
+    <span class="survey__note">
+      The grid widens toward the survey date. Terrain is drawn; positions are dated.
+    </span>
+    <span class="corner-pair" aria-hidden="true">
+      {land ? '8°07′30″S · 34°57′30″W — 8°07′30″S · 34°50′W' : '8°07′30″S · 34°57′30″W'}
+    </span>
+  </figcaption>
+</figure>
+
+<style>
+  .survey {
+    --neat-w: 1.5px;
+    position: relative;
+    container-type: inline-size;
+    display: grid;
+    gap: 0.4rem;
+    font-family: var(--sans);
+  }
+
+  /* Coordinates sit in the collar, outside the neatline. */
+  .survey__corners {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .corner,
+  .corner-pair {
+    font-stretch: 80%;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+  }
+
+  .survey__sheet {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .survey--portrait .survey__sheet {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+  }
+
+  .survey__field {
+    --u: calc(100cqw / var(--w));
+    position: relative;
+    container-type: inline-size;
+    aspect-ratio: var(--w) / var(--h);
+    background: var(--page);
+    border: var(--neat-w) solid var(--neat);
+    outline: 0.5px solid var(--neat);
+    outline-offset: 4px;
+    margin: 5px;
+  }
+
+  .survey__terrain {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .stratum {
+    transition: opacity 240ms var(--ease-out);
+  }
+  .stratum--moss { fill: var(--band-moss); }
+  .stratum--gold { fill: var(--band-gold); }
+  .stratum--slate { fill: var(--band-slate); }
+
+  .hatch {
+    stroke: var(--ink-2);
+    stroke-width: 1;
+    opacity: 0.35;
+  }
+
+  .void {
+    stroke: var(--ink-4);
+    stroke-width: 0.8;
+    opacity: 0.55;
+  }
+
+  .grid line {
+    stroke: var(--grid);
+    stroke-width: 0.9;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .contours path {
+    fill: none;
+    stroke: var(--contour);
+    stroke-width: 0.7;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .contours path.index {
+    stroke-width: 1.4;
+  }
+
+  .river {
+    fill: none;
+    stroke: var(--water);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+
+  .river-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    fill: var(--field-water);
+  }
+
+  .survey--portrait .river-label {
+    font-size: 13px;
+  }
+
+  .surveyed {
+    stroke: var(--ink);
+    stroke-width: 1.2;
+    stroke-dasharray: 5 4;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .leaders polyline {
+    fill: none;
+    stroke: var(--ink-3);
+    stroke-width: 0.8;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* The authored moment: the survey is drawn from 2010 toward today. */
+  @media (prefers-reduced-motion: no-preference) {
+    .survey--landscape .contours,
+    .survey--landscape .grid {
+      animation: survey-sweep 1600ms var(--ease-out) both;
+    }
+    .survey--portrait .contours,
+    .survey--portrait .grid {
+      animation: survey-sweep-up 1600ms var(--ease-out) both;
+    }
+  }
+
+  @keyframes survey-sweep {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes survey-sweep-up {
+    from { clip-path: inset(100% 0 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  /* ------------------------------------------------------------ hover span */
+
+  .survey__span {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    background: color-mix(in oklab, var(--ember) 16%, transparent);
+    border: 0 solid var(--ember);
+    transition: opacity 200ms var(--ease-out);
+  }
+
+  .survey--landscape .survey__span {
+    top: 0;
+    bottom: 0;
+    left: calc(var(--s0, 0) * 100%);
+    width: max(2px, calc((var(--s1, 0) - var(--s0, 0)) * 100%));
+    border-inline-width: 1.5px;
+  }
+
+  .survey--portrait .survey__span {
+    left: 0;
+    right: 0;
+    top: calc((1 - var(--s1, 0)) * 100%);
+    height: max(2px, calc((var(--s1, 0) - var(--s0, 0)) * 100%));
+    border-block-width: 1.5px;
+  }
+
+  .survey__field.is-spanning .survey__span {
+    opacity: 1;
+  }
+
+  /* ------------------------------------------------------------ lettering */
+
+  .survey__date {
+    position: absolute;
+    font-stretch: 80%;
+    font-size: max(10px, calc(12 * var(--u)));
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--page);
+    padding: 0.15em 0.4em;
+    white-space: nowrap;
+  }
+
+  .survey--landscape .survey__date {
+    top: 0.5em;
+    transform: translateX(-50%);
+  }
+
+  .survey--portrait .survey__date {
+    right: 0.5em;
+    transform: translateY(-120%);
+  }
+
+  .role,
+  .mark {
+    position: absolute;
+    left: calc(var(--lx) * var(--u));
+    top: calc(var(--ly) * var(--u));
+    width: calc(var(--lw) * var(--u));
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+  }
+
+  .role {
+    align-items: center;
+    text-align: center;
+  }
+
+  .survey--portrait .role {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .role__name {
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: max(11px, calc(13.5 * var(--u)));
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+
+  .role__title {
+    font-family: var(--serif);
+    font-style: normal;
+    font-size: max(11px, calc(13 * var(--u)));
+    color: var(--field-muted);
+  }
+
+  .role:hover .role__name,
+  .role.is-active .role__name {
+    text-decoration: underline;
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 2px;
+  }
+
+  .mark {
+    --fs: max(12px, calc(15 * var(--u)));
+    padding-block: 0.1em;
+  }
+
+  .survey--portrait .mark {
+    --fs: max(12.5px, calc(13.5 * var(--u)));
+  }
+
+  .mark--left {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .mark__sym {
+    position: absolute;
+    left: calc(var(--sx) * var(--u) - 8px);
+    top: calc(var(--sy) * var(--u) - 8px);
+    width: 16px;
+    height: 16px;
+    overflow: visible;
+    fill: var(--ink);
+    transition: transform 220ms var(--ease-out);
+  }
+
+  .mark__sym .ring {
+    fill: var(--page);
+    stroke: var(--ink);
+    stroke-width: 1.6;
+  }
+
+  .mark--paper .mark__sym {
+    fill: var(--water);
+  }
+
+  .mark__name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: var(--fs);
+    line-height: 1.2;
+    color: var(--ink);
+    text-wrap: balance;
+    text-shadow:
+      0 0 3px var(--page),
+      0 0 3px var(--page),
+      0 0 6px var(--page);
+  }
+
+  .mark--paper .mark__detail {
+    white-space: nowrap;
+  }
+
+  .mark--paper .mark__name {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--field-water);
+  }
+
+  .mark--experiment .mark__name {
+    font-size: calc(var(--fs) * 1.12);
+  }
+
+  .mark__detail {
+    font-stretch: 82%;
+    font-weight: 600;
+    font-size: calc(var(--fs) * 0.74);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--field-muted);
+    text-shadow: 0 0 3px var(--page), 0 0 3px var(--page);
+  }
+
+  .mark:hover .mark__name,
+  .mark.is-active .mark__name {
+    text-decoration: underline;
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 1.5px;
+  }
+
+  .mark:hover .mark__sym,
+  .mark.is-active .mark__sym {
+    transform: scale(1.35);
+  }
+
+  /* ------------------------------------------------------------ scale + caption */
+
+  .survey__scale {
+    position: relative;
+    height: 1.25rem;
+    margin-inline: 5px;
+  }
+
+  .survey__years {
+    position: relative;
+  }
+
+  .survey__years li {
+    position: absolute;
+    font-stretch: 80%;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--brick);
+  }
+
+  .survey__scale .survey__years li {
+    transform: translateX(-50%);
+  }
+
+  .survey--portrait .survey__years li {
+    right: 0.45rem;
+    transform: translateY(-50%);
+  }
+
+  .survey__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.3rem 1.5rem;
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    color: var(--ink-3);
+  }
+
+  .survey__readout {
+    flex-basis: 100%;
+    min-height: 1.3em;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: var(--ink);
+  }
+
+  .scale-bar {
+    display: grid;
+    gap: 0.25rem;
+    font-stretch: 82%;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .scale-bar__row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  /* Bars are drawn at the field's own scale, so they measure the sheet. */
+  .scale-bar__bar {
+    --tick: linear-gradient(var(--ink), var(--ink));
+    width: calc(var(--len) * min(100cqw, 100vw));
+    height: 7px;
+    background:
+      var(--tick) left / 1.5px 100% no-repeat,
+      var(--tick) right / 1.5px 100% no-repeat,
+      var(--tick) center / 100% 1.5px no-repeat;
+  }
+
+  .survey__note {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.8125rem;
+  }
+</style>

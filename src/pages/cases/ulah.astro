@@ -1,0 +1,117 @@
+---
+import Case from '../../layouts/Case.astro';
+import Plate from '../../components/Plate.astro';
+import Activity from '../../components/Activity.astro';
+import activity from '../../data/cases/ulah-activity.json';
+---
+
+<Case
+  title="Ulah"
+  summary="A marketing site and a 55-project portfolio for a commercial architecture studio, taken from a Figma file to a live site on the client's existing hosting."
+  facts={[
+    { label: 'Client', value: 'Ulah, commercial architecture & design' },
+    { label: 'My role', value: 'Front-end build, content pipeline, deployment' },
+    { label: 'Timeline', value: 'Mar – Sep 2026' },
+    { label: 'Stack', value: 'Astro, CSS, sharp, Tally' },
+    { label: 'Status', value: 'Live' },
+  ]}
+  links={[{ label: 'Visit ulahdesign.com.br', href: 'https://ulahdesign.com.br' }]}
+>
+  <section class="case-section" aria-labelledby="brief">
+    <h2 id="brief">The brief</h2>
+    <div class="case-body">
+      <p>
+        Ulah is a commercial architecture studio, and it's run by my wife. They had a finished
+        design in Figma and years of project photography, and needed a site that looks as
+        considered as the stores they design.
+      </p>
+      <p>
+        My background is backend and platform work, so this project was where I sharpened my
+        front-end craft. I paired with <strong>Claude Code</strong> throughout, using it to iterate on
+        layout and responsive detail against the Figma file, while I owned the structure, the
+        content pipeline and every call on what shipped.
+      </p>
+    </div>
+  </section>
+
+  <section class="case-section" aria-labelledby="work">
+    <h2 id="work">What I built</h2>
+    <ol class="decisions">
+      <li>
+        <h3>A faithful, responsive build of the Figma design</h3>
+        <p>
+          The homepage, the "about" and process sections and five portfolio pages match the design
+          at desktop and phone widths, with the studio's own typeface (Neurial Grotesk) self-hosted and
+          the design's SVG ornaments sized to spec.
+        </p>
+      </li>
+      <li>
+        <h3>A photo pipeline instead of hand-exported images</h3>
+        <p>
+          The studio's photo folders mix camera RAW (CR3), HEIC and PNG. One script turns them into
+          web-ready masters, auto-oriented with metadata stripped, and Astro generates the responsive
+          sizes at build. Adding a project means dropping in a folder and re-running it.
+        </p>
+      </li>
+      <li>
+        <h3>A portfolio the studio can reorder</h3>
+        <p>
+          The order of projects and of their photos lives in one YAML file. The first four photos of each
+          project show up front and the rest open on demand, so long galleries stay fast.
+        </p>
+      </li>
+      <li>
+        <h3>Fits the hosting they already pay for</h3>
+        <p>
+          The site is fully static. A configurable base path let the new version be staged next to the
+          old one on the same shared host before cutover, and a one-command deploy mirrors the build over
+          FTPS. The first contact form was a PHP handler with reCAPTCHA; I replaced it with a Tally embed,
+          leaving nothing server-side to maintain.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="case-section" aria-labelledby="plates">
+    <h2 id="plates">The site</h2>
+    <div class="plates plates--lead">
+      <Plate
+        number={1}
+        src="/cases/ulah/home-desktop.webp"
+        width={1440}
+        height={900}
+        alt="Ulah homepage at desktop width: a store interior photo behind the headline 'Projetos que desafiam o óbvio de forma estratégica' with two buttons."
+        caption="Homepage, desktop. Captured from the live site, September 2026."
+      />
+      <Plate
+        number={2}
+        src="/cases/ulah/projetos.webp"
+        width={1200}
+        height={1667}
+        alt="Ulah 'Lojas' portfolio page listing projects Baimas and Cia Coffee with four photos each."
+        caption="Portfolio category page: each project shows four photos up front."
+      />
+      <Plate
+        number={3}
+        frame="phone"
+        src="/cases/ulah/home-mobile.webp"
+        width={390}
+        height={844}
+        alt="Ulah homepage on a phone-sized screen."
+        caption="Homepage at phone width."
+      />
+    </div>
+  </section>
+
+  <section class="case-section" aria-labelledby="shipped">
+    <h2 id="shipped">What shipped</h2>
+    <div class="case-body">
+      <ul class="shipped">
+        <li>Live at <a href="https://ulahdesign.com.br">ulahdesign.com.br</a>: a homepage and <strong>five portfolio categories</strong>, from shops and kiosks to carts, homes and offices.</li>
+        <li><strong>55 projects and 243 photos</strong>, all run through the photo pipeline.</li>
+        <li>No server code to maintain: a static build and a one-command deploy.</li>
+      </ul>
+      <Activity data={activity} label="Commits per week" />
+    </div>
+  </section>
+</Case>

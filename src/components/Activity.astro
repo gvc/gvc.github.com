@@ -1,0 +1,202 @@
+---
+// Weekly commit counts drawn as a single-series bar chart, with a table view.
+interface Props {
+  data: { source: string; first: string; last: string; total: number; weeks: { week: string; commits: number }[] };
+  label: string;
+}
+
+const { data, label } = Astro.props;
+const W = 800;
+const H = 120;
+const top = 22;
+const n = data.weeks.length;
+const step = W / n;
+const barW = Math.max(2, step - 2);
+const max = Math.max(...data.weeks.map((w) => w.commits));
+const fmt = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const peak = data.weeks.reduce((a, b) => (b.commits > a.commits ? b : a));
+const peakIndex = data.weeks.indexOf(peak);
+const bars = data.weeks.map((w, i) => {
+  const h = w.commits === 0 ? 0 : Math.max(3, (w.commits / max) * (H - top));
+  return { ...w, x: i * step + (step - barW) / 2, y: H - h, h, text: `Week of ${fmt(w.week)} · ${w.commits} ${w.commits === 1 ? 'commit' : 'commits'}` };
+});
+const peakX = bars[peakIndex].x + barW / 2;
+---
+
+<figure class="activity" data-activity>
+  <figcaption class="activity__head">
+    <span class="activity__title">{label}</span>
+    <span class="activity__total">{data.total} commits · {fmt(data.first)} – {fmt(data.last)}</span>
+  </figcaption>
+  <div class="activity__plot">
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`${label}: ${data.total} commits between ${fmt(data.first)} and ${fmt(data.last)}, peaking at ${peak.commits} in the week of ${fmt(peak.week)}.`}>
+      <line x1="0" x2={W} y1={H - 0.5} y2={H - 0.5} class="baseline" />
+      {bars.map((b) => (
+        <g class="bar" data-text={b.text}>
+          <rect x={b.x - 1} y="0" width={step} height={H} class="hit" />
+          {b.h > 0 && <rect x={b.x} y={b.y} width={barW} height={b.h} rx="1.5" class="fill" />}
+        </g>
+      ))}
+    </svg>
+    <span class="activity__peak" style={`left:${(peakX / W) * 100}%`} aria-hidden="true">
+      Peak · {peak.commits}
+    </span>
+  </div>
+  <div class="activity__axis" aria-hidden="true">
+    <span>{fmt(data.weeks[0].week)}</span>
+    <span class="activity__readout" data-readout></span>
+    <span>{fmt(data.weeks[n - 1].week)}</span>
+  </div>
+  <details class="activity__table">
+    <summary>Show as table</summary>
+    <table>
+      <thead><tr><th scope="col">Week of</th><th scope="col">Commits</th></tr></thead>
+      <tbody>
+        {data.weeks.filter((w) => w.commits > 0).map((w) => (
+          <tr><td>{fmt(w.week)}</td><td>{w.commits}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </details>
+  <p class="activity__source">Source: {data.source}.</p>
+</figure>
+
+<script>
+  for (const fig of document.querySelectorAll<HTMLElement>('[data-activity]')) {
+    const readout = fig.querySelector<HTMLElement>('[data-readout]');
+    if (!readout) continue;
+    for (const bar of fig.querySelectorAll<SVGGElement>('.bar')) {
+      bar.addEventListener('pointerenter', () => {
+        readout.textContent = bar.dataset.text ?? '';
+        bar.classList.add('is-on');
+      });
+      bar.addEventListener('pointerleave', () => {
+        readout.textContent = '';
+        bar.classList.remove('is-on');
+      });
+    }
+  }
+</script>
+
+<style>
+  .activity {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .activity__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    align-items: baseline;
+  }
+
+  .activity__title {
+    font-stretch: 125%;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .activity__total,
+  .activity__axis,
+  .activity__source,
+  .activity__peak {
+    font-stretch: 82%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+  }
+
+  .activity__plot {
+    position: relative;
+    padding-top: 1.1rem;
+  }
+
+  .activity svg {
+    display: block;
+    width: 100%;
+    height: 7.5rem;
+  }
+
+  .baseline {
+    stroke: var(--ink);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .hit {
+    fill: transparent;
+  }
+
+  .fill {
+    fill: var(--moss);
+    transition: fill 120ms var(--ease-out);
+  }
+
+  .bar.is-on .fill {
+    fill: var(--ember);
+  }
+
+  .activity__peak {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: var(--ink-2);
+  }
+
+  .activity__axis {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .activity__readout {
+    color: var(--ink);
+    text-align: center;
+  }
+
+  .activity__table summary {
+    cursor: pointer;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    width: fit-content;
+  }
+
+  .activity__table table {
+    margin-top: 0.5rem;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .activity__table th,
+  .activity__table td {
+    text-align: left;
+    padding: 0.3rem 1.5rem 0.3rem 0;
+    border-bottom: 1px solid color-mix(in oklab, var(--ink-4) 45%, transparent);
+  }
+
+  .activity__table th {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .activity__source {
+    font-family: var(--serif);
+    font-style: italic;
+    font-stretch: normal;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+</style>

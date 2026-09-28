@@ -1,0 +1,171 @@
+/* Long-form reading on the survey sheet: serif text, brown ink, ember links. */
+
+.prose {
+  font-family: var(--serif);
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 66ch;
+}
+
+.prose > * + * {
+  margin-top: 1.15em;
+}
+
+.prose h2,
+.prose h3 {
+  font-family: var(--sans);
+  color: var(--ink);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.prose h2 {
+  margin-top: 2.4em;
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding-bottom: 0.6rem;
+  border-bottom: 1.5px solid var(--neat);
+}
+
+.prose h3 {
+  margin-top: 2em;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.prose h2 + *,
+.prose h3 + * {
+  margin-top: 0.8em;
+}
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.prose a {
+  color: var(--ink);
+  text-decoration-color: var(--ember);
+  text-decoration-thickness: 1.5px;
+}
+
+.prose a:hover {
+  color: var(--ember);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+}
+
+.prose ul {
+  list-style: none;
+}
+
+.prose ul > li {
+  position: relative;
+}
+
+.prose ul > li::before {
+  content: '';
+  position: absolute;
+  left: -1.05em;
+  top: 0.62em;
+  width: 0.4em;
+  height: 0.4em;
+  border: 1.5px solid var(--ink-3);
+  border-radius: 50%;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose code {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  font-size: 0.84em;
+  background: var(--mantle);
+  border: 1px solid var(--overlay);
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+}
+
+.prose pre {
+  background: var(--mantle);
+  border: 1px solid var(--overlay);
+  border-left: 1px solid var(--overlay);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  line-height: 1.5;
+  font-size: 0.9375rem;
+}
+
+/* Shiki paints its own colours; the sheet sets the paper. */
+.prose pre.astro-code {
+  background-color: var(--mantle) !important;
+}
+
+.prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding-left: 1.2em;
+  border-left: 1px solid var(--ink-3);
+  font-style: italic;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose th {
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--neat);
+  padding: 0.5rem 0.75rem 0.5rem 0;
+}
+
+.prose td {
+  padding: 0.55rem 0.75rem 0.55rem 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--ink-4) 45%, transparent);
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--ink-4);
+  margin-block: 2.5em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose .astro-code,
+  .prose .astro-code span {
+    color: var(--shiki-dark) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+  }
+}

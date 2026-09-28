@@ -1,0 +1,116 @@
+{
+ "source": "git log of github.com/gvc/ulah-website, author commits only",
+ "first": "2026-03-26",
+ "last": "2026-09-24",
+ "total": 24,
+ "weeks": [
+  {
+   "week": "2026-03-23",
+   "commits": 6
+  },
+  {
+   "week": "2026-03-30",
+   "commits": 2
+  },
+  {
+   "week": "2026-04-06",
+   "commits": 0
+  },
+  {
+   "week": "2026-04-13",
+   "commits": 4
+  },
+  {
+   "week": "2026-04-20",
+   "commits": 0
+  },
+  {
+   "week": "2026-04-27",
+   "commits": 0
+  },
+  {
+   "week": "2026-05-04",
+   "commits": 0
+  },
+  {
+   "week": "2026-05-11",
+   "commits": 0
+  },
+  {
+   "week": "2026-05-18",
+   "commits": 0
+  },
+  {
+   "week": "2026-05-25",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-01",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-08",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-15",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-22",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-29",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-06",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-13",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-20",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-27",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-03",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-10",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-17",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-24",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-31",
+   "commits": 0
+  },
+  {
+   "week": "2026-09-07",
+   "commits": 0
+  },
+  {
+   "week": "2026-09-14",
+   "commits": 0
+  },
+  {
+   "week": "2026-09-21",
+   "commits": 12
+  }
+ ]
+}

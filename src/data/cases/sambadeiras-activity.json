@@ -1,0 +1,240 @@
+{
+ "source": "git log of github.com/gvc/sambadeiras, author commits only",
+ "first": "2025-07-26",
+ "last": "2026-08-29",
+ "total": 119,
+ "weeks": [
+  {
+   "week": "2025-07-21",
+   "commits": 1
+  },
+  {
+   "week": "2025-07-28",
+   "commits": 16
+  },
+  {
+   "week": "2025-08-04",
+   "commits": 5
+  },
+  {
+   "week": "2025-08-11",
+   "commits": 3
+  },
+  {
+   "week": "2025-08-18",
+   "commits": 4
+  },
+  {
+   "week": "2025-08-25",
+   "commits": 0
+  },
+  {
+   "week": "2025-09-01",
+   "commits": 0
+  },
+  {
+   "week": "2025-09-08",
+   "commits": 4
+  },
+  {
+   "week": "2025-09-15",
+   "commits": 0
+  },
+  {
+   "week": "2025-09-22",
+   "commits": 0
+  },
+  {
+   "week": "2025-09-29",
+   "commits": 0
+  },
+  {
+   "week": "2025-10-06",
+   "commits": 0
+  },
+  {
+   "week": "2025-10-13",
+   "commits": 0
+  },
+  {
+   "week": "2025-10-20",
+   "commits": 0
+  },
+  {
+   "week": "2025-10-27",
+   "commits": 0
+  },
+  {
+   "week": "2025-11-03",
+   "commits": 0
+  },
+  {
+   "week": "2025-11-10",
+   "commits": 0
+  },
+  {
+   "week": "2025-11-17",
+   "commits": 0
+  },
+  {
+   "week": "2025-11-24",
+   "commits": 0
+  },
+  {
+   "week": "2025-12-01",
+   "commits": 0
+  },
+  {
+   "week": "2025-12-08",
+   "commits": 0
+  },
+  {
+   "week": "2025-12-15",
+   "commits": 0
+  },
+  {
+   "week": "2025-12-22",
+   "commits": 0
+  },
+  {
+   "week": "2025-12-29",
+   "commits": 5
+  },
+  {
+   "week": "2026-01-05",
+   "commits": 5
+  },
+  {
+   "week": "2026-01-12",
+   "commits": 0
+  },
+  {
+   "week": "2026-01-19",
+   "commits": 0
+  },
+  {
+   "week": "2026-01-26",
+   "commits": 0
+  },
+  {
+   "week": "2026-02-02",
+   "commits": 0
+  },
+  {
+   "week": "2026-02-09",
+   "commits": 0
+  },
+  {
+   "week": "2026-02-16",
+   "commits": 0
+  },
+  {
+   "week": "2026-02-23",
+   "commits": 0
+  },
+  {
+   "week": "2026-03-02",
+   "commits": 0
+  },
+  {
+   "week": "2026-03-09",
+   "commits": 0
+  },
+  {
+   "week": "2026-03-16",
+   "commits": 0
+  },
+  {
+   "week": "2026-03-23",
+   "commits": 0
+  },
+  {
+   "week": "2026-03-30",
+   "commits": 0
+  },
+  {
+   "week": "2026-04-06",
+   "commits": 0
+  },
+  {
+   "week": "2026-04-13",
+   "commits": 0
+  },
+  {
+   "week": "2026-04-20",
+   "commits": 0
+  },
+  {
+   "week": "2026-04-27",
+   "commits": 2
+  },
+  {
+   "week": "2026-05-04",
+   "commits": 0
+  },
+  {
+   "week": "2026-05-11",
+   "commits": 24
+  },
+  {
+   "week": "2026-05-18",
+   "commits": 14
+  },
+  {
+   "week": "2026-05-25",
+   "commits": 1
+  },
+  {
+   "week": "2026-06-01",
+   "commits": 23
+  },
+  {
+   "week": "2026-06-08",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-15",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-22",
+   "commits": 0
+  },
+  {
+   "week": "2026-06-29",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-06",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-13",
+   "commits": 7
+  },
+  {
+   "week": "2026-07-20",
+   "commits": 0
+  },
+  {
+   "week": "2026-07-27",
+   "commits": 4
+  },
+  {
+   "week": "2026-08-03",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-10",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-17",
+   "commits": 0
+  },
+  {
+   "week": "2026-08-24",
+   "commits": 1
+  }
+ ]
+}

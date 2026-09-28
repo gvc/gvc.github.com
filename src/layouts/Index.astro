@@ -1,0 +1,88 @@
+---
+import Sheet from './Sheet.astro';
+import SheetClose from '../components/SheetClose.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  count: string;
+}
+
+const { title, description, heading, count } = Astro.props;
+---
+
+<Sheet title={title} description={description}>
+  <main class="index-page">
+    <header class="page-head">
+      <h1>{heading}</h1>
+      <p class="page-head__count">{count}</p>
+    </header>
+    <slot />
+  </main>
+  <SheetClose />
+</Sheet>
+
+<style>
+  .index-page {
+    width: 100%;
+    max-width: 62rem;
+    padding: clamp(2rem, 6vh, 4rem) var(--gutter) clamp(3rem, 8vh, 5rem);
+  }
+
+  .page-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1.5px solid var(--neat);
+  }
+
+  h1 {
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .page-head__count {
+    font-stretch: 82%;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .index-page :global(.year) {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .index-page :global(.year__label) {
+    padding-top: 1.35rem;
+    font-stretch: 82%;
+    font-size: 1rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--brick);
+    border-top: 1px solid var(--grid);
+  }
+
+  @media (max-width: 640px) {
+    .index-page :global(.year) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .index-page :global(.year__label) {
+      padding-top: 0.5rem;
+    }
+  }
+</style>

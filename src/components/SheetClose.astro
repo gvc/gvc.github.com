@@ -1,0 +1,48 @@
+---
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="close">
+  <p class="close__line">
+    Say hello on <a href="https://www.linkedin.com/in/guieevc/" rel="me">LinkedIn</a>, or read
+    the code on <a href="https://github.com/gvc" rel="me">GitHub</a>.
+  </p>
+  <p class="close__meta">© {year} Guilherme Carvalho · Recife, Pernambuco</p>
+</footer>
+
+<style>
+  .close {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: auto;
+    padding: clamp(2.5rem, 7vh, 4.5rem) var(--gutter) 2.5rem;
+    border-top: 1.5px solid var(--neat);
+  }
+
+  .close__line {
+    font-family: var(--serif);
+    font-size: clamp(1.375rem, 2.6vw, 2rem);
+    line-height: 1.3;
+    color: var(--ink);
+    max-width: 32ch;
+  }
+
+  .close__line a {
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 2px;
+  }
+
+  .close__line a:hover {
+    color: var(--ember);
+  }
+
+  .close__meta {
+    font-stretch: 88%;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+</style>

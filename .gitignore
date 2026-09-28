@@ -3,3 +3,8 @@ node_modules/
 .DS_Store
 .astro/
 dist/
+
+# Impeccable local state
+.impeccable/review/
+.impeccable/questions/
+.impeccable/hook.cache.json

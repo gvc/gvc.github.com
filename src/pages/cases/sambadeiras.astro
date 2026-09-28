@@ -1,0 +1,119 @@
+---
+import Case from '../../layouts/Case.astro';
+import Plate from '../../components/Plate.astro';
+import Activity from '../../components/Activity.astro';
+import activity from '../../data/cases/sambadeiras-activity.json';
+---
+
+<Case
+  title="Sambadeiras"
+  summary="Check-in, attendance and payments for a women's samba group in Olinda, built for whatever phone each member has and for a loud, crowded rehearsal."
+  facts={[
+    { label: 'Client', value: "A women's samba group, Olinda (PE)" },
+    { label: 'My role', value: 'Product, design, development, operations' },
+    { label: 'Timeline', value: 'Jul 2025 – today' },
+    { label: 'Stack', value: 'Ruby on Rails 8, Hotwire, PostgreSQL, Asaas, Fly.io' },
+    { label: 'Status', value: 'In use by the group' },
+  ]}
+  links={[]}
+>
+  <section class="case-section" aria-labelledby="brief">
+    <h2 id="brief">The brief</h2>
+    <div class="case-body">
+      <p>
+        The group brings together women from very different backgrounds, on very different phones,
+        with very different comfort with technology. Every one of them had to be able to check in
+        at each rehearsal from her own phone, and the board needed to manage monthly fees, costume
+        payments and contact details without spreadsheets.
+      </p>
+      <p>
+        That set the bar: the check-in has to work on an old Android in bright sun, with music
+        playing, for someone who has never installed an app like it. Everything else comes second.
+      </p>
+    </div>
+  </section>
+
+  <section class="case-section" aria-labelledby="work">
+    <h2 id="work">What I built</h2>
+    <ol class="decisions">
+      <li>
+        <h3>Check-in in one scan</h3>
+        <p>
+          Every rehearsal or parade gets its own QR code. A member scans it with the phone camera or the
+          in-app scanner and confirms with one tap. The flow is designed around a check-in of under ten
+          seconds.
+        </p>
+      </li>
+      <li>
+        <h3>A location check that never locks anyone out</h3>
+        <p>
+          Check-ins are compared with a radius around the venue. The board chooses whether to reject
+          check-ins from outside it or just flag them for reports. When a phone refuses to share its
+          location, the check-in still goes through and is marked, so an old phone or a denied
+          permission never costs anyone her attendance.
+        </p>
+      </li>
+      <li>
+        <h3>Payments the members choose themselves</h3>
+        <p>
+          Members pick PIX or credit card, paid in full or in instalments (six for the yearly fee, three
+          for the costume). Exemptions follow each member's enrolment type. Charges go through
+          <strong>Asaas</strong>, and its webhooks update each payment's status. The board charges the
+          month with one button that is safe to press twice, and can reissue a charge, cancelling the old one along with its fines.
+        </p>
+      </li>
+      <li>
+        <h3>Tools for the board</h3>
+        <p>
+          The board records justified absences and manages members, sections and activities. Members
+          see their own attendance and payment history.
+        </p>
+      </li>
+      <li>
+        <h3>Built for the phones people actually have</h3>
+        <p>
+          Pages are server-rendered with light JavaScript, touch targets are large, contrast holds
+          outdoors, and all copy is written in Portuguese from the start. Five decision records
+          document the payment and testing design, and the system tests run fully isolated from the
+          payment provider.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="case-section" aria-labelledby="plates">
+    <h2 id="plates">The app</h2>
+    <div class="plates plates--phones">
+      <Plate
+        number={1}
+        frame="phone"
+        src="/cases/sambadeiras/login-after.png"
+        width={375}
+        height={460}
+        alt="Sambadeiras sign-in screen: labelled e-mail and password fields and a clear sign-in button."
+        caption="Sign-in, May 2026."
+      />
+      <Plate
+        number={2}
+        frame="phone"
+        src="/cases/sambadeiras/extract-checkin.png"
+        width={375}
+        height={600}
+        alt="Check-in screen showing the member, the rehearsal 'Ensaio Geral' with venue and time, and a QR scanner frame."
+        caption="Check-in: the member, today's rehearsal, venue and time, with the QR scanner below."
+      />
+    </div>
+  </section>
+
+  <section class="case-section" aria-labelledby="shipped">
+    <h2 id="shipped">What shipped</h2>
+    <div class="case-body">
+      <ul class="shipped">
+        <li>In use by the group for check-ins, attendance and payments, with feedback from both members and the board built back in.</li>
+        <li><strong>Asaas payments</strong> covering PIX and card, up-front and instalment plans, exemptions and batch charging.</li>
+        <li><strong>119 commits</strong> since July 2025, with five architecture decision records.</li>
+      </ul>
+      <Activity data={activity} label="Commits per week" />
+    </div>
+  </section>
+</Case>

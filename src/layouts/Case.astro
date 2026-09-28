@@ -1,0 +1,350 @@
+---
+import Sheet from './Sheet.astro';
+
+export interface Props {
+  title: string;
+  summary: string;
+  facts: { label: string; value: string }[];
+  links: { label: string; href: string }[];
+}
+
+const { title, summary, facts, links } = Astro.props;
+---
+
+<Sheet title={`${title} — Case study by Guilherme Carvalho`} description={summary} noindex>
+  <main class="case">
+    <header class="case__head">
+      <div class="case__intro">
+        <h1>{title}</h1>
+        <p class="case__summary">{summary}</p>
+        <ul class="case__links">
+          {links.map((l) => (
+            <li><a href={l.href} rel="noopener">{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <dl class="title-block">
+        {facts.map((f) => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </header>
+
+    <slot />
+
+    <section class="case__cta" aria-labelledby="cta-title">
+      <h2 id="cta-title">Have a project like this?</h2>
+      <p>
+        I take projects from brief to deploy. Message me on
+        <a href="https://www.linkedin.com/in/guieevc/" rel="noopener">LinkedIn</a> or see more of my code on
+        <a href="https://github.com/gvc" rel="noopener">GitHub</a>.
+      </p>
+    </section>
+  </main>
+  <p class="case__meta">© {new Date().getUTCFullYear()} Guilherme Carvalho · Recife, Pernambuco</p>
+</Sheet>
+
+<style>
+  .case {
+    width: 100%;
+    max-width: 76rem;
+    padding: clamp(1.5rem, 5vh, 3rem) var(--gutter) clamp(3rem, 8vh, 5rem);
+  }
+
+  .case__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: end;
+  }
+
+  h1 {
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .case__summary {
+    margin-top: 1.25rem;
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    line-height: 1.45;
+    color: var(--ink-2);
+    max-width: 38ch;
+    text-wrap: pretty;
+  }
+
+  .case__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .case__links a {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 2px;
+  }
+
+  .case__links a:hover {
+    color: var(--ember);
+  }
+
+  /* The facts sit in a map title block: double rule, sheet lettering. */
+  .title-block {
+    margin: 5px;
+    border: 1.5px solid var(--neat);
+    outline: 0.5px solid var(--neat);
+    outline-offset: 4px;
+  }
+
+  .title-block div {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 0.6rem 0.9rem;
+  }
+
+  .title-block div + div {
+    border-top: 1px solid color-mix(in oklab, var(--ink-4) 55%, transparent);
+  }
+
+  .title-block dt {
+    font-stretch: 82%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-top: 0.15rem;
+  }
+
+  .title-block dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ------------------------------------------------------------ sections */
+
+  .case :global(.case-section) {
+    display: grid;
+    grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    margin-top: clamp(3rem, 8vh, 5rem);
+  }
+
+  .case :global(.case-section > h2) {
+    align-self: start;
+    position: sticky;
+    top: 1.5rem;
+    padding-top: 0.75rem;
+    border-top: 1.5px solid var(--neat);
+    font-stretch: 125%;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .case :global(.case-body) {
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+    max-width: 64ch;
+  }
+
+  .case :global(.case-body > * + *) {
+    margin-top: 1.1em;
+  }
+
+  .case :global(.case-body strong) {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  .case :global(.case-body a) {
+    color: var(--ink);
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 1.5px;
+  }
+
+  /* Numbered decisions, keyed like survey stations. */
+  .case :global(.decisions) {
+    display: grid;
+    gap: 1.75rem;
+    max-width: 66ch;
+  }
+
+  /* Each decision is a survey station, marked with the sheet's triangle. */
+  .case :global(.decisions > li) {
+    position: relative;
+    padding-left: 1.9rem;
+  }
+
+  .case :global(.decisions > li::before) {
+    content: '';
+    position: absolute;
+    left: 0.1rem;
+    top: 0.45rem;
+    width: 0.85rem;
+    height: 0.75rem;
+    background: var(--ink);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+
+  .case :global(.decisions h3) {
+    font-family: var(--serif);
+    font-size: 1.3125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+    padding-top: 0.1rem;
+  }
+
+  .case :global(.decisions p) {
+    margin-top: 0.4rem;
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+
+  .case :global(.decisions code) {
+    font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+    font-size: 0.84em;
+    background: var(--mantle);
+    border: 1px solid var(--overlay);
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  .case :global(.plates) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 2rem 2.5rem;
+    align-items: start;
+  }
+
+  .case :global(.plates--wide) {
+    grid-template-columns: 1fr;
+    max-width: 58rem;
+  }
+
+  .case :global(.plates--lead > :first-child) {
+    grid-column: 1 / -1;
+  }
+
+  .case :global(.plates--phones) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 17.5rem));
+    justify-content: start;
+  }
+
+  .case :global(.shipped) {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 64ch;
+  }
+
+  .case :global(.shipped li) {
+    padding-left: 1.4rem;
+    position: relative;
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  /* Benchmark mark from the sheet's legend. */
+  .case :global(.shipped li::before) {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--ink) 30%, transparent 34%);
+  }
+
+  .case :global(.shipped strong) {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  /* ------------------------------------------------------------ call to action */
+
+  .case__cta {
+    margin: clamp(4rem, 10vh, 6rem) 5px 0;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    border: 1.5px solid var(--neat);
+    outline: 0.5px solid var(--neat);
+    outline-offset: 4px;
+  }
+
+  .case__cta h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .case__cta p {
+    margin-top: 0.75rem;
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 58ch;
+  }
+
+  .case__cta a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration-color: var(--ember);
+    text-decoration-thickness: 2px;
+  }
+
+  .case__cta a:hover {
+    color: var(--ember);
+  }
+
+  .case__meta {
+    padding: 2rem var(--gutter) 2.5rem;
+    font-stretch: 88%;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 860px) {
+    .case__head {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .case :global(.case-section) {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .case :global(.case-section > h2) {
+      position: static;
+    }
+  }
+</style>
