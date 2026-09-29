@@ -8,18 +8,27 @@ interface Props {
   width: number;
   height: number;
   frame?: 'desktop' | 'phone';
+  /** Link the plate to its full-size image, for dense screens read on phones. */
+  zoom?: boolean;
 }
 
-const { src, alt, number, caption, width, height, frame = 'desktop' } = Astro.props;
+const { src, alt, number, caption, width, height, frame = 'desktop', zoom = false } = Astro.props;
 ---
 
 <figure class:list={['plate', `plate--${frame}`]}>
   <div class="plate__frame">
-    <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+    {zoom ? (
+      <a href={src} target="_blank" rel="noopener" aria-label={`Open plate ${number} at full size`}>
+        <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+      </a>
+    ) : (
+      <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+    )}
   </div>
   <figcaption>
     <span class="plate__number">Plate {number}</span>
     <span>{caption}</span>
+    {zoom && <a class="plate__zoom" href={src} target="_blank" rel="noopener">Open full size</a>}
   </figcaption>
 </figure>
 
@@ -57,6 +66,16 @@ const { src, alt, number, caption, width, height, frame = 'desktop' } = Astro.pr
     font-size: 0.9375rem;
     line-height: 1.45;
     color: var(--ink-2);
+  }
+
+  .plate__zoom {
+    width: fit-content;
+    margin-top: 0.2rem;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration-color: var(--ember);
   }
 
   .plate__number {

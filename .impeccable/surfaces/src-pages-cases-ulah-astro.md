@@ -13,9 +13,6 @@ Inherits the survey-sheet world (DESIGN.md). Case header is the name in expanded
 
 Decisions:
 - Not linked from any page, and `noindex`. Remove noindex if the owner wants them in search.
-- Sambadeiras profile screenshots are excluded because they show a real CPF number and birth date. Plates show only the owner's name.
+- Sambadeiras plates come from the owner's capture script (sambadeiras/script/case_screenshots) run against invented seed data (fake_user in seed.rb). No real member data. The dense board screen links to its full-size image for phone readers.
 - Every claim is checked against the source repos. The Van Damme releases claim was corrected to "version bumps" because GitHub has no releases.
 - Ulah and Sambadeiras repos are private, so there are no repo links. Van Damme links its public repo.
-
-Open decisions for the owner:
-- Better Sambadeiras plates (Financeiro, Frequência, admin payments) need the app running locally with synthetic data.

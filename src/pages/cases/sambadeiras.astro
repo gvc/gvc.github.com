@@ -83,25 +83,77 @@ import activity from '../../data/cases/sambadeiras-activity.json';
 
   <section class="case-section" aria-labelledby="plates">
     <h2 id="plates">The app</h2>
-    <div class="plates plates--phones">
-      <Plate
-        number={1}
-        frame="phone"
-        src="/cases/sambadeiras/login-after.png"
-        width={375}
-        height={460}
-        alt="Sambadeiras sign-in screen: labelled e-mail and password fields and a clear sign-in button."
-        caption="Sign-in, May 2026."
-      />
-      <Plate
-        number={2}
-        frame="phone"
-        src="/cases/sambadeiras/extract-checkin.png"
-        width={375}
-        height={600}
-        alt="Check-in screen showing the member, the rehearsal 'Ensaio Geral' with venue and time, and a QR scanner frame."
-        caption="Check-in: the member, today's rehearsal, venue and time, with the QR scanner below."
-      />
+    <div class="plate-groups">
+      <p class="plate-note">Screens captured from the running app with invented members and payments.</p>
+      <div class="plates plates--phones">
+        <Plate
+          number={1}
+          frame="phone"
+          src="/cases/sambadeiras/checkin-landing.webp"
+          width={780}
+          height={796}
+          alt="Check-in landing page for 'Ensaio geral', with date, time and venue, a note that the location was found, and a Confirmar check-in button."
+          caption="After scanning the rehearsal's QR code: one button to confirm."
+        />
+        <Plate
+          number={2}
+          frame="phone"
+          src="/cases/sambadeiras/checkin-done.webp"
+          width={780}
+          height={1036}
+          alt="Check-in confirmation: a green tick and 'Você já fez check-in!' for Ensaio geral."
+          caption="Done. Scanning again just shows this confirmation."
+        />
+        <Plate
+          number={3}
+          frame="phone"
+          src="/cases/sambadeiras/checkin-no-location.webp"
+          width={780}
+          height={836}
+          alt="Check-in landing page noting that location is unavailable and the check-in will be recorded without it."
+          caption="No location from the phone? The check-in still goes through, marked for the board."
+        />
+      </div>
+      <div class="plates plates--phones">
+        <Plate
+          number={4}
+          frame="phone"
+          src="/cases/sambadeiras/payment-plan.webp"
+          width={780}
+          height={1026}
+          alt="Payment step of the profile: monthly fee set to PIX in six instalments of R$120, costume set to card in three instalments of R$155, and costume size."
+          caption="Each member picks her own plan: PIX or card, in full or in instalments."
+        />
+        <Plate
+          number={5}
+          frame="phone"
+          src="/cases/sambadeiras/financeiro.webp"
+          width={780}
+          height={1510}
+          alt="Financeiro page: an alert for two late payments, the amount open, and charges with Pendente, Atrasado and Pago statuses and Pagar buttons."
+          caption="Her payments: what's open, what's late, one tap to pay."
+        />
+        <Plate
+          number={6}
+          frame="phone"
+          src="/cases/sambadeiras/frequencia.webp"
+          width={780}
+          height={1744}
+          alt="Frequência page: 12 attendances out of 15 activities, with rehearsals marked Presente, Faltou or Falta justificada."
+          caption="Her attendance, including absences the board has justified."
+        />
+      </div>
+      <div class="plates plates--wide">
+        <Plate
+          number={7}
+          zoom
+          src="/cases/sambadeiras/cobranca.webp"
+          width={1600}
+          height={1553}
+          alt="Board view of September 2026 payments: totals of paid, open and late fees and costumes, the processing history of each charge run with totals and failures, and a table of members' charges with Regerar buttons."
+          caption="The board's month: charge runs with their results, every member's status, and a button to reissue a charge."
+        />
+      </div>
     </div>
   </section>
 
@@ -117,3 +169,17 @@ import activity from '../../data/cases/sambadeiras-activity.json';
     </div>
   </section>
 </Case>
+
+<style>
+  .plate-groups {
+    display: grid;
+    gap: clamp(2.5rem, 6vh, 3.5rem);
+  }
+
+  .plate-note {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-3);
+  }
+</style>
